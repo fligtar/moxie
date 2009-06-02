@@ -41,6 +41,14 @@ class Cacher {
     }
     
     /**
+     * Flushes a certain key from the cache for better
+     * memory management
+     */
+    public function flush($key) {
+        $this->cache[$key] = null;
+    }
+    
+    /**
      * Reads the cache file
      */
     private function readCacheFile() {

@@ -37,6 +37,8 @@ class Project {
             $xml = $this->fetch();
         }
         
+        $this->cacher->flush('XML');
+        
         // Crunch it! *grunt*
         $this->data = $this->crunch($xml);
     }
