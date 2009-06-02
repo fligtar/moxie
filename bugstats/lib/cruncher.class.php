@@ -129,7 +129,7 @@ class Cruncher {
                 $this->recordBug('bugsOpen', $id, $assignee);
             
                 // Record any patches
-                if (!empty($bug->attachment) && $bug->attachment->attributes()->ispatch == 1 && !empty($bug->attachment->flag)) {
+                if (isset($bug->attachment) && $bug->attachment->attributes()->ispatch == 1 && isset($bug->attachment->flag)) {
                     if ($bug->attachment->flag->attributes()->status == '?') {
                         $this->recordBug('bugsOpenAwaitingReview', $id, $assignee);
                         $this->recordReviewRequest($id, (string) $bug->attachment->flag->attributes()->requestee);
