@@ -127,15 +127,25 @@ class Cruncher {
             else {
                 // Record open bug
                 $this->recordBug('bugsOpen', $id, $assignee);
-            
+                
                 // Record any patches
-                if (isset($bug->attachment) && $bug->attachment->attributes()->ispatch == 1 && isset($bug->attachment->flag)) {
-                    if ($bug->attachment->flag->attributes()->status == '?') {
-                        $this->recordBug('bugsOpenAwaitingReview', $id, $assignee);
-                        $this->recordReviewRequest($id, (string) $bug->attachment->flag->attributes()->requestee);
-                    }
-                    elseif ($bug->attachment->flag->attributes()->status == '+') {
-                        $this->recordBug('bugsOpenReviewedPlus', $id, $assignee);
+                if (isset($bug->attachment)) {
+                    /**
+                     * As far as I can tell there is no way to check if the atachment object
+                     * is an array short of doing this. is_array() returns false, so wtf.
+                     */
+                    $attachments = !isset($bug->attachment[1]) ? array($bug->attachment) : $bug->attachment;
+                    
+                    foreach ($attachments as $attachment) {
+                        if ($attachment->attributes()->ispatch == 1 && isset($attachment->flag)) {
+                            if ($attachment->flag->attributes()->status == '?') {
+                                $this->recordBug('bugsOpenAwaitingReview', $id, $assignee);
+                                $this->recordReviewRequest($id, (string) $attachment->flag->attributes()->requestee);
+                            }
+                            elseif ($attachment->flag->attributes()->status == '+') {
+                                $this->recordBug('bugsOpenReviewedPlus', $id, $assignee);
+                            }
+                        }
                     }
                 }
             }
