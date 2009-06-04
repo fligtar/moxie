@@ -7,7 +7,10 @@ require_once dirname(dirname(dirname(__FILE__))).'/project.inc.php';
  * Must extend project class
  */
 class bandwagon extends amo {
-    // Short name for report
+	// ID for files and classes
+	public $reportID = 'bandwagon';
+	
+    // Short name for report URL
     public $reportName = 'bandwagon';
     
     // Pretty name to display for report

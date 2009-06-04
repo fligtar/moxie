@@ -7,7 +7,10 @@ require_once dirname(dirname(dirname(__FILE__))).'/project.inc.php';
  * Must extend project class
  */
 class amo506 extends amo {
-    // Short name for report
+	// ID for files and classes
+	public $reportID = 'amo506';
+	
+    // Short name for report URL
     public $reportName = '5.0.6';
     
     // Pretty name to display for report

@@ -21,7 +21,9 @@ class Project {
     public function __construct() {
         $this->fetcher = new Fetcher;
         $this->cruncher = new Cruncher;
-        $this->cacher = new Cacher($this->name);
+		
+		$cacheFile = dirname(dirname(__FILE__)).'/projects/'.$this->projectName.'/reports/'.$this->reportID.'/data.cache';
+        $this->cacher = new Cacher($cacheFile);
     }
     
     /**

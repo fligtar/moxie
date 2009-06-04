@@ -7,12 +7,16 @@ require 'lib/project.class.php';
 require 'lib/projectlister.class.php';
 $projectlister = new ProjectLister;
 
-$projects = $projectlister->getProjectDetails();
-
 echo '<h1>Available Projects</h1>';
 echo '<ul>';
-foreach ($projects as $project) {
-	echo '<li><a href="'.$project['name'].'">'.$project['displayName'].'</a></li>';
+$currentProject = '';
+foreach ($projectlister->projects as $projectName => $project) {
+	echo '<li>'.$project['projectDisplayName'].'</li>';
+	echo '<ul>';
+	foreach ($project['reports'] as $reportID => $reportDetails) {
+		echo '<li><a href="'.$projectName.'/'.$reportDetails['reportName'].'">'.$reportDetails['reportDisplayName'].'</a></li>';
+	}
+	echo '</ul>';
 }
 echo '</ul>';
 

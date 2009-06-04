@@ -7,29 +7,33 @@
 class ProjectLister {
     public $projectsDir;
     public $projects;
-	public $reports;
-    public $detailedProjects;
 
-	public $ignored = array('.', '..', '.DS_Store', '.svn');
+	private $ignored = array('.', '..', '.DS_Store', '.svn');
     
     /**
      * Sets the projects directory path and lists projects and reports
      */
     public function __construct() {
         $this->projectsDir = dirname(dirname(__FILE__)).'/projects';
-		$this->listProjects();
+		$this->findProjectsAndReports();
     }
     
     /**
-     * Lists the project short names
+     * Gets the metadata for all projects and reports
      */
-    public function listProjects() {   
+    public function findProjectsAndReports() {   
         $projects = array();
         if ($dh = opendir($this->projectsDir)) {
             while (($project = readdir($dh)) !== false) {
                 if (!in_array($project, $this->ignored)) {
-                    $projects[] = $project;
-					$this->listReports($project);
+					$reportIDs = $this->listReports($project);
+					$reports = $this->getReportDetails($project, $reportIDs);
+					$keys = array_keys($reports);
+					$projects[$project] = array(
+						'projectName' => $reports[$keys[0]]['projectName'],
+						'projectDisplayName' => $reports[$keys[0]]['projectDisplayName'],
+						'reports' => $reports
+					);
 				}
             }
             closedir($dh);
@@ -41,7 +45,7 @@ class ProjectLister {
 	/**
 	 * Lists the report short names
 	 */
-	public function listReports($projectName) {
+	private function listReports($projectName) {
 		$reports = array();
 		$reportsDir = "{$this->projectsDir}/{$projectName}/reports";
 		
@@ -54,59 +58,45 @@ class ProjectLister {
 			closedir($dh);
 		}
 		
-		$this->reports[$projectName] = $reports;
+		return $reports;
 	}
 	
     /**
      * Determines whether the name is a valid project
      */
     public function isProject($projectName) {
-        return in_array($projectName, $this->projects);
+        return array_key_exists($projectName, $this->projects);
     }
 	
 	/**
-	 * Determines whether the name is a valid report in the given project
+	 * Determines whether the ID is a valid report in the given project
 	 */
-	public function isReport($projectName, $reportName) {
-		
+	public function isReport($projectName, $reportID) {
+		return array_key_exists($reportID, $this->projects[$projectName]['reports']);
 	}
-    
-    /**
-     * Gets a list of all projects with their metadata
-     */
-    public function getProjectDetails() {
-        foreach ($this->projects as $projectName) {
-            $this->detailedProjects[$projectName] = $this->loadProjectDetails($projectName);
-        }
-        
-        return $this->detailedProjects;
-    }
-    
-    /**
-     * Gets the metadata from a project's config file
-     */
-    private function loadProjectDetails($projectName) {
-        if (!class_exists($projectName))
-            include "{$this->projectsDir}/{$projectName}/project.inc.php";
-        
-        $project = new $projectName;
-        
-        $detailedProject = array(
-            'projectName' => $project->projectName,
-            'projectDisplayName' => $project->projectDisplayName,
-			'reports' => $this->getReportDetails($projectName)
-        );
-        
-        return $detailedProject;
-    }
+	
+	/**
+	 * Determines the report ID based on the report name
+	 */
+	public function getReportID($reportName, $projectName) {
+		if (!$this->isProject($projectName))
+			return false;
+		
+		foreach ($this->projects[$projectName]['reports'] as $reportID => $reportDetails) {
+			if ($reportDetails['reportName'] == $reportName) {
+				return $reportID;
+			}
+		}
+	}
 	
 	/*
 	 * Gets a list of all reports with their metadata
 	 */
-	public function getReportDetails($projectName) {
+	public function getReportDetails($projectName, $reportIDs) {
 		$reports = array();
-		foreach ($this->reports[$projectName] as $reportName) {
-			$reports[] = $this->loadReportDetails($projectName, $reportName);
+		
+		foreach ($reportIDs as $reportID) {
+			$reports[$reportID] = $this->loadReportDetails($projectName, $reportID);
 		}
 		
 		return $reports;
@@ -115,12 +105,15 @@ class ProjectLister {
 	/**
 	 * Gets the metadata from a report's config file
 	 */
-	private function loadReportDetails($projectName, $reportName) {
-		include "{$this->projectsDir}/{$projectName}/reports/{$reportName}/report.inc.php";
+	private function loadReportDetails($projectName, $reportID) {
+		include_once "{$this->projectsDir}/{$projectName}/reports/{$reportID}/report.inc.php";
 		
-		$report = new Report;
+		$report = new $reportID;
 		
 		$detailedReport = array(
+			'projectName' => $report->projectName,
+			'projectDisplayName' => $report->projectDisplayName,
+			'reportID' => $reportID,
 			'reportName' => $report->reportName,
 			'reportDisplayName' => $report->reportDisplayName
 		);

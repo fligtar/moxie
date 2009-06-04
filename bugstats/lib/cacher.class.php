@@ -11,8 +11,8 @@ class Cacher {
     /**
      * Sets cache file path and loads it if it exists
      */
-    public function __construct($projectName) {
-        $this->cacheFile = dirname(dirname(__FILE__)).'/projects/'.$projectName.'/data.cache';
+    public function __construct($cacheFile) {
+        $this->cacheFile = $cacheFile;
         $this->readCacheFile();
     }
     

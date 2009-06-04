@@ -2,21 +2,20 @@
 /**
  * This script fetches new data in the background
  */
-require 'lib/project.class.php';
 require 'lib/projectlister.class.php';
 $projectlister = new ProjectLister;
 
 $projectName = $_GET['project'];
+$reportID = $_GET['report'];
 
-if (!$projectlister->isProject($projectName)) {
+if (!$projectlister->isProject($projectName) || !$projectlister->isReport($projectName, $reportID)) {
 	die('Invalid project name.');
 }
 
-if (!class_exists($projectName))
-	require "projects/{$projectName}/project.inc.php";
+require_once "projects/{$projectName}/reports/{$reportID}/report.inc.php";
 
-$project = new $projectName;
+$report = new $reportID;
 
-$project->bam(true);
+$report->bam(true);
 
 ?>

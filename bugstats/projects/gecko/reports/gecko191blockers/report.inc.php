@@ -7,7 +7,10 @@ require_once dirname(dirname(dirname(__FILE__))).'/project.inc.php';
  * Must extend project class
  */
 class gecko191blockers extends gecko {
-    // Short name for report
+	// ID for files and classes
+	public $reportID = 'gecko191blockers';
+	
+    // Short name for report URL
     public $reportName = '1.9.1-blockers';
     
     // Pretty name to display for report

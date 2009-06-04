@@ -3,6 +3,9 @@ body {
     font-size: 13px;
     margin: 0;
 }
+img {
+	border: none;
+}
 
 /* Header */
 
@@ -276,4 +279,10 @@ li.bugcount.primary span {
 #footer {
     margin: 0 auto;
     text-align: center;
+}
+#poweredby {
+	margin: 5px 0;
+}
+#footer {
+	margin-bottom: 20px;
 }

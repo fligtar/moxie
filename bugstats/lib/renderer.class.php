@@ -64,7 +64,7 @@ class Renderer {
             echo ' reviewRequests';
         echo '">';
             // @TODO need to find a better place for the gravatar
-            echo '<img class="avatar"  src="http://www.gravatar.com/avatar/'.md5($user['email']).'?s=20&amp;d=http://project-status.fligtar.com/images/blank.png" alt="avatar for '.$user['email'].'"/>';
+            echo '<img class="avatar"  src="http://www.gravatar.com/avatar/'.md5($user['email']).'?s=20&amp;d=http://moxie.fligtar.com/images/blank.png" alt="avatar for '.$user['email'].'"/>';
         
             echo '<span class="pie">'.count($user['assignedBugs']['bugsOpen']).','.count($user['assignedBugs']['bugsFixed']).','.(count($user['assignedBugs']['bugsAll']) - count($user['assignedBugs']['bugsFixed']) - count($user['assignedBugs']['bugsOpen'])).'</span>';
             
@@ -123,11 +123,22 @@ class Renderer {
     public function projectSelectionBox($projects) {
         echo '<select id="project-selector" onchange="selectProject();">';
             echo '<option value="">select a project</option>';
-            foreach ($projects as $project) {
-                echo '<option value="'.$project['name'].'">'.$project['displayName'].'</option>';
+            foreach ($projects as $projectName => $project) {
+				echo '<optgroup label="'.$project['projectDisplayName'].'">';
+				foreach ($project['reports'] as $reportID => $reportDetails) {
+                	echo '<option value="'.$projectName.'/'.$reportDetails['reportName'].'">'.$reportDetails['reportDisplayName'].'</option>';
+				}
+				echo '</optgroup>';
             }
         echo '</select>';
     }
+	
+	/**
+	 * Returns the current page's URL
+	 */
+	public function currentURL() {
+		return $_SERVER['REQUEST_URI'];
+	}
     
 }
 
