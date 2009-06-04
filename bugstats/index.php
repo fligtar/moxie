@@ -7,7 +7,7 @@ require 'lib/project.class.php';
 require 'lib/projectlister.class.php';
 $projectlister = new ProjectLister;
 
-$projects = $projectlister->getProjectsWithDetails();
+$projects = $projectlister->getProjectDetails();
 
 echo '<h1>Available Projects</h1>';
 echo '<ul>';

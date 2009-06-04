@@ -5,40 +5,44 @@ require 'lib/renderer.class.php';
 require 'lib/projectlister.class.php';
 $projectlister = new ProjectLister;
 
-/**
- * @TODO This whole section needs to be redone
- * with better .htaccess rewrites.
- */
-$requri = $_SERVER['REQUEST_URI'];
-$getparams = strpos($requri, '?');
-if ($getparams !== false) {
-    $requri = substr($requri, 0, $getparams);
+// If no project or report, go to index
+if (empty($_GET['project']) || empty($_GET['report'])) {
+	header('Location: ../../index.php');
+	exit;
 }
 
-if ($requri[strlen($requri) - 1] == '/') {
-    $requri = substr($requri, 0, strlen($requri) - 1);
-    header('Location: '.$requri);
-    exit;
+$projectName = $_GET['project'];
+$reportName = $_GET['report'];
+
+if (!empty($_GET['params'])) {
+	$_params = explode('/', $_GET['params']);
+	foreach ($_params as $_param) {
+		$split = explode(':', $_param);
+		$params[$split[0]] = $split[1];
+	}
+}
+else {
+	$params = array();
 }
 
-$projectName = substr($requri, strrpos($requri, '/') + 1);
+$sort = !empty($params['sort']) ? $params['sort'] : 'bugsOpen';
 
-// Hey look, we finally got the project!
-
-$params = explode('=', $_SERVER['QUERY_STRING']);
-$sort = !empty($params[1]) ? $params[1] : 'bugsOpen';
-
-if (!$projectlister->isProject($projectName)) {
-    die('Invalid project name.');
+// Make sure the project and reports exist
+if (!$projectlister->isProject($projectName) || !$projectlister->isReport($projectName, $reportName)) {
+    header('Location: ../../index.php');
+	exit;
 }
 
-// Include the project config file
+// Include the project and report config files
 if (!class_exists($projectName))
     require "projects/{$projectName}/project.inc.php";
+if (!class_exists($reportName))
+	require "projects/{$projectName}/reports/{$reportName}/report.inc.php";
 
-// Instantiate the project
-$project = new $projectName;
+// Instantiate the report
+$report = new Report;
 
+exit;
 // BAM!
 $project->bam();
 
