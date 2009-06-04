@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(dirname(dirname(__FILE__))).'/lib/project.class.php';
+
 /**
  * Project configuration file
  * Any of these settings can be overwritten by the report settings

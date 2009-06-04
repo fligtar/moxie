@@ -1,10 +1,12 @@
 <?php
 
+require_once dirname(dirname(dirname(__FILE__))).'/project.inc.php';
+
 /**
  * Report configuration file
  * Must extend project class
  */
-class Report extends amo {
+class all extends amo {
     // Short name for report
     public $reportName = 'all';
     

@@ -1,10 +1,12 @@
 <?php
 
+require_once dirname(dirname(dirname(__FILE__))).'/project.inc.php';
+
 /**
  * Report configuration file
  * Must extend project class
  */
-class Report extends gecko {
+class gecko191blockers extends gecko {
     // Short name for report
     public $reportName = '1.9.1-blockers';
     
