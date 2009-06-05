@@ -46,7 +46,7 @@ class Renderer {
         echo '">';
         echo "<div>";
             // @TODO need to find a better place for the gravatar
-            echo '<img class="avatar"  src="http://www.gravatar.com/avatar/'.md5($user['email']).'?s=20&amp;d=http://moxie.fligtar.com/images/blank.png" alt="avatar for '.$user['email'].'"/>';
+            //echo '<img class="avatar"  src="http://www.gravatar.com/avatar/'.md5($user['email']).'?s=20&amp;d=http://moxie.fligtar.com/images/blank.png" alt="avatar for '.$user['email'].'"/>';
         
             echo '<span class="pie">'.count($user['assignedBugs']['bugsOpen']).','.count($user['assignedBugs']['bugsFixed']).'</span>';
             
