@@ -53,7 +53,8 @@ class Cruncher {
         if (empty($this->data['users'][$assignee])) {
             $this->createUser($assignee, $assignee_name);
         }
-        elseif (!empty($assignee_name) && empty($this->data['users'][$assignee]['name'])) {
+        elseif (!empty($assignee_name) && $this->data['users'][$assignee]['name'] == $assignee) {
+            // If user's name wasn't known at creation but is now, update it
             $this->data['users'][$assignee]['name'] = $assignee_name;
         }
         
@@ -64,6 +65,8 @@ class Cruncher {
      * Record a review request
      */
     private function recordReviewRequest($bug_id, $requestee) {
+        if (empty($requestee)) return;
+        
         if (empty($this->data['users'][$requestee])) {
             $this->createUser($requestee);
         }
@@ -77,6 +80,7 @@ class Cruncher {
     public function createUser($email, $name = '') {
         if (!empty($name)) {
             $name = preg_replace('/\s?[\[\(].+[\]\)]/', '', $name);
+            $name = preg_replace('/\s?:.+/', '', $name);
         }
         else {
             $name = $email;
@@ -113,7 +117,7 @@ class Cruncher {
             $id = (string) $bug->bug_id;
             
             // Record bug's existence
-            $this->recordBug('bugsAll', $id, $assignee, $bug->assigned_to->attributes()->name);
+            $this->recordBug('bugsAll', $id, $assignee, (string) $bug->assigned_to->attributes()->name);
             
             if (!empty($bug->resolution)) {
                 // Record bug's resolution
