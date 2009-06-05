@@ -75,7 +75,6 @@ class Cacher {
     
     /**
      * Gets the age of the cache file in human terms
-     * @TODO need to stop using ceil()
      */
     public function getHumanCacheAge() {
         $diff = $this->getCacheAge();
@@ -86,10 +85,20 @@ class Cacher {
             $str = 'less than a minute ago';
         elseif ($diff < 3600)
             $str = ceil($diff / 60).' minutes ago';
-        elseif ($diff < 86400)
-            $str = ceil($diff / 3600).' hours ago';
+        elseif ($diff < 86400) {
+            $hours = floor($diff / 3600);
+            $minutes = round(($diff % 3600) / 60, 0);
+            
+            $str = "{$hours} hour";
+            if ($hours != 1)
+                $str .= 's';
+            $str .= ", {$minutes} minute";
+            if ($minutes != 1)
+                $str .= 's';
+            $str .= " ago";
+        }
         else
-            $str = ceil($diff / 86400).' days ago';
+            $str = round($diff / 86400, 0).' days ago';
             
         return $str;
     }
