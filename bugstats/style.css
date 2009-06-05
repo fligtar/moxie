@@ -278,12 +278,9 @@ li.bugcount.primary span {
 /* Footer */
 
 #footer {
-    margin: 0 auto;
+    margin: 20px auto;
     text-align: center;
 }
 #poweredby {
 	margin: 5px 0;
-}
-#footer {
-	margin-bottom: 20px;
 }
