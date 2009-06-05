@@ -20,7 +20,7 @@ class all extends amo {
     public $queryString = 'buglist.cgi?query_format=advanced&product=addons.mozilla.org';
 	
     // Maximum cache age in seconds before refreshing
-    public $refreshTime = 86400000;
+    public $refreshTime = 259200;
     
     // Manual refresh enabled?
     public $manualRefresh = false;
