@@ -24,7 +24,7 @@ class gecko extends Project {
     public $unassigned = 'nobody@mozilla.org';
     
     // Maximum cache age in seconds before refreshing
-    public $refreshTime = 86400;
+    public $refreshTime = 86400000;
     
     // Manual refresh enabled?
     public $manualRefresh = false;
