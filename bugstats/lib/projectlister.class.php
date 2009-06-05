@@ -1,5 +1,7 @@
 <?php
 
+require_once 'cacher.class.php';
+
 /**
  * ProjectLister!
  * Figures out what projects exist and reads their metadata
@@ -15,7 +17,18 @@ class ProjectLister {
      */
     public function __construct() {
         $this->projectsDir = dirname(dirname(__FILE__)).'/projects';
-		$this->findProjectsAndReports();
+
+		$cacheFile = dirname(dirname(__FILE__)).'/projects.cache';
+        $cacher = new Cacher($cacheFile);
+		
+		// Pull project listing from cache if it's there and less than an hour old
+		if ($cacher->check('projects') && $cacher->getCacheAge() > 3600) {
+			$this->projects = $cacher->pull('projects');
+		}
+		else {
+			$this->findProjectsAndReports();
+			$cacher->cache('projects', $this->projects);
+		}
     }
     
     /**

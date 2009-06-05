@@ -53,7 +53,8 @@ $render = new Renderer($report);
 <head>
     <title><?="{$report->projectDisplayName} {$report->reportDisplayName}"?> Status</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <link rel="stylesheet" href="../style.css" />
+	<base href="http://localhost/<?=dirname($_SERVER['PHP_SELF'])?>/" />
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
@@ -61,21 +62,19 @@ $render = new Renderer($report);
 <div id="header">
     <div id="header-content">
         <div id="right-area">
-            <div>
-                <?=$render->projectSelectionBox($projectlister->projects);?>
-            </div>
+           	<?=$render->projectSelectionBox($projectlister->projects);?>
         
             <div id="age-box">
             <?php
             // If data refresh is allowed and the data is more than 5 minutes old, allow manual refresh
             echo '<p>Data retrieved '.$report->cacher->getHumanCacheAge().'.</p>';
-            if ((!isset($report->refresh) || $report->refresh === true) && $report->cacher->getCacheAge() > 300)
+            if ($report->manualRefresh && $report->cacher->getCacheAge() > 300)
                 echo '<p id="refresh-trigger"><a href="#" onclick="backfetch(); return false;">Refresh now</a></p>';
             ?>
             </div>
         </div>
     
-        <img src="../projects/<?=$projectName?>/logo.png" alt="<?=$report->reportDisplayName?>" />
+        <img src="projects/<?=$projectName?>/logo.png" alt="<?=$report->reportDisplayName?>" />
         <h1><?="{$report->projectDisplayName} {$report->reportDisplayName}"?></h1>
         <h2>bug status</h2>
     </div>
@@ -173,13 +172,13 @@ $render = new Renderer($report);
 <div id="footer">
     Report generated based on <a href="<?=$report->queryBase.htmlentities($report->queryString)?>">this query</a> and does not include non-public bugs.
 	<div id="poweredby">
-		<a href="http://code.google.com/p/moxie-dev/"><img src="../images/poweredbymoxie.png" alt="powered by moxie" /></a>
+		<a href="http://code.google.com/p/moxie-dev/"><img src="images/poweredbymoxie.png" alt="powered by moxie" /></a>
 	</div>
 </div>
 
 <script type="text/javascript" src="http://g.fligtar.com/jquery.js"></script>
-<script type="text/javascript" src="../js/shiny.js"></script>
-<script type="text/javascript" src="../js/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="js/shiny.js"></script>
+<script type="text/javascript" src="js/jquery.sparkline.min.js"></script>
 <script type="text/javascript">
     var projectName = '<?=$projectName?>';
 	var reportID = '<?=$reportID?>';
@@ -190,8 +189,8 @@ $render = new Renderer($report);
         $('#assignment-pie').sparkline('html', {type: 'pie', height: 150, sliceColors: ['#E8A81D', '#0B26A1', '#69645C']} );
         
         <?php
-        // If refresh is allowed and the cache is more than an hour old, backfetch after loading
-        if ((!isset($report->refresh) || $report->refresh === true) && $report->cacher->getCacheAge() > 3600) {
+        // If the cache is older than the maximum cache age, backfetch after loading
+        if ($report->cacher->getCacheAge() > $report->refreshTime) {
             echo 'backfetch();';
         }
         ?>

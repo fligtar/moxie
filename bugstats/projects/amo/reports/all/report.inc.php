@@ -18,6 +18,12 @@ class all extends amo {
     
     // Bugzilla query for the report
     public $queryString = 'buglist.cgi?query_format=advanced&product=addons.mozilla.org';
+	
+    // Maximum cache age in seconds before refreshing
+    public $refreshTime = 86400;
+    
+    // Manual refresh enabled?
+    public $manualRefresh = false;
 }
 
 ?>

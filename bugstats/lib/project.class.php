@@ -1,8 +1,8 @@
 <?php
 
-require 'fetcher.class.php';
-require 'cruncher.class.php';
-require 'cacher.class.php';
+require_once 'fetcher.class.php';
+require_once 'cruncher.class.php';
+require_once 'cacher.class.php';
 
 /**
  * Project!

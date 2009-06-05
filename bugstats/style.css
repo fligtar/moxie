@@ -43,6 +43,7 @@ img {
 #right-area {
     float: right;
     margin: 20px 5px 0 0;
+	text-align: right;
 }
 #age-box {
     margin: 20px 0 0 0;
@@ -61,7 +62,7 @@ img {
 #toolbar {
     background-color: #000000;
     color: #FFFFFF;
-    height: 18px;
+    height: 19px;
 }
 
 #toolbar-content {
