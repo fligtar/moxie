@@ -3,7 +3,7 @@ function backfetch() {
     $('#refresh-trigger').hide();
     $('#backfetching').slideDown();
     $.ajax({
-        url: "../backfetch.php?project=" + projectName + '&report=' + reportID,
+        url: $('base').attr('href') + "backfetch.php?project=" + projectName + '&report=' + reportID,
         cache: false,
         success: function() {
             $('#backfetching').slideUp();
@@ -25,6 +25,6 @@ function selectProject() {
     var project = $('#project-selector').val();
     
     if (project != '') {
-        window.location = '../' + project;
+        window.location = $('base').attr('href') + project;
     }
 }
