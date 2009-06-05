@@ -6,22 +6,22 @@ $projectlister = new ProjectLister;
 
 // If no project or report, go to index
 if (empty($_GET['project']) || empty($_GET['report'])) {
-	header('Location: ../../index.php');
-	exit;
+    header('Location: ../../index.php');
+    exit;
 }
 
 $projectName = $_GET['project'];
 $reportName = $_GET['report'];
 
 if (!empty($_GET['params'])) {
-	$_params = explode('/', $_GET['params']);
-	foreach ($_params as $_param) {
-		$split = explode(':', $_param);
-		$params[$split[0]] = $split[1];
-	}
+    $_params = explode('/', $_GET['params']);
+    foreach ($_params as $_param) {
+        $split = explode(':', $_param);
+        $params[$split[0]] = $split[1];
+    }
 }
 else {
-	$params = array();
+    $params = array();
 }
 
 $sort = !empty($params['sort']) ? $params['sort'] : 'bugsOpen';
@@ -31,7 +31,7 @@ $reportID = $projectlister->getReportID($reportName, $projectName);
 // Make sure the project and report exists
 if (!$reportID) {
     header('Location: ../../index.php');
-	exit;
+    exit;
 }
 
 // Include the report config file
@@ -53,7 +53,7 @@ $render = new Renderer($report);
 <head>
     <title><?="{$report->projectDisplayName} {$report->reportDisplayName}"?> Status</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<base href="http://localhost/<?=dirname($_SERVER['PHP_SELF'])?>/" />
+    <base href="http://<?=$_SERVER['SERVER_NAME'].dirname($_SERVER['PHP_SELF'])?>/" />
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -62,7 +62,7 @@ $render = new Renderer($report);
 <div id="header">
     <div id="header-content">
         <div id="right-area">
-           	<?=$render->projectSelectionBox($projectlister->projects);?>
+            <?=$render->projectSelectionBox($projectlister->projects);?>
         
             <div id="age-box">
             <?php
@@ -171,9 +171,9 @@ $render = new Renderer($report);
 
 <div id="footer">
     Report generated based on <a href="<?=$report->queryBase.htmlentities($report->queryString)?>">this query</a> and does not include non-public bugs.
-	<div id="poweredby">
-		<a href="http://code.google.com/p/moxie-dev/"><img src="images/poweredbymoxie.png" alt="powered by moxie" /></a>
-	</div>
+    <div id="poweredby">
+        <a href="http://code.google.com/p/moxie-dev/"><img src="images/poweredbymoxie.png" alt="powered by moxie" /></a>
+    </div>
 </div>
 
 <script type="text/javascript" src="http://g.fligtar.com/jquery.js"></script>
@@ -181,7 +181,7 @@ $render = new Renderer($report);
 <script type="text/javascript" src="js/jquery.sparkline.min.js"></script>
 <script type="text/javascript">
     var projectName = '<?=$projectName?>';
-	var reportID = '<?=$reportID?>';
+    var reportID = '<?=$reportID?>';
     
     $(function() {
         $('.pie').sparkline('html', {type: 'pie', height: 50, sliceColors: ['#6B2418', '#336B47', '#69645C']} );

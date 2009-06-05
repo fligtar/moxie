@@ -4,7 +4,7 @@ body {
     margin: 0;
 }
 img {
-	border: none;
+    border: none;
 }
 
 /* Header */
@@ -43,7 +43,7 @@ img {
 #right-area {
     float: right;
     margin: 20px 5px 0 0;
-	text-align: right;
+    text-align: right;
 }
 #age-box {
     margin: 20px 0 0 0;
@@ -282,5 +282,5 @@ li.bugcount.primary span {
     text-align: center;
 }
 #poweredby {
-	margin: 5px 0;
+    margin: 5px 0;
 }
