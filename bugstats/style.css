@@ -205,7 +205,7 @@ img {
 .user-box {
     -moz-border-radius: 6px;
     border: 1px solid #CCCCCC;
-    min-height: 60px;
+    min-height: 52px;
     margin: 10px;
     padding: 5px;
 }

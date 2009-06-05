@@ -71,8 +71,9 @@ class Renderer {
             echo '<h4><a href="mailto:'.$user['email'].'">'.$user['name'].'</a></h4>';
             
             echo '<ul>';
-            
-                echo '<li class="open bugcount">'.$this->bugLink($user['assignedBugs']['bugsOpen'], '%s <span>OPEN</span> bugs', '1 <span>OPEN</span> bug').'</li>';
+                if (!empty($user['assignedBugs']['bugsOpen'])) {
+                    echo '<li class="open bugcount">'.$this->bugLink($user['assignedBugs']['bugsOpen'], '%s <span>OPEN</span> bugs', '1 <span>OPEN</span> bug').'</li>';
+                }
                 
                 if (!empty($user['assignedBugs']['bugsOpenAwaitingReview'])) {
                     echo '<li class="indented">'.$this->bugLink($user['assignedBugs']['bugsOpenAwaitingReview'], '%s patches awaiting review',  '1 patch awaiting review').'</li>';
@@ -86,7 +87,9 @@ class Renderer {
                     echo '<li class="indented">'.$this->bugLink($user['otherBugs']['reviewRequests'], '%s review requests', '1 review request').'</li>';
                 }
                 
-                echo '<li class="fixed bugcount">'.$this->bugLink($user['assignedBugs']['bugsFixed'], '%s <span>FIXED</span> bugs', '1 <span>FIXED</span> bug').'</li>';
+                if (!empty($user['assignedBugs']['bugsFixed'])) {
+                    echo '<li class="fixed bugcount">'.$this->bugLink($user['assignedBugs']['bugsFixed'], '%s <span>FIXED</span> bugs', '1 <span>FIXED</span> bug').'</li>';
+                }
                 
             echo '</ul>';
         echo '</div>';
