@@ -66,7 +66,7 @@ class Renderer {
             // @TODO need to find a better place for the gravatar
             echo '<img class="avatar"  src="http://www.gravatar.com/avatar/'.md5($user['email']).'?s=20&amp;d=http://moxie.fligtar.com/images/blank.png" alt="avatar for '.$user['email'].'"/>';
         
-            echo '<span class="pie">'.count($user['assignedBugs']['bugsOpen']).','.count($user['assignedBugs']['bugsFixed']).','.(count($user['assignedBugs']['bugsAll']) - count($user['assignedBugs']['bugsFixed']) - count($user['assignedBugs']['bugsOpen'])).'</span>';
+            echo '<span class="pie">'.count($user['assignedBugs']['bugsOpen']).','.count($user['assignedBugs']['bugsFixed']).'</span>';
             
             echo '<h4><a href="mailto:'.$user['email'].'">'.$user['name'].'</a></h4>';
             
@@ -122,7 +122,7 @@ class Renderer {
      */
     public function projectSelectionBox($projects) {
         echo '<select id="project-selector" onchange="selectProject();">';
-            echo '<option value="">select a project</option>';
+            echo '<option value="">select a report</option>';
             foreach ($projects as $projectName => $project) {
 				echo '<optgroup label="'.$project['projectDisplayName'].'">';
 				foreach ($project['reports'] as $reportID => $reportDetails) {

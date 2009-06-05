@@ -143,7 +143,7 @@ $render = new Renderer($report);
 
 <div id="overall-status">
 <h2>Overall Status</h2>
-    <div id="status-pie"><?=count($report->data['bugsOpen'])?>,<?=count($report->data['bugsFixed'])?>,<?=count($report->data['bugsOtherResolved'])?></div>
+    <div id="status-pie"><?=count($report->data['bugsOpen'])?>,<?=count($report->data['bugsFixed'])?></div>
     <div id="assignment-pie"><?=count($report->data['users'][$report->unassigned]['assignedBugs']['bugsAll'])?>,<?=count($developerBugs)?>,<?=count($otherBugs)?></div>
 
     <ul id="status-legend">
@@ -155,7 +155,7 @@ $render = new Renderer($report);
     <ul id="assignment-legend">
         <li class="unassigned bugcount"><?=$render->bugLink($report->data['users'][$report->unassigned]['assignedBugs']['bugsAll'], '%s <span>unassigned</span> bugs', '1 <span>unassigned</span> bug')?></li>
         <li class="primary bugcount"><?=$render->bugLink($developerBugs, '%s <span>primary developer</span> bugs', '1 <span>primary developer</span> bug')?></li>
-        <li class="other bugcount"><?=$render->bugLink($otherBugs, '%s other bugs', '1 other  bug')?></li>
+        <li class="other bugcount"><?=$render->bugLink($otherBugs, '%s bugs assigned to others', '1 bug assigned to others')?></li>
     </ul>
     
     <p class="unassigned-count"><?=$render->bugLink($report->data['users'][$report->unassigned]['assignedBugs']['bugsOpen'], '%s <span class="open">OPEN</span> <span class="unassigned">unassigned</span> bugs', '1 <span class="open">OPEN</span> <span class="unassigned">unassigned</span> bug')?></p>
