@@ -208,7 +208,15 @@ img {
     min-height: 52px;
     margin: 10px;
     padding: 5px;
+    width: 234px; 
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: top;       
+    zoom: 1;
+    *display: inline;
+    _height: 52px;
 }
+
 .user-box.highlight,
 #content.highlight-reviewRequests .user-box.reviewRequests,
 #content.highlight-bugsOpenAwaitingReview .user-box.bugsOpenAwaitingReview,
@@ -221,10 +229,11 @@ img {
 }
 
 .user-box .avatar {
-    z-index: 100;
-    position: absolute;
-    margin: 15px 0 0 195px;
     opacity: 0.5;
+    position: absolute;
+    right: 20px;
+    top: 19px;
+    z-index: 100;
 }
 
 .user-box h4 {

@@ -19,31 +19,12 @@ class Renderer {
      * @TODO h8ers will h8 on my <table>
      */
     public function userGrid($users, $columns = 3) {
-        echo '<table class="user-grid">';
-        echo '<tbody>';
-        
-        $i = 0;
+        echo '<div class="user-grid-'.$columns.'">';
+       
         foreach ($users as $user) {
-            if ($i % $columns == 0) echo '<tr>';
-
-            echo '<td>';
             $this->userBox($user);
-            echo '</td>';
-
-            if ($i % $columns == ($columns - 1)) echo '</tr>';
-            $i++;
         }
-        
-        // I don't know what's going on here but it sure looks exciting!
-        $i--;
-        if ($i % $columns < $columns - 1) {
-            echo str_repeat('<td></td>', $columns - (($i % $columns) + 1));
-            echo '</tr>';
-            
-        }
-        
-        echo '</tbody>';
-        echo '</table>';
+        echo "</div>";
     }
     
     /**
@@ -63,6 +44,7 @@ class Renderer {
         if (!empty($user['otherBugs']['reviewRequests']))
             echo ' reviewRequests';
         echo '">';
+        echo "<div>";
             // @TODO need to find a better place for the gravatar
             echo '<img class="avatar"  src="http://www.gravatar.com/avatar/'.md5($user['email']).'?s=20&amp;d=http://moxie.fligtar.com/images/blank.png" alt="avatar for '.$user['email'].'"/>';
         
@@ -92,7 +74,7 @@ class Renderer {
                 }
                 
             echo '</ul>';
-        echo '</div>';
+        echo '</div></div>';
     }
     
     /**
