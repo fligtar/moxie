@@ -75,13 +75,44 @@ class Fetcher {
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,"ctype=xml&id=".implode($bugs, "&id=")."&excludefield=attachmentdata");
+        curl_setopt($ch, CURLOPT_POSTFIELDS,"ctype=xml&id=".implode($bugs, "&id=").$this->getExcludedFields());
 
         $xml = curl_exec($ch);
 
         curl_close($ch);
         
         return $xml;
+    }
+    
+    /**
+     * Get the unneeded fields string for the XML request
+     */
+    private function getExcludedFields() {
+        $fields = array(
+            'attachmentdata',
+            'creation_ts',
+            'delta_ts',
+            'short_desc',
+            'reporter_accessible',
+            'cclist_accessible',
+            'classification_id',
+            'product',
+            'component',
+            'version',
+            'rep_platform',
+            'op_sys',
+            'priority',
+            'bug_severity',
+            'target_milestone',
+            'everconfirmed',
+            'cc',
+            'qa_contact',
+            'cf_blocking_fennec',
+            'token',
+            'long_desc'
+        );
+        
+        return '&excludefield='.implode('&excludefield=', $fields);
     }
 
 }

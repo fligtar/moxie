@@ -29,6 +29,8 @@ class ProjectLister {
             $this->findProjectsAndReports();
             $cacher->cache('projects', $this->projects);
         }
+        
+        ksort($this->projects);
     }
     
     /**
@@ -41,6 +43,7 @@ class ProjectLister {
                 if (!in_array($project, $this->ignored)) {
                     $reportIDs = $this->listReports($project);
                     $reports = $this->getReportDetails($project, $reportIDs);
+                    ksort($reports);
                     $keys = array_keys($reports);
                     $projects[$project] = array(
                         'projectName' => $reports[$keys[0]]['projectName'],
