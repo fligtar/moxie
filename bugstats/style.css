@@ -205,7 +205,7 @@ img {
 .user-box {
     -moz-border-radius: 6px;
     border: 1px solid #CCCCCC;
-    min-height: 52px;
+    min-height: 48px;
     margin: 10px;
     padding: 5px;
     width: 234px; 
@@ -214,7 +214,11 @@ img {
     vertical-align: top;       
     zoom: 1;
     *display: inline;
-    _height: 52px;
+    _height: 48px;
+}
+
+.user-box:hover {
+    border-color: #000000;
 }
 
 .user-box.highlight,
@@ -228,14 +232,6 @@ img {
     float: right;
 }
 
-.user-box .avatar {
-    opacity: 0.5;
-    position: absolute;
-    right: 20px;
-    top: 19px;
-    z-index: 100;
-}
-
 .user-box h4 {
     margin: 0;
     padding: 0;
@@ -246,7 +242,9 @@ img {
 }
 
 .user-box ul,
-.user-box li {
+.user-box li,
+.tooltip ul,
+.tooltip li {
     margin: 0;
     padding: 0;
     list-style-type: none;
@@ -255,7 +253,8 @@ img {
 }
 .user-box li a,
 #overall-status li a,
-#overall-status .unassigned-count a {
+#overall-status .unassigned-count a,
+.tooltip li a {
     text-decoration: none;
     color: #69645C;
     padding-right: 10px;
@@ -263,10 +262,12 @@ img {
 }
 .user-box li a:hover,
 #overall-status li a:hover,
-#overall-status .unassigned-count:hover {
+#overall-status .unassigned-count:hover,
+.tooltip li a:hover {
     text-decoration: underline;
 }
-.user-box li.indented {
+.user-box li.indented,
+.tooltip li.indented {
     text-indent: 10px;
 }
 li.bugcount.open span,
@@ -282,6 +283,28 @@ li.bugcount.unassigned span,
 }
 li.bugcount.primary span {
     color: #0B26A1;
+}
+
+.tooltip {
+    background: transparent url(images/white_arrow_big.png) no-repeat scroll 0 0; 
+    font-size: 14px; 
+    height: 153px; 
+    padding: 30px; 
+    width: 310px;  
+    display: none;
+}
+
+.tooltip .avatar {
+    float: right;
+}
+
+.tooltip h5 {
+    margin: 0;
+    padding: 0;
+}
+
+.tooltip li.indented a {
+    margin-left: 10px;
 }
 
 /* Footer */

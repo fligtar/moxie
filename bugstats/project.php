@@ -134,7 +134,7 @@ $render = new Renderer($report);
             $developers[] = $user;
             $developerBugs = array_merge($developerBugs, $user['assignedBugs']['bugsAll']);
         }
-        elseif ($user['email'] != $report->unassigned) {
+        elseif ($user['email'] != $report->unassigned && !empty($user['assignedBugs']['bugsAll'])) {
             $others[] = $user;
             $otherBugs = array_merge($otherBugs, $user['assignedBugs']['bugsAll']);
         }
@@ -179,14 +179,17 @@ $render = new Renderer($report);
 <script type="text/javascript" src="http://g.fligtar.com/jquery.js"></script>
 <script type="text/javascript" src="js/shiny.js"></script>
 <script type="text/javascript" src="js/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="js/jquery.tools.min.js"></script>
 <script type="text/javascript">
     var projectName = '<?=$projectName?>';
     var reportID = '<?=$reportID?>';
     
     $(function() {
-        $('.pie').sparkline('html', {type: 'pie', height: 50, sliceColors: ['#6B2418', '#336B47', '#69645C']} );
+        $('.pie').sparkline('html', {type: 'pie', height: 45, sliceColors: ['#6B2418', '#336B47', '#69645C']} );
         $('#status-pie').sparkline('html', {type: 'pie', height: 150, sliceColors: ['#6B2418', '#336B47', '#69645C']} );
         $('#assignment-pie').sparkline('html', {type: 'pie', height: 150, sliceColors: ['#E8A81D', '#0B26A1', '#69645C']} );
+        
+        $('.tooltip').tooltip();
         
         <?php
         // If the cache is older than the maximum cache age, backfetch after loading

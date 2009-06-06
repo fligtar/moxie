@@ -45,9 +45,7 @@ class Renderer {
             echo ' reviewRequests';
         echo '">';
         echo "<div>";
-            // @TODO need to find a better place for the gravatar
-            //echo '<img class="avatar"  src="http://www.gravatar.com/avatar/'.md5($user['email']).'?s=20&amp;d=http://moxie.fligtar.com/images/blank.png" alt="avatar for '.$user['email'].'"/>';
-        
+
             echo '<span class="pie">'.count($user['assignedBugs']['bugsOpen']).','.count($user['assignedBugs']['bugsFixed']).'</span>';
             
             echo '<h4><a href="mailto:'.$user['email'].'">'.$user['name'].'</a></h4>';
@@ -75,6 +73,44 @@ class Renderer {
                 
             echo '</ul>';
         echo '</div></div>';
+        
+        echo '<div class="tooltip">';
+            echo '<img class="avatar"  src="http://www.gravatar.com/avatar/'.md5($user['email']).'?s=50&amp;d=http://moxie.fligtar.com/images/blank.png" alt="avatar for '.$user['email'].'"/>';
+            echo '<h5>Additional Details</h5>';
+            echo '<ul>';
+            
+            if (!empty($user['patches']['patchesUploaded'])) {
+                echo '<li>'.$this->bugLink($user['patches']['patchesUploaded'], '%s patches uploaded', '1 patch uploaded').'</li>';
+
+                echo '<li class="indented">';
+                if (!empty($user['patches']['patchesUploadedPlus']))
+                    echo $this->bugLink($user['patches']['patchesUploadedPlus'], "%s r+'d");
+                if (!empty($user['patches']['patchesUploadedMinus']))
+                    echo $this->bugLink($user['patches']['patchesUploadedMinus'], "%s r-'d");
+                if (!empty($user['patches']['patchesUploadedRequested']))
+                    echo $this->bugLink($user['patches']['patchesUploadedRequested'], "%s r?'d");
+                echo '</li>';
+            }
+            
+            if (!empty($user['patches']['patchesReviewed'])) {
+                echo '<li>'.$this->bugLink($user['patches']['patchesReviewed'], '%s patches reviewed', '1 patch reviewed').'</li>';
+
+                echo '<li class="indented">';
+                if (!empty($user['patches']['patchesReviewedPlus']))
+                    echo $this->bugLink($user['patches']['patchesReviewedPlus'], "%s r+'d");
+                if (!empty($user['patches']['patchesReviewedMinus']))
+                    echo $this->bugLink($user['patches']['patchesReviewedMinus'], "%s r-'d");
+                if (!empty($user['patches']['patchesReviewRequested']))
+                    echo $this->bugLink($user['patches']['patchesReviewRequested'], "%s r?'d");
+                echo '</li>';
+            }
+            
+            if (!empty($user['otherBugs']['bugsFiled'])) {
+                echo '<li>'.$this->bugLink($user['otherBugs']['bugsFiled'], '%s bugs filed', '1 bug filed').'</li>';
+            }
+            
+            echo '</ul>';
+        echo '</div>';
     }
     
     /**

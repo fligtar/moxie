@@ -60,18 +60,37 @@ class Cruncher {
         
         $this->data['users'][$assignee]['assignedBugs'][$stat][] = $bug_id;
     }
-    
+
     /**
-     * Record a review request
+     * Records a per-user bug in otherBugs
      */
-    private function recordReviewRequest($bug_id, $requestee) {
-        if (empty($requestee)) return;
-        
-        if (empty($this->data['users'][$requestee])) {
-            $this->createUser($requestee);
+    private function recordOtherBug($stat, $bug_id, $user, $userName = '') {
+        // Create user if doesn't exist
+        if (empty($this->data['users'][$user])) {
+            $this->createUser($user, $userName);
+        }
+        elseif (!empty($userName) && $this->data['users'][$user]['name'] == $user) {
+            // If user's name wasn't known at creation but is now, update it
+            $this->data['users'][$user]['name'] = $userName;
         }
         
-        $this->data['users'][$requestee]['otherBugs']['reviewRequests'][] = $bug_id;
+        $this->data['users'][$user]['otherBugs'][$stat][] = $bug_id;
+    }
+    
+    /**
+     * Records an attachment
+     */
+    private function recordPatch($stat, $bug_id, $user, $userName = '') {
+        // Create user if doesn't exist
+        if (empty($this->data['users'][$user])) {
+            $this->createUser($user, $userName);
+        }
+        elseif (!empty($userName) && $this->data['users'][$user]['name'] == $user) {
+            // If user's name wasn't known at creation but is now, update it
+            $this->data['users'][$user]['name'] = $userName;
+        }
+
+        $this->data['users'][$user]['patches'][$stat][] = $bug_id;
     }
     
     /**
@@ -100,8 +119,19 @@ class Cruncher {
                 'bugsOtherResolved' => array()
             ),
             
+            'patches' => array(
+                'patchesUploaded' => array(),
+                'patchesUploadedPlus' => array(),
+                'patchesUploadedMinus' => array(),
+                'patchesUploadedRequested' => array(),
+                'patchesReviewed' => array(),
+                'patchesReviewedPlus' => array(),
+                'patchesReviewedMinus' => array(),
+                'patchesReviewRequested' => array()
+            ),
+            
             'otherBugs' => array(
-                'reviewRequests' => array()
+                'bugsFiled' => array()
             )
         );
     }
@@ -118,8 +148,11 @@ class Cruncher {
             
             // Record bug's existence
             $this->recordBug('bugsAll', $id, $assignee, (string) $bug->assigned_to->attributes()->name);
+            $this->recordOtherBug('bugsFiled', $id, (string) $bug->reporter, (string) $bug->reporter->attributes()->name);
             
             if (!empty($bug->resolution)) {
+                $openBug = false;
+                
                 // Record bug's resolution
                 if ($bug->resolution == 'FIXED') {
                     $this->recordBug('bugsFixed', $id, $assignee);
@@ -131,23 +164,41 @@ class Cruncher {
             else {
                 // Record open bug
                 $this->recordBug('bugsOpen', $id, $assignee);
+                $openBug = true;
+            }
+            
+            // Record any patches
+            if (isset($bug->attachment)) {
+                /**
+                 * As far as I can tell there is no way to check if the atachment object
+                 * is an array short of doing this. is_array() returns false, so wtf.
+                 */
+                $attachments = !isset($bug->attachment[1]) ? array($bug->attachment) : $bug->attachment;
                 
-                // Record any patches
-                if (isset($bug->attachment)) {
-                    /**
-                     * As far as I can tell there is no way to check if the atachment object
-                     * is an array short of doing this. is_array() returns false, so wtf.
-                     */
-                    $attachments = !isset($bug->attachment[1]) ? array($bug->attachment) : $bug->attachment;
-                    
-                    foreach ($attachments as $attachment) {
-                        if ($attachment->attributes()->ispatch == 1 && isset($attachment->flag)) {
+                foreach ($attachments as $attachment) {
+                    if ($attachment->attributes()->ispatch == 1) {
+                        $this->recordPatch('patchesUploaded', $id, (string) $attachment->attacher);
+                        
+                        if (isset($attachment->flag)) {
                             if ($attachment->flag->attributes()->status == '?') {
-                                $this->recordBug('bugsOpenAwaitingReview', $id, $assignee);
-                                $this->recordReviewRequest($id, (string) $attachment->flag->attributes()->requestee);
+                                if ($openBug)
+                                    $this->recordBug('bugsOpenAwaitingReview', $id, $assignee);
+                                $this->recordPatch('patchesUploadedRequested', $id, (string) $attachment->attacher);
+                                $this->recordPatch('patchesReviewRequested', $id, (string) $attachment->flag->attributes()->requestee);
                             }
                             elseif ($attachment->flag->attributes()->status == '+') {
-                                $this->recordBug('bugsOpenReviewedPlus', $id, $assignee);
+                                if ($openBug)
+                                    $this->recordBug('bugsOpenReviewedPlus', $id, $assignee);
+                                $this->recordPatch('patchesUploadedPlus', $id, (string) $attachment->attacher);
+                                $this->recordPatch('patchesReviewed', $id, (string) $attachment->flag->attributes()->setter);
+                                $this->recordPatch('patchesReviewedPlus', $id, (string) $attachment->flag->attributes()->setter);
+                            }
+                            elseif ($attachment->flag->attributes()->status == '-') {
+                                if ($openBug)
+                                    $this->recordBug('bugsOpenReviewedPlus', $id, $assignee);
+                                $this->recordPatch('patchesUploadedMinus', $id, (string) $attachment->attacher);
+                                $this->recordPatch('patchesReviewed', $id, (string) $attachment->flag->attributes()->setter);
+                                $this->recordPatch('patchesReviewedMinus', $id, (string) $attachment->flag->attributes()->setter);
                             }
                         }
                     }
