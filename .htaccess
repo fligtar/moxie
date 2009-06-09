@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# Send request to bugstats if a valid URL isn't specified
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ bugstats/$1
