@@ -10,8 +10,8 @@
 <body onload="getBrowserSize(); rotateViews();" onresize="getBrowserSize();">
 
 <ul id="nav">
-    <li><a href="http://moxie.fligtar.com/amo/5.0.6" onclick="changeView(this); return false;">AMO 5.0.6</a></li>
-    <li><a href="http://moxie.fligtar.com/amo/5.0.7" onclick="changeView(this); return false;">AMO 5.0.7</a></li>
+    <li><a href="../bugstats/amo/5.0.6/spectacle" onclick="changeView(this); return false;">AMO 5.0.6</a></li>
+    <li><a href="../bugstats/amo/5.0.7/spectacle" onclick="changeView(this); return false;">AMO 5.0.7</a></li>
     <li><a href="http://addons.mozilla.org" onclick="changeView(this); return false;">AMO Stats</a></li>
     <li><a href="http://status.mozilla.com/en-US/outages.html" onclick="changeView(this); return false;">IT Bugs</a></li>
 </ul>

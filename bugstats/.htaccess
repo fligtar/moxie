@@ -1,5 +1,9 @@
 RewriteEngine On
 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(\w+)\/(.+?)\/spectacle$ spectacle.php?project=$1&report=$2 [L]
+
 # Main rewrite for projects and reports to work
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
