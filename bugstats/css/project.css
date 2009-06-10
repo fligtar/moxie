@@ -134,7 +134,7 @@ img {
     padding: 5px;
 }
 #backfetching {
-    background: url(images/ajax_loading.gif) no-repeat 1% 50%;
+    background: url(../images/ajax_loading.gif) no-repeat 1% 50%;
     padding-left: 30px;
 }
 #backfetched {
@@ -258,7 +258,7 @@ img {
     text-decoration: none;
     color: #69645C;
     padding-right: 10px;
-    background: url(images/external-link.png) no-repeat 100% 40%;
+    background: url(../images/external-link.png) no-repeat 100% 40%;
 }
 .user-box li a:hover,
 #overall-status li a:hover,
@@ -286,7 +286,7 @@ li.bugcount.primary span {
 }
 
 .tooltip {
-    background: transparent url(images/white_arrow_big.png) no-repeat scroll 0 0; 
+    background: transparent url(../images/white_arrow_big.png) no-repeat scroll 0 0; 
     font-size: 14px; 
     height: 153px; 
     padding: 30px; 
