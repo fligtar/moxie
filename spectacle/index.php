@@ -10,17 +10,19 @@
 <body onload="getBrowserSize(); rotateViews();" onresize="getBrowserSize();">
 
 <ul id="nav">
-    <li><a href="../bugstats/amo/5.0.6/spectacle" onclick="changeView(this); return false;">AMO 5.0.6</a></li>
-    <li><a href="../bugstats/amo/5.0.7/spectacle" onclick="changeView(this); return false;">AMO 5.0.7</a></li>
-    <li><a href="http://addons.mozilla.org" onclick="changeView(this); return false;">AMO Stats</a></li>
+    <li><a href="../bugstats/amo/5.0.6/spectacle" onclick="changeView(this); return false;">AMO 5.0.6</a><img src="../bugstats/projects/amo/logo-large.png" alt=""/></li>
+    <li><a href="../bugstats/amo/5.0.7/spectacle" onclick="changeView(this); return false;">AMO 5.0.7</a><img src="../bugstats/projects/amo/logo-large.png" alt=""/></li>
+    <li><a href="http://addons.mozilla.org" onclick="changeView(this); return false;">AMO Stats</a><img src="../bugstats/projects/amo/logo-large.png" alt=""/></li>
     <li><a href="http://status.mozilla.com/en-US/outages.html" onclick="changeView(this); return false;">IT Bugs</a></li>
 </ul>
 
 <h1>&nbsp;</h1>
 
 <div id="content-box">
-    <iframe src=""></iframe>
+    <iframe src="" scrolling="no"></iframe>
 </div>
+
+<img id="logo" src="" />
 
 <script type="text/javascript" src="http://g.fligtar.com/jquery.js"></script>
 <script type="text/javascript">
@@ -35,7 +37,7 @@ function rotateViews() {
     
     changeView(next);
     
-    window.setTimeout("rotateViews()", 20000);
+    //window.setTimeout("rotateViews()", 20000);
 }
 
 function changeView(a) {
@@ -44,6 +46,7 @@ function changeView(a) {
     $('.present').removeClass('present').addClass('past');
     $(a).parent().addClass('present');
     $('h1').text($(a).text());
+    $('#logo').attr('src', $(a).parent().find('img').attr('src'));
 }
 
 function getBrowserSize() {
@@ -58,7 +61,7 @@ function getBrowserSize() {
 }
 
 function resize(height, width) {
-    $('iframe').css('height', height - 115 - 20 + 'px');
+    $('iframe').css('height', height - 115 - 30 + 'px');
 }
 
 </script>

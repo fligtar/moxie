@@ -18,6 +18,15 @@ class amo507 extends amo {
     
     // Bugzilla query for the report
     public $queryString = 'buglist.cgi?query_format=advanced&product=addons.mozilla.org&target_milestone=5.0.7';
+    
+    // Code freeze date
+    public $codeFreeze = '2009-06-25';
+    
+    // Launch date
+    public $launch = '2009-06-30';
+    
+    // Summary of release
+    public $summary = 'Contributions, Tagging, maybe Search Re-design';
 }
 
 ?>

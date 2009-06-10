@@ -54,7 +54,7 @@ $render = new Renderer($report);
     <title><?="{$report->projectDisplayName} {$report->reportDisplayName}"?> Status</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <base href="http://<?=$_SERVER['SERVER_NAME'].dirname($_SERVER['PHP_SELF'])?>/" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/project.css" />
 </head>
 
 <body>
@@ -189,7 +189,7 @@ $render = new Renderer($report);
         $('#status-pie').sparkline('html', {type: 'pie', height: 150, sliceColors: ['#6B2418', '#336B47', '#69645C']} );
         $('#assignment-pie').sparkline('html', {type: 'pie', height: 150, sliceColors: ['#E8A81D', '#0B26A1', '#69645C']} );
         
-        $('.tooltip').tooltip();
+        //$('.tooltip').tooltip();
         
         <?php
         // If the cache is older than the maximum cache age, backfetch after loading

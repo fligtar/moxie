@@ -55,6 +55,10 @@ ul#nav,
     background-color: #CCCCCC;
 }
 
+#nav li img {
+    display: none;
+}
+
 h1 {
     margin: 20px 125px 0 0;
     font-size: 55px;
@@ -74,4 +78,10 @@ h1 {
     width: 100%;
     border: none;
     height: 100%;
+}
+
+#logo {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
