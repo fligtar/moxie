@@ -12,8 +12,8 @@
 <ul id="nav">
     <li><a href="../bugstats/amo/5.0.6/spectacle" onclick="changeView(this); return false;">AMO 5.0.6</a><img src="../bugstats/projects/amo/logo-large.png" alt=""/></li>
     <li><a href="../bugstats/amo/5.0.7/spectacle" onclick="changeView(this); return false;">AMO 5.0.7</a><img src="../bugstats/projects/amo/logo-large.png" alt=""/></li>
-    <li><a href="http://addons.mozilla.org" onclick="changeView(this); return false;">AMO Stats</a><img src="../bugstats/projects/amo/logo-large.png" alt=""/></li>
-    <li><a href="http://status.mozilla.com/en-US/outages.html" onclick="changeView(this); return false;">IT Bugs</a></li>
+    <!--<li><a href="http://addons.mozilla.org" onclick="changeView(this); return false;">AMO Stats</a><img src="../bugstats/projects/amo/logo-large.png" alt=""/></li>
+    <li><a href="http://status.mozilla.com/en-US/outages.html" onclick="changeView(this); return false;">IT Bugs</a></li>-->
 </ul>
 
 <h1>&nbsp;</h1>
@@ -37,7 +37,7 @@ function rotateViews() {
     
     changeView(next);
     
-    //window.setTimeout("rotateViews()", 20000);
+    window.setTimeout("rotateViews()", 20000);
 }
 
 function changeView(a) {

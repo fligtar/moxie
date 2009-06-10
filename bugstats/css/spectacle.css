@@ -25,7 +25,7 @@ li {
 }
 
 #details ul {
-    margin-left: 40px;
+    margin-left: 150px;
 }
 #details ul li {
     font-size: 30px;
@@ -78,11 +78,11 @@ li {
 
 #status-pie {
     float: right;
-    margin: -20px 50px;
+    margin: -20px 90px;
 }
 
 #footer {
-    margin-top: 70px;
+    margin: 70px 200px 0 0;
     clear: both;
 }
 #footer p {
