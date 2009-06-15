@@ -39,7 +39,7 @@ function rotateViews() {
     
     changeView(next);
     
-    //window.setTimeout("rotateViews()", 20000);
+    window.setTimeout("rotateViews()", 20000);
 }
 
 function changeView(a) {

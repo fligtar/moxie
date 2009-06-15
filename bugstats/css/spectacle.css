@@ -54,6 +54,8 @@ li {
     -moz-border-radius: 15px;
     color: #FFFFFF;
     margin: -5px 20px 0 0;
+    -moz-box-shadow: 3px 3px 10px #666666;
+    text-shadow: 3px 3px 10px #000000;
 }
     
 #bug-status ul li.open span {
