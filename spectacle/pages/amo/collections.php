@@ -18,7 +18,7 @@ $stats = simplexml_load_string($xml);
 
 <div id="content">
     
-    <div style="height: 320px;">
+    <div style="height: 15em;">
         <ul class="left">
             <li class="total"><span><?=number_format($stats->collections->counts->total)?></span><br />collections created</li>
             <li class="total"><span><?=number_format($stats->collections->addon_downloads)?></span><br />add-ons downloaded from collections</li>
@@ -53,8 +53,8 @@ $stats = simplexml_load_string($xml);
 <script type="text/javascript" src="../../../bugstats/js/jquery.sparkline.min.js"></script>
 <script type="text/javascript">
     $(function() {
-        $('#status-pie').sparkline('html', {type: 'pie', height: 150, sliceColors: ['#607827', '#6B2418']} );
-        $('#type-pie').sparkline('html', {type: 'pie', height: 150, sliceColors: ['#B8AB26', '#2055B7']} );
+        $('#status-pie').sparkline('html', {type: 'pie', height: '8em', sliceColors: ['#607827', '#6B2418']} );
+        $('#type-pie').sparkline('html', {type: 'pie', height: '8em', sliceColors: ['#B8AB26', '#2055B7']} );
     });
 </script>
 

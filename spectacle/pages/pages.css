@@ -5,7 +5,7 @@ body {
 }
 
 div.section {
-    margin-top: 50px;
+    margin-top: 1em;
     clear: both;
 }
 
@@ -16,19 +16,19 @@ ul, li {
 }
 
 li {
-    margin: 30px;
+    margin: 0.5em;
 }
 
 ul li.total {
     color: #666666;
-    font-size: 40px;
+    font-size: 1.5em;
     padding: 5px;
     text-align: center;
     margin: 5px;
 }
 ul li.total span {
     font-weight: bold;
-    font-size: 80px;
+    font-size: 2.5em;
     padding: 5px;
     letter-spacing: 5px;
     color: #000000;
@@ -45,14 +45,14 @@ ul.right {
 
 ul li.count {
     color: #333333;
-    font-size: 55px;
+    font-size: 2.5em;
     padding: 5px;
 }
 
 ul li.count span {
     display: inline-block;
-    min-width: 170px;
-    font-size: 55px;
+    min-width: 3em;
+    font-size: 1.2em;
     padding: 5px;
     text-align: center;
     -moz-border-radius: 15px;
@@ -63,7 +63,7 @@ ul li.count span {
 }
 
 ul li.indented {
-    font-size: 35px;
+    font-size: 1.8em;
     margin-left: 150px;
     margin-top: -20px;
     list-style: disc;
@@ -104,7 +104,7 @@ ul li.normal strong {
 
 #status-pie {
     float: right;
-    margin: 30px 90px;
+    margin: 1em 13em 1em 1em;
 }
 
 .collections #status-pie {

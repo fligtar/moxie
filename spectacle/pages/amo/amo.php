@@ -43,7 +43,7 @@ $stats = simplexml_load_string($xml);
 <script type="text/javascript" src="../../../bugstats/js/jquery.sparkline.min.js"></script>
 <script type="text/javascript">
     $(function() {
-        $('#status-pie').sparkline('html', {type: 'pie', height: 250, sliceColors: ['#607827', '#6B2418', '#2055B7']} );
+        $('#status-pie').sparkline('html', {type: 'pie', height: '17em', sliceColors: ['#607827', '#6B2418', '#2055B7']} );
     });
 </script>
 
