@@ -4,10 +4,6 @@ body {
     margin: 0;
 }
 
-#content {
-    padding: 20px 70px;
-}
-
 ul, li {
     padding: 0;
     margin: 0;
@@ -50,14 +46,13 @@ li {
 }
 
 #bug-status ul li.bugcount span {
-    display: block;
+    display: inline-block;
     width: 120px;
     font-size: 55px;
     padding: 5px;
     text-align: center;
     -moz-border-radius: 15px;
     color: #FFFFFF;
-    float: left;
     margin: -5px 20px 0 0;
 }
     
@@ -69,10 +64,10 @@ li {
     color: #000000;
 }
 #bug-status ul li.fixed span {
-    background-color: #336B47;
+    background-color: #607827;
 }
 #bug-status ul li.fixed strong {
-    text-shadow: 3px 3px 10px #336B47;
+    text-shadow: 3px 3px 10px #607827;
     color: #000000;
 }
 

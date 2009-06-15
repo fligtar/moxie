@@ -1,0 +1,122 @@
+body {
+    font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+    font-size: 13px;
+    margin: 0;
+}
+
+div.section {
+    margin-top: 50px;
+    clear: both;
+}
+
+ul, li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+li {
+    margin: 30px;
+}
+
+ul li.total {
+    color: #666666;
+    font-size: 40px;
+    padding: 5px;
+    text-align: center;
+    margin: 5px;
+}
+ul li.total span {
+    font-weight: bold;
+    font-size: 80px;
+    padding: 5px;
+    letter-spacing: 5px;
+    color: #000000;
+}
+
+ul.left {
+    float: left;
+    width: 50%;
+}
+ul.right {
+    float: right;
+    width: 50%;
+}
+
+ul li.count {
+    color: #333333;
+    font-size: 55px;
+    padding: 5px;
+}
+
+ul li.count span {
+    display: inline-block;
+    min-width: 170px;
+    font-size: 55px;
+    padding: 5px;
+    text-align: center;
+    -moz-border-radius: 15px;
+    color: #FFFFFF;
+    margin: -5px 10px 0 0;
+    -moz-box-shadow: 3px 3px 10px #666666;
+    text-shadow: 3px 3px 10px #000000;
+}
+
+ul li.indented {
+    font-size: 35px;
+    margin-left: 150px;
+    margin-top: -20px;
+    list-style: disc;
+}
+    
+ul li.experimental span,
+ul li.private span {
+    background-color: #6B2418;
+}
+ul li.experimental strong,
+ul li.private strong {
+    text-shadow: 3px 3px 10px #6B2418;
+    color: #000000;
+}
+ul li.public span {
+    background-color: #607827;
+}
+ul li.public strong {
+    text-shadow: 3px 3px 10px #607827;
+    color: #000000;
+}
+ul li.nominated span,
+ul li.autopublisher span {
+    background-color: #2055B7;
+}
+ul li.nominated strong,
+ul li.autopublisher strong {
+    text-shadow: 3px 3px 10px #2055B7;
+    color: #000000;
+}
+ul li.normal span {
+    background-color: #B8AB26;
+}
+ul li.normal strong {
+    text-shadow: 3px 3px 10px #B8AB26;
+    color: #000000;
+}
+
+#status-pie {
+    float: right;
+    margin: 30px 90px;
+}
+
+.collections #status-pie {
+    margin: 0;
+    float: left;
+    text-align: center;
+    width: 50%;
+}
+
+.collections #type-pie {
+    margin: 0;
+    float: right;
+    text-align: center;
+    width: 50%;
+}

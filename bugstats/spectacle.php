@@ -54,7 +54,7 @@ $render = new Renderer($report);
     <title><?="{$report->projectDisplayName} {$report->reportDisplayName}"?> Status</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <base href="http://<?=$_SERVER['SERVER_NAME'].dirname($_SERVER['PHP_SELF'])?>/" />
-    <link rel="stylesheet" href="css/spectacle.css" />
+    <link rel="stylesheet" type="text/css" href="css/spectacle.css" />
 </head>
 
 <body>
@@ -89,7 +89,7 @@ $render = new Renderer($report);
 <script type="text/javascript" src="js/jquery.sparkline.min.js"></script>
 <script type="text/javascript">
     $(function() {
-        $('#status-pie').sparkline('html', {type: 'pie', height: 200, sliceColors: ['#6B2418', '#336B47']} );
+        $('#status-pie').sparkline('html', {type: 'pie', height: 200, sliceColors: ['#6B2418', '#607827']} );
     });
 </script>
 

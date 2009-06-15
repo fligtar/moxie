@@ -4,7 +4,9 @@
 <head>
     <title>Spectacle</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <!-- refresh every 3 hours -->
+    <meta http-equiv="refresh" content="10800">
 </head>
 
 <body onload="getBrowserSize(); rotateViews();" onresize="getBrowserSize();">
@@ -12,8 +14,8 @@
 <ul id="nav">
     <li><a href="../bugstats/amo/5.0.6/spectacle" onclick="changeView(this); return false;">AMO 5.0.6</a><img src="../bugstats/projects/amo/logo-large.png" alt=""/></li>
     <li><a href="../bugstats/amo/5.0.7/spectacle" onclick="changeView(this); return false;">AMO 5.0.7</a><img src="../bugstats/projects/amo/logo-large.png" alt=""/></li>
-    <!--<li><a href="http://addons.mozilla.org" onclick="changeView(this); return false;">AMO Stats</a><img src="../bugstats/projects/amo/logo-large.png" alt=""/></li>
-    <li><a href="http://status.mozilla.com/en-US/outages.html" onclick="changeView(this); return false;">IT Bugs</a></li>-->
+    <li><a href="pages/amo/amo.php" onclick="changeView(this); return false;">Add-on Stats</a><img src="../bugstats/projects/amo/logo-large.png" alt=""/></li>
+    <li><a href="pages/amo/collections.php" onclick="changeView(this); return false;">Collection Stats</a><img src="../bugstats/projects/amo/collections-logo.png" alt=""/></li>
 </ul>
 
 <h1>&nbsp;</h1>
@@ -61,7 +63,7 @@ function getBrowserSize() {
 }
 
 function resize(height, width) {
-    $('iframe').css('height', height - 115 - 30 + 'px');
+    $('iframe').css('height', height - 115 - 80 + 'px');
 }
 
 </script>

@@ -54,7 +54,7 @@ $render = new Renderer($report);
     <title><?="{$report->projectDisplayName} {$report->reportDisplayName}"?> Status</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <base href="http://<?=$_SERVER['SERVER_NAME'].dirname($_SERVER['PHP_SELF'])?>/" />
-    <link rel="stylesheet" href="css/project.css" />
+    <link rel="stylesheet" type="text/css" href="css/project.css" />
 </head>
 
 <body>
