@@ -121,7 +121,7 @@ class Renderer {
     public function bugLink($bugs, $plural, $singular = '') {
         if (empty($singular)) $singular = $plural;
         
-        $str = '<a target="blank" href="'.$this->project->queryBase;
+        $str = '<a target="_blank" href="'.$this->project->queryBase;
         
         if (count($bugs) == 1) {
             $str .= 'show_bug.cgi?id='.$bugs[0].'" title="bug '.$bugs[0].'">'.sprintf($singular, '1');
