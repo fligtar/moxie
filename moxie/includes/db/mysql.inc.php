@@ -15,7 +15,7 @@ class mysql extends db {
     }
     
     public function execute($query) {
-        mysql_query($query, $this->dbh);
+       return mysql_query($query, $this->dbh);
     }
     
     public function query($query) {

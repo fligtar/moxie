@@ -1,0 +1,25 @@
+body {
+    background: #FFFFFF url(../images/background.jpg) center top no-repeat;
+}
+
+#logo {
+    padding: 5px;
+    background-color: #FFFFFF;
+    -moz-border-radius: 10px;
+}
+
+h1 {
+    background-color: #FFFFFF;
+    padding: 5px;
+    -moz-border-radius: 10px;
+    display: inline-block;
+}
+
+#content {
+    background-color: #FFFFFF;
+    opacity: 0.7;
+}
+
+#content * {
+    opacity: 1;
+}

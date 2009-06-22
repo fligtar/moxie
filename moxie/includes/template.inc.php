@@ -14,7 +14,7 @@ class Template {
     }
     
     public function render($template, $vars = array()) {
-        include $this->getThemedFile("{$template}.php");
+        include $this->getThemedFile("{$template}.template.php");
     }
     
     private function getThemedFile($file) {
@@ -46,10 +46,15 @@ class Template {
         
         foreach ($files as $file) {
             $path = str_replace($this->template_dir, '', $this->getThemedFile("css/{$file}.css"));
-            $string .= '<link type="text/css" href="templates/'.$path.'" />'."\n";
+            $string .= '<link rel="stylesheet" type="text/css" href="templates/'.$path.'" />'."\n";
         }
         
         return $string;
+    }
+    
+    public function image($img) {
+        $path = str_replace($this->template_dir, '', $this->getThemedFile("images/{$img}"));
+        return "templates/{$path}";
     }
 }
 
