@@ -19,7 +19,8 @@ foreach ($vars['deliverables'] as $deliverable) {
             
             if (!empty($category['bugs'])) {
                 foreach ($category['bugs'] as $bug) {
-                    echo '<li><a href="'.$vars['project']['tracker_url'].'/show_bug.cgi?id='.$bug['number'].'">'.$bug['number'].' - '.$bug['summary'].'</a></li>';
+                    $tracker = $vars['bugtrackers'][$bug['bugtracker_id']];
+                    echo '<li><a href="'.$tracker['url'].sprintf($tracker['tracker_info']['viewpage'], $bug['number']).'">'.$tracker['tracker_info']['bug_term'].' '.$bug['number'].' - '.$bug['summary'].'</a></li>';
                 }
             }
             

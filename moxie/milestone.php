@@ -1,13 +1,10 @@
 <?php
 require 'includes/init.inc.php';
 require 'includes/template.inc.php';
+require 'includes/bugtracking.inc.php';
 
-list($Project, $Milestone, 
-    $Deliverable, $Category, 
-    $Resource, $Bug) = load_models(
-                                    'Project', 'Milestone', 
-                                    'Deliverable', 'Category', 
-                                    'Resource', 'Bug');
+list($Bug, $Bugtracker, $Category, $Deliverable, $Milestone, $Resource, $Project) = 
+load_models('Bug', 'Bugtracker', 'Category', 'Deliverable', 'Milestone', 'Resource', 'Project');
 
 if (is_numeric($_GET['project'])) {
     $project = $Project->get($_GET['project']);
@@ -42,6 +39,14 @@ if (!empty($deliverables)) {
     }
 }
 
+// Get the bugtrackers for this project
+$bugtrackers = $Bugtracker->getBugtrackers($project['id']);
+if (!empty($bugtrackers)) {
+    foreach ($bugtrackers as $bugtracker_id => $bugtracker) {
+        $bugtrackers[$bugtracker_id]['tracker_info'] = Bugtracking::getTrackerInfo($bugtracker['type']);
+    }
+}
+
 $template = new Template($project['theme'], $Config->get('theme'));
 
 $template->render('head', array(
@@ -57,7 +62,8 @@ $template->render('header', array(
 $template->render('milestone', array(
         'project' => $project,
         'milestone' => $milestone,
-        'deliverables' => $deliverables
+        'deliverables' => $deliverables,
+        'bugtrackers' => $bugtrackers
     ));
 
 $template->render('footer');

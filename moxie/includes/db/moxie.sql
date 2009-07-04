@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 21, 2009 at 02:13 AM
+-- Generation Time: Jul 03, 2009 at 11:32 PM
 -- Server version: 5.0.37
 -- PHP Version: 5.2.1
 
@@ -16,6 +16,57 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bugs`
+--
+
+CREATE TABLE IF NOT EXISTS `bugs` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `number` int(11) unsigned NOT NULL,
+  `bugtracker_id` int(11) unsigned NOT NULL,
+  `summary` varchar(255) NOT NULL,
+  `assignee` varchar(255) NOT NULL,
+  `fixed` tinyint(1) NOT NULL,
+  `verified` tinyint(1) NOT NULL,
+  `created` datetime NOT NULL default '0000-00-00 00:00:00',
+  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`),
+  KEY `bugtracker_id` (`bugtracker_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `bugs`
+--
+
+INSERT INTO `bugs` (`id`, `number`, `bugtracker_id`, `summary`, `assignee`, `fixed`, `verified`, `created`, `modified`) VALUES
+(1, 500, 1, '', '', 0, 0, '0000-00-00 00:00:00', '2009-07-03 23:19:21'),
+(2, 700, 1, 'can''t draw unicode characters', 'buster@formerly-netscape.com.tld', 1, 1, '0000-00-00 00:00:00', '2009-07-03 23:19:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bugtrackers`
+--
+
+CREATE TABLE IF NOT EXISTS `bugtrackers` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `type` int(11) unsigned NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `nickname` varchar(255) NOT NULL,
+  `created` datetime NOT NULL default '0000-00-00 00:00:00',
+  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `bugtrackers`
+--
+
+INSERT INTO `bugtrackers` (`id`, `type`, `url`, `nickname`, `created`, `modified`) VALUES
+(1, 1, 'https://bugzilla.mozilla.org', 'bugzilla', '2009-07-03 22:19:58', '2009-07-03 22:19:58');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
@@ -23,12 +74,17 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `categories`
 --
 
+INSERT INTO `categories` (`id`, `name`) VALUES
+(1, 'Spec'),
+(2, 'Design'),
+(3, 'Implementation'),
+(4, 'Verification');
 
 -- --------------------------------------------------------
 
@@ -146,6 +202,26 @@ INSERT INTO `projects` (`id`, `name`, `url`, `open`, `theme`, `created`, `modifi
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `projects_bugtrackers`
+--
+
+CREATE TABLE IF NOT EXISTS `projects_bugtrackers` (
+  `project_id` int(11) unsigned NOT NULL,
+  `bugtracker_id` int(11) unsigned NOT NULL,
+  UNIQUE KEY `project_id` (`project_id`,`bugtracker_id`),
+  KEY `bugtracker_id` (`bugtracker_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `projects_bugtrackers`
+--
+
+INSERT INTO `projects_bugtrackers` (`project_id`, `bugtracker_id`) VALUES
+(1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `projects_users`
 --
 
@@ -172,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `projects_users` (
 --
 
 CREATE TABLE IF NOT EXISTS `resources` (
-  `id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL auto_increment,
   `deliverable_id` int(11) unsigned NOT NULL,
   `category_id` int(11) unsigned NOT NULL,
   `bug_id` int(11) unsigned default NULL,
@@ -181,13 +257,18 @@ CREATE TABLE IF NOT EXISTS `resources` (
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
   KEY `deliverable_id` (`deliverable_id`),
-  KEY `category_id` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `category_id` (`category_id`),
+  KEY `bug_id` (`bug_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `resources`
 --
 
+INSERT INTO `resources` (`id`, `deliverable_id`, `category_id`, `bug_id`, `url`, `created`, `modified`) VALUES
+(1, 1, 1, NULL, 'https://wiki.mozilla.org/AMO:Projects/developer.AMO/Features/News', '2009-06-21 18:21:09', '2009-06-21 18:21:09'),
+(2, 1, 2, 1, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 2, 3, 2, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -215,11 +296,17 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 --
+-- Constraints for table `bugs`
+--
+ALTER TABLE `bugs`
+  ADD CONSTRAINT `bugs_ibfk_1` FOREIGN KEY (`bugtracker_id`) REFERENCES `bugtrackers` (`id`);
+
+--
 -- Constraints for table `dates`
 --
 ALTER TABLE `dates`
-  ADD CONSTRAINT `dates_ibfk_2` FOREIGN KEY (`deliverable_id`) REFERENCES `deliverables` (`id`),
-  ADD CONSTRAINT `dates_ibfk_1` FOREIGN KEY (`milestone_id`) REFERENCES `milestones` (`id`);
+  ADD CONSTRAINT `dates_ibfk_1` FOREIGN KEY (`milestone_id`) REFERENCES `milestones` (`id`),
+  ADD CONSTRAINT `dates_ibfk_2` FOREIGN KEY (`deliverable_id`) REFERENCES `deliverables` (`id`);
 
 --
 -- Constraints for table `deliverables`
@@ -234,8 +321,16 @@ ALTER TABLE `milestones`
   ADD CONSTRAINT `milestones_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`);
 
 --
+-- Constraints for table `projects_bugtrackers`
+--
+ALTER TABLE `projects_bugtrackers`
+  ADD CONSTRAINT `projects_bugtrackers_ibfk_2` FOREIGN KEY (`bugtracker_id`) REFERENCES `bugtrackers` (`id`),
+  ADD CONSTRAINT `projects_bugtrackers_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`);
+
+--
 -- Constraints for table `resources`
 --
 ALTER TABLE `resources`
-  ADD CONSTRAINT `resources_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `resources_ibfk_1` FOREIGN KEY (`deliverable_id`) REFERENCES `deliverables` (`id`);
+  ADD CONSTRAINT `resources_ibfk_3` FOREIGN KEY (`deliverable_id`) REFERENCES `deliverables` (`id`),
+  ADD CONSTRAINT `resources_ibfk_4` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
+  ADD CONSTRAINT `resources_ibfk_5` FOREIGN KEY (`bug_id`) REFERENCES `bugs` (`id`);
