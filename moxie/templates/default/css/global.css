@@ -1,25 +1,124 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
 body {
-    background: #FAFDFE url(../images/background.jpg) center top no-repeat;
+	line-height: 1;
+	color: black;
+	background: white;
+}
+ol, ul {
+	list-style: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+caption, th, td {
+	text-align: left;
+	font-weight: normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: "";
+}
+blockquote, q {
+	quotes: "" "";
 }
 
-#logo {
-    padding: 5px;
-    background-color: #FFFFFF;
-    -moz-border-radius: 10px;
+body {
+    font-family: "Lucida Grande",arial,sans-serif;
 }
 
-h1 {
-    background-color: #FFFFFF;
-    padding: 5px;
-    -moz-border-radius: 10px;
-    display: inline-block;
+#header {
+    padding: 10px 50px;
+}
+
+#header #breadcrumbs ul li {
+    display: inline;
+}
+
+#header #logo {
+    display: inline;
+}
+
+#header h1 {
+    font-weight: bold;
+    display: inline;
+    font-size: 2.2em;
+}
+#header h2 {
+    display: inline;
+    font-size: 1.8em;
+    font-weight: bold;
 }
 
 #content {
-    background-color: #FFFFFF;
-    opacity: 0.7;
+    padding: 20px;
+    clear: both;
 }
 
-#content * {
-    opacity: 1;
+.deliverable-box {
+    background: transparent url(../images/dots.png) center bottom no-repeat;
+    clear: both;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+.deliverable-box h3 {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+.deliverable-box ul.categories {
+    margin: 10px;
+}
+.deliverable-box ul.categories li {
+    margin: 15px 0;
+}
+
+.deliverable-box ul.categories ul.resources,
+.deliverable-box ul.categories ul.resources li {
+    display: inline;
+    margin: 0 5px;
+}
+
+.category-box {
+    background: transparent url(../images/flag.png) right center no-repeat;
+    padding-right: 13px;
+}
+.category {
+    padding: 3px 6px;
+    font-size: 0.75em;
+    -moz-border-radius: 15px;
+    text-transform: uppercase;
+    color: white;
+    font-family: arial;
+}
+
+.spec {
+    background-color: yellow;
+}
+.design {
+    background-color: blue;
+}
+.implementation {
+    background-color: red;
 }

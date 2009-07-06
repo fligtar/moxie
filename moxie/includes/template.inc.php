@@ -56,6 +56,18 @@ class Template {
         $path = str_replace($this->template_dir, '', $this->getThemedFile("images/{$img}"));
         return "templates/{$path}";
     }
+    
+    public function bugLink($bug, $tracker) {
+        echo '<a class="bug';
+        if ($bug['fixed'])
+            echo ' fixed';
+        if ($bug['verified'])
+            echo ' verified';
+        echo '" title="'.htmlentities($bug['assignee'].' - '.$bug['summary']).'" ';
+        echo 'href="'.$tracker['url'].sprintf($tracker['tracker_info']['viewpage'], $bug['number']).'">';
+        echo $tracker['tracker_info']['bug_term'].' '.$bug['number'];
+        echo '</a>';
+    }
 }
 
 ?>
