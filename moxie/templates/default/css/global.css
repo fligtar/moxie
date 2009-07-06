@@ -104,21 +104,26 @@ body {
     background: transparent url(../images/flag.png) right center no-repeat;
     padding-right: 13px;
 }
-.category {
+span.category {
     padding: 3px 6px;
     font-size: 0.75em;
     -moz-border-radius: 15px;
     text-transform: uppercase;
     color: white;
     font-family: arial;
+    text-shadow: 1px 1px 1px #666666;
+    opacity: 1;
+}
+span.unselected {
+    opacity: 0.5;
 }
 
-.spec {
-    background-color: yellow;
+span.spec {
+    background-color: #D9A300;
 }
-.design {
-    background-color: blue;
+span.design {
+    background-color: #541F9B;
 }
-.implementation {
-    background-color: red;
+span.implementation {
+    background-color: #861304;
 }

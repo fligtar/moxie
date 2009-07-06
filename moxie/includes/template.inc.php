@@ -52,6 +52,18 @@ class Template {
         return $string;
     }
     
+    public function jsString() {
+        $files = func_get_args();
+        $string = '';
+        
+        foreach ($files as $file) {
+            $path = str_replace($this->template_dir, '', $this->getThemedFile("js/{$file}.js"));
+            $string .= '<script type="text/javascript" src="templates/'.$path.'"></script>'."\n";
+        }
+        
+        return $string;
+    }
+    
     public function image($img) {
         $path = str_replace($this->template_dir, '', $this->getThemedFile("images/{$img}"));
         return "templates/{$path}";

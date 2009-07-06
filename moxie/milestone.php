@@ -66,6 +66,13 @@ $template->render('milestone', array(
         'bugtrackers' => $bugtrackers
     ));
 
-$template->render('footer');
+$template->render('addresource', array(
+        'bugtrackers' => $bugtrackers,
+        'categories' => $categories
+    ));
+
+$template->render('footer', array(
+        'js' => $template->jsString('milestone')
+    ));
 
 ?>

@@ -5,7 +5,8 @@
     <title><?php echo $vars['title']; ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <base href="<?php echo $this->getBaseURL(); ?>/" />
-    <?php echo $vars['css']; ?>
+    <?php if (!empty($vars['css'])) echo $vars['css']; ?>
+    <?php echo $this->cssString('smoothness/jquery-ui'); ?>
 </head>
 
 <body>
