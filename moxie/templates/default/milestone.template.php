@@ -2,7 +2,17 @@
 
 foreach ($vars['deliverables'] as $deliverable) {
     echo '<div class="deliverable-box">';
+    
+    echo '<ul class="deliverable-menu">';
+    echo '<li><a class="add" href="#">add resource</a></li>';
+    echo '<li><a class="refresh" href="#">refresh</a></li>';
+    echo '</ul>';
     echo '<h3>'.$deliverable['name'].'</h3>';
+    
+    $this->render('addresource', array(
+            'bugtrackers' => $vars['bugtrackers'],
+            'categories' => $vars['categories']
+        ));
     
     echo '<ul class="categories">';
     foreach ($deliverable['categories'] as $category_name => $category) {

@@ -63,10 +63,6 @@ $template->render('milestone', array(
         'project' => $project,
         'milestone' => $milestone,
         'deliverables' => $deliverables,
-        'bugtrackers' => $bugtrackers
-    ));
-
-$template->render('addresource', array(
         'bugtrackers' => $bugtrackers,
         'categories' => $categories
     ));

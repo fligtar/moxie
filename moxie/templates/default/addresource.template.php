@@ -1,30 +1,40 @@
-<div class="addresource">
-    <div class="type-selector">
-        <p>Add resource:</p>
-        <ul>
-        <?php
-        if (!empty($vars['bugtrackers'])) {
-            foreach ($vars['bugtrackers'] as $bugtracker_id => $bugtracker) {
-                echo '<li class="bugtracker">'.$bugtracker['nickname'].'</li>';
+<div class="add-resource">
+    <div class="content">
+        <div class="type-selector">
+            <ul>
+            <?php
+            if (!empty($vars['bugtrackers'])) {
+                foreach ($vars['bugtrackers'] as $bugtracker_id => $bugtracker) {
+                    echo '<li><a class="bugtracker selected">'.$bugtracker['nickname'].' '. $bugtracker['tracker_info']['bug_term'].'</a></li>';
+                }
             }
-        }
-        ?>
-            <li class="link">link</li>
-        </ul>
-    </div>
-    
-    <div>
-        <label>bug number</label><input type="text" />
+            ?>
+                <li><a class="link">link</a></li>
+            </ul>
+        </div>
         
-        <p>Categories:</p>
-        <ul>
-        <?php
-        if (!empty($vars['categories'])) {
-            foreach ($vars['categories'] as $category) {
-                echo '<li><span class="category '.strtolower($category['name']).' unselected">'.$category['name'].'</span></li>';
-            }
-        }
-        ?>
-        </ul>
+        <div class="type-form">
+            <div>
+                <label>Bug number</label><input type="text" id="bugnumber" />
+                <span class="loading">Loading...</span>
+            </div>
+            
+            <div>
+            
+            </div>
+            
+            <div>
+                <label>Categories:</label>
+                <ul>
+                <?php
+                if (!empty($vars['categories'])) {
+                    foreach ($vars['categories'] as $category) {
+                        echo '<li><a class="category '.strtolower($category['name']).'" href="#">'.$category['name'].'</a></li>';
+                    }
+                }
+                ?>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
