@@ -42,6 +42,30 @@ class Model {
         return $this->db->execute($query);
     }
     
+    public function insert($data) {
+        $fields = array();
+        $values = array();
+        
+        foreach ($data as $field => $value) {
+            $fields[] = $field;
+            $values[] = '\''.escape($value).'\'';
+        }
+        
+        if (!array_key_exists('created', $data)) {
+            $fields[] = 'created';
+            $values[] = 'NOW()';
+        }
+        
+        if (!array_key_exists('modified', $data)) {
+            $fields[] = 'modified';
+            $values[] = 'NOW()';
+        }
+        
+        $query = "INSERT INTO {$this->table} (".implode(', ', $fields).") VALUES (".implode(', ', $values).")";
+        
+        return $this->db->execute($query);
+    }
+    
 }
 
 ?>

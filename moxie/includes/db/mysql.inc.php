@@ -29,6 +29,10 @@ class mysql extends db {
         return $results;
     }
     
+    public function getLastID() {
+        return mysql_insert_id($this->dbh);
+    }
+    
     public function disconnect() {
         mysql_close($this->dbh);
     }

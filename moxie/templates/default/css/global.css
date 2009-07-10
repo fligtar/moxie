@@ -1,3 +1,15 @@
+/* A font by Jos Buivenga (exljbris) -> www.exljbris.nl */
+@font-face {
+    font-family: "Museo";
+    src: url(Museo700-Regular.otf);
+    font-weight: bold;
+}
+@font-face {
+    font-family: "Museo";
+    src: url(Museo500-Regular.otf);
+    font-weight: normal;
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -65,11 +77,12 @@ body {
     font-weight: bold;
     display: inline;
     font-size: 2.2em;
+    font-family: "Museo";
 }
 #header h2 {
     display: inline;
     font-size: 1.8em;
-    font-weight: bold;
+    font-family: "Museo";
 }
 
 #content {
@@ -97,7 +110,8 @@ body {
     text-decoration: none;
     color: #CCCCCC;
 }
-.deliverable-box .deliverable-menu li a:hover {
+.deliverable-box .deliverable-menu li a:hover,
+.deliverable-box .deliverable-menu li a.selected {
     border-color: #2E5186;
     color: #2E5186;
 }
@@ -155,6 +169,7 @@ body {
     right: 100px;
     background: transparent url(../images/pointer.gif) 86% 4px no-repeat;
     width: 550px;
+    display: none;
 }
 .add-resource .content {
     margin-top: 11px;
@@ -190,6 +205,14 @@ body {
 }
 .add-resource .content .type-form {
     padding: 10px;
+}
+
+.add-resource .content .type-form .form,
+.add-resource .content .type-form .loading {
+    display: none;
+}
+.add-resource .content .type-form .form.selected {
+    display: block;
 }
 
 .add-resource .content .type-form ul,
