@@ -5,7 +5,7 @@ function json($json, $tab = 0, $encode = false) {
         foreach ($json as $key => $value) {
             echo str_repeat("\t", $tab)."\"{$key}\": ";
             if (is_array($value))
-                $this->json($value, $tab + 1, $encode);
+                json($value, $tab + 1, $encode);
             else
                 if (is_numeric($value) && strpos($value, '.') === false)
                     echo "{$value},\n";

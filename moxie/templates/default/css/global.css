@@ -171,6 +171,11 @@ body {
     width: 550px;
     display: none;
 }
+.add-resource .close {
+    float: right;
+    padding: 3px 5px;
+    font-size: 0.8em;
+}
 .add-resource .content {
     margin-top: 11px;
     border: 1px solid #2E5186;
@@ -215,8 +220,8 @@ body {
     display: block;
 }
 
-.add-resource .content .type-form ul,
-.add-resource .content .type-form ul li {
+.add-resource .content .type-form .categories ul,
+.add-resource .content .type-form .categories ul li {
     display: inline;
 }
 .add-resource .content .type-form ul li a.category {
@@ -231,4 +236,14 @@ body {
 .add-resource .loading {
     padding-left: 20px;
     background: transparent url(../images/ajax_loading.gif) 0% 50% no-repeat;
+}
+
+.add-resource .content .type-form .form label input {
+    margin-left: 15px;
+}
+.add-resource .content .type-form .form .preview input {
+    margin: 0 15px;
+}
+.add-resource .content .type-form .categories {
+    margin: 10px 0;
 }
