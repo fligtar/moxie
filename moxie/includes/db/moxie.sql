@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 03, 2009 at 11:32 PM
+-- Generation Time: Jul 21, 2009 at 05:24 PM
 -- Server version: 5.0.37
 -- PHP Version: 5.2.1
 
@@ -25,21 +25,25 @@ CREATE TABLE IF NOT EXISTS `bugs` (
   `bugtracker_id` int(11) unsigned NOT NULL,
   `summary` varchar(255) NOT NULL,
   `assignee` varchar(255) NOT NULL,
-  `fixed` tinyint(1) NOT NULL,
-  `verified` tinyint(1) NOT NULL,
+  `fixed` tinyint(1) NOT NULL default '0',
+  `verified` tinyint(1) NOT NULL default '0',
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
   KEY `bugtracker_id` (`bugtracker_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `bugs`
 --
 
 INSERT INTO `bugs` (`id`, `number`, `bugtracker_id`, `summary`, `assignee`, `fixed`, `verified`, `created`, `modified`) VALUES
-(1, 500, 1, '', '', 0, 0, '0000-00-00 00:00:00', '2009-07-03 23:19:21'),
-(2, 700, 1, 'can''t draw unicode characters', 'buster@formerly-netscape.com.tld', 1, 1, '0000-00-00 00:00:00', '2009-07-03 23:19:21');
+(1, 500, 1, '', '', 0, 0, '0000-00-00 00:00:00', '2009-07-05 23:56:19'),
+(2, 700, 1, 'can''t draw unicode characters', 'buster@formerly-netscape.com.tld', 1, 1, '0000-00-00 00:00:00', '2009-07-05 23:56:19'),
+(3, 499738, 1, 'developer.AMO homepage designs', 'chowse@mozilla.com', 0, 0, '0000-00-00 00:00:00', '2009-07-05 23:56:19'),
+(4, 501625, 1, 'Developer tools won''t load', 'clouserw@gmail.com', 0, 0, '0000-00-00 00:00:00', '2009-07-05 23:56:19'),
+(5, 500000, 1, 'remove INTL_ConvertCharset because it is unused', 'timeless@bemail.org', 1, 0, '2009-07-10 00:26:29', '2009-07-10 00:26:29'),
+(6, 500001, 1, 'fix compiler warnings in c-sdk/ldap', 'timeless@bemail.org', 0, 0, '2009-07-19 15:11:10', '2009-07-19 15:11:10');
 
 -- --------------------------------------------------------
 
@@ -74,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `categories`
@@ -83,8 +87,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 INSERT INTO `categories` (`id`, `name`) VALUES
 (1, 'Spec'),
 (2, 'Design'),
-(3, 'Implementation'),
-(4, 'Verification');
+(3, 'Implementation');
 
 -- --------------------------------------------------------
 
@@ -252,6 +255,7 @@ CREATE TABLE IF NOT EXISTS `resources` (
   `deliverable_id` int(11) unsigned NOT NULL,
   `category_id` int(11) unsigned NOT NULL,
   `bug_id` int(11) unsigned default NULL,
+  `name` varchar(255) default NULL,
   `url` varchar(255) default NULL,
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -259,16 +263,18 @@ CREATE TABLE IF NOT EXISTS `resources` (
   KEY `deliverable_id` (`deliverable_id`),
   KEY `category_id` (`category_id`),
   KEY `bug_id` (`bug_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `resources`
 --
 
-INSERT INTO `resources` (`id`, `deliverable_id`, `category_id`, `bug_id`, `url`, `created`, `modified`) VALUES
-(1, 1, 1, NULL, 'https://wiki.mozilla.org/AMO:Projects/developer.AMO/Features/News', '2009-06-21 18:21:09', '2009-06-21 18:21:09'),
-(2, 1, 2, 1, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 2, 3, 2, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `resources` (`id`, `deliverable_id`, `category_id`, `bug_id`, `name`, `url`, `created`, `modified`) VALUES
+(1, 1, 1, NULL, 'wiki spec', 'https://wiki.mozilla.org/AMO:Projects/developer.AMO/Features/News', '2009-06-21 18:21:09', '2009-06-21 18:21:09'),
+(2, 1, 2, 1, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 2, 3, 2, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 1, 2, 3, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 1, 2, 4, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -324,8 +330,8 @@ ALTER TABLE `milestones`
 -- Constraints for table `projects_bugtrackers`
 --
 ALTER TABLE `projects_bugtrackers`
-  ADD CONSTRAINT `projects_bugtrackers_ibfk_2` FOREIGN KEY (`bugtracker_id`) REFERENCES `bugtrackers` (`id`),
-  ADD CONSTRAINT `projects_bugtrackers_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`);
+  ADD CONSTRAINT `projects_bugtrackers_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`),
+  ADD CONSTRAINT `projects_bugtrackers_ibfk_2` FOREIGN KEY (`bugtracker_id`) REFERENCES `bugtrackers` (`id`);
 
 --
 -- Constraints for table `resources`
