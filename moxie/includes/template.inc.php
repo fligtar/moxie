@@ -6,6 +6,12 @@ class Template {
     public $default_theme = 'default';
     public $template_dir;
     
+    private $cache = array();
+    
+    const CACHE_NONE = 0;
+    const CACHE_MEMORY = 1;
+    //const CACHE_FILE = 2;
+    
     public function __construct($primary_theme = 'default', $backup_theme = 'default') {
         $this->primary_theme = $primary_theme;
         $this->backup_theme = $backup_theme;
@@ -13,8 +19,27 @@ class Template {
         $this->template_dir = dirname(dirname(__FILE__)).'/templates/';
     }
     
-    public function render($template, $vars = array()) {
+    public function render($template, $vars = array(), $cache_level = Template::CACHE_NONE) {
+        // If caching requesting, see if a cached version is available
+        if ($cache_level > Template::CACHE_NONE) {
+            if (!empty($this->cache[$template])) {
+                // Cached version found in memory. Use it and return
+                echo "<!-- Cached template {$template} -->";
+                echo $this->cache[$template];
+                return;
+            }
+            else {
+                // No cached version found. We'll cache the one we're about to render!
+                ob_start();
+            }
+        }
+        
         include $this->getThemedFile("{$template}.template.php");
+        
+        if ($cache_level > Template::CACHE_NONE) {
+            $this->cache[$template] = ob_get_contents();
+            ob_end_flush();
+        }
     }
     
     private function getThemedFile($file) {

@@ -212,11 +212,11 @@ body {
     padding: 10px;
 }
 
-.add-resource .content .type-form .form,
+.add-resource .content .type-form,
 .add-resource .content .type-form .loading {
     display: none;
 }
-.add-resource .content .type-form .form.selected {
+.add-resource .content .type-form.selected {
     display: block;
 }
 

@@ -1,4 +1,8 @@
 <?php
+$starttime = microtime();
+$startarray = explode(" ", $starttime);
+$starttime = $startarray[1] + $startarray[0];
+
 require dirname(__FILE__).'/global.inc.php';
 
 if (!file_exists(dirname(__FILE__).'/config.php')) {

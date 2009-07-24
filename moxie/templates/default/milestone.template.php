@@ -12,7 +12,7 @@ foreach ($vars['deliverables'] as $deliverable) {
     $this->render('addresource', array(
             'bugtrackers' => $vars['bugtrackers'],
             'categories' => $vars['categories']
-        ));
+        ), Template::CACHE_MEMORY);
     
     echo '<ul class="categories">';
     foreach ($deliverable['categories'] as $category_name => $category) {

@@ -1,10 +1,11 @@
 <?php
 require 'includes/init.inc.php';
 require 'includes/template.inc.php';
+require 'includes/resourcemanager.inc.php';
 require 'includes/bugtracking.inc.php';
 
-list($Bug, $Bugtracker, $Category, $Deliverable, $Milestone, $Resource, $Project) = 
-load_models('Bug', 'Bugtracker', 'Category', 'Deliverable', 'Milestone', 'Resource', 'Project');
+list($Bug, $Bugtracker, $Category, $Deliverable, $Milestone, $Resource, $Resourcetype, $Project) = 
+load_models('Bug', 'Bugtracker', 'Category', 'Deliverable', 'Milestone', 'Resource', 'Resourcetype', 'Project');
 
 if (is_numeric($_GET['project'])) {
     $project = $Project->get($_GET['project']);
@@ -13,6 +14,10 @@ else {
     $projects = $Project->getAll("url = '".escape($_GET['project'])."'");
     $project = $projects[0];
 }
+
+// Get resourcetypes for the project
+$resourcetypes = $Resourcetype->getActiveForProject($project['id']);
+$resource_manager = new ResourceManager($resourcetypes);
 
 // Get the milestone's info
 $milestone = $Milestone->get($_GET['milestone']);

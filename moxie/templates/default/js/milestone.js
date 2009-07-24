@@ -20,7 +20,7 @@ var milestone = {
     },
     
     resetAddPanel: function(panel) {
-        panel.find('.categories,.submit,.loading').hide();
+        panel.find('.loading').hide();
         panel.find('input[type="text"]').val('');
         panel.find('.categories li a').removeClass('selected');
         panel.find('.preview li').remove();
@@ -30,17 +30,13 @@ var milestone = {
         $(a).toggleClass('selected');
     },
     
-    showForm: function(a, formType, formtype_id) {
+    showForm: function(a, form_class) {
         $(a).parent().parent().find('a').removeClass('selected');
         $(a).addClass('selected');
         
         var content = $(a).parent().parent().parent().parent();
-        content.find('.type-form .form').removeClass('selected');
-        content.find('.type-form .' + formType).addClass('selected');
-        
-        if (formtype_id) {
-            content.find('.type-form .' + formType + ' .' + formType + '_id').val(formtype_id);
-        }
+        content.find('.type-form').removeClass('selected');
+        content.find('.type-form.' + form_class).addClass('selected');
     },
     
     bugLookup: function(button) {
