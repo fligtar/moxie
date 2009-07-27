@@ -14,7 +14,7 @@ class ResourceManager {
     public function loadResourcetypes() {
         if (!empty($this->resourcetype_list)) {
             foreach ($this->resourcetype_list as $k => $resourcetype) {
-                if ($this->loadResourcetypeFile($resourcetype)) {
+                if (strpos($resourcetype, array('/')) === false && $this->loadResourcetypeFile($resourcetype)) {
                     $this->resourcetypes[$resourcetype] = new $resourcetype;
                 }
                 else {

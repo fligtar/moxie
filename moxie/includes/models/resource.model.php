@@ -3,7 +3,7 @@
 class ResourceModel extends Model {
     public $table = 'resources';
     
-    public function getBugResources($deliverable_id, $category_id) {
+    /*public function getBugResources($deliverable_id, $category_id) {
         $query = "
             SELECT * 
             FROM resources
@@ -25,6 +25,15 @@ class ResourceModel extends Model {
                 category_id = {$category_id} AND 
                 deliverable_id = {$deliverable_id} AND 
                 url IS NOT NULL
+            ");
+        
+        return $results;
+    }*/
+    
+    public function getResources($deliverable_id, $category_id) {
+        $results = $this->getAll("
+                category_id = {$category_id} AND 
+                deliverable_id = {$deliverable_id}
             ");
         
         return $results;

@@ -6,6 +6,10 @@ class link extends Resourcetype {
     
     public $icon = 'link.png';
     
+    public $fields = array(
+        'link_name', 'link_url'
+    );
+    
     /**
      * This method should RETURN (not render) any JavaScript used by this resource's form
      * @return string
@@ -24,19 +28,6 @@ class link extends Resourcetype {
         $form .= '<label>URL<input type="text" name="link_url" /></label>';
         
         return $form;
-    }
-    
-    /**
-     * This method should return an array of data to save for the resource.
-     * @return array
-     */
-    public function onSubmit($parameters) {
-        $data = array(
-            'link_name' => $parameters['link_name'],
-            'link_url' => $parameters['link_url']
-        );
-        
-        return $data;
     }
     
     /**

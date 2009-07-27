@@ -76,7 +76,40 @@ var milestone = {
     },
     
     addResources: function(button) {
+        var typeform = $(button).parent().parent();
+        var resourcetype = typeform.find('input[name="resourcetype"]').val();
+        var deliverable_id = typeform.find('input[name="deliverable_id"]').val();
         
+        // If resourcetype has a custom validator, call it
+        if (resourcetype.beforeAddResource) {
+            if (!resourcetype.beforeAddResource(typeform)) {
+                return false;
+            }
+        }
+        
+        // Start building GET URL
+        var url = 'ajax.php?action=add-resource&deliverable_id=' + encodeURIComponent(deliverable_id) + '&resourcetype=' + encodeURIComponent(resourcetype);
+        
+        // Determine which categories are selected
+        typeform.find('.category.selected input[name="category_id"]').each(function() {
+            url += '&category_id=' + encodeURIComponent($(this).val());
+        });
+        
+        // If the resourcetype has a custom param string builder, use that
+        if (resourcetype.buildParamString) {
+            url += resourcetype.buildParamString(typeform);
+        }
+        else {
+            // Otherwise, pass all input fields and values
+            typeform.find('.form input').each(function() {
+                url += '&' + encodeURIComponent($(this).attr('name')) + '=' + encodeURIComponent($(this).val());
+            });
+        }
+        
+        $.getJSON(url, function(data) {
+            
+            
+        });
     }
     
 };

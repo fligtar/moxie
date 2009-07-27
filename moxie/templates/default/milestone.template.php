@@ -1,31 +1,38 @@
 <?php
-
 foreach ($vars['deliverables'] as $deliverable) {
-    echo '<div class="deliverable-box">';
+?>
+    <div class="deliverable-box">
+        <ul class="deliverable-menu">
+            <li><a class="add" href="#" onclick="milestone.showAddPanel(this); return false;">add resource</a></li>
+            <li><a class="refresh" href="#">refresh</a></li>
+        </ul>
+        <h3><?php echo $deliverable['name']; ?></h3>
     
-    echo '<ul class="deliverable-menu">';
-    echo '<li><a class="add" href="#" onclick="milestone.showAddPanel(this); return false;">add resource</a></li>';
-    echo '<li><a class="refresh" href="#">refresh</a></li>';
-    echo '</ul>';
-    echo '<h3>'.$deliverable['name'].'</h3>';
-    
-    $this->render('addresource', array(
-            'bugtrackers' => $vars['bugtrackers'],
-            'categories' => $vars['categories']
-        ), Template::CACHE_MEMORY);
-    
-    echo '<ul class="categories">';
-    foreach ($deliverable['categories'] as $category_name => $category) {
-        // Make sure category has at least one resource
-        if (empty($category['links']) && empty($category['bugs'])) {
-            continue;
-        }
+        <?php
+        $this->render('addresource', array(
+                'deliverable_id' => $deliverable['id'],
+                'categories' => $vars['categories']
+            ), Template::CACHE_MEMORY);
+        ?>
         
-        echo '<li><span class="category '.strtolower($category_name).'">'.$category_name.'</span>';
-        
-        echo '<ul class="resources">';
+        <ul class="categories">
+        <?php
+        foreach ($deliverable['categories'] as $category_name => $resources) {
+            // Make sure category has at least one resource
+            if (empty($resources)) {
+                continue;
+            }
             
-        if (!empty($category['links'])) {
+            echo '<li><span class="category '.strtolower($category_name).'">'.$category_name.'</span>';
+            
+            echo '<ul class="resources">';
+            
+            global $resource_manager;
+            foreach($resources as $resource) {
+                echo '<li class="resource '.$resource['resourcetype'].'">'.$resource_manager->resourcetypes[$resource['resourcetype']]->buildLink(unserialize($resource['data'])).'</li>';
+            }
+            
+        /*if (!empty($category['links'])) {
             foreach ($category['links'] as $link) {
                 echo '<li class="resource link"><a href="'.$link['url'].'">'.$link['name'].'</a></li>';
             }
@@ -35,15 +42,14 @@ foreach ($vars['deliverables'] as $deliverable) {
             foreach ($category['bugs'] as $bug) {
                 echo '<li class="resource bug">'.$this->bugLink($bug, $vars['bugtrackers'][$bug['bugtracker_id']]).'</li>';
             }
+        }*/
+            echo '</ul>';
+            echo '</li>';
         }
-        
-        echo '</ul>';
-        
-        echo '</li>';
-    }
-    echo '</ul>';
+        ?>
+        </ul>
     
-    echo '</div>';
+    </div>
+<?php
 }
-
 ?>

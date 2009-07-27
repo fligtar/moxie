@@ -2,20 +2,22 @@
 
 class Resourcetype {
     
-    public function js() {
-        
-    }
+    public function js() {}
+    public function css() {}
+    public function form() {}
     
-    public function css() {
+    public function getFieldsToSave($data) {
+        $fields = array();
         
-    }
-    
-    public function form() {
+        if ($this->fields) {
+            foreach ($this->fields as $field) {
+                if (!empty($data[$field])) {
+                    $fields[$field] = $data[$field];
+                }
+            }
+        }
         
-    }
-    
-    public function onSubmit() {
-        
+        return $fields;
     }
     
 }

@@ -1,6 +1,7 @@
 <?php
 require 'includes/init.inc.php';
 require 'includes/template.inc.php';
+require 'includes/resourcemanager.inc.php';
 
 switch ($_GET['action']) {
     /**
@@ -63,12 +64,32 @@ switch ($_GET['action']) {
     /**
      * Add one or more resources to a deliverable
      * Params:
-     *   bugtracker_id - bugtracker_id of the bugtracker
-     *   bug_numbers - numbers of the bug to lookup
-     *   category_id - id of the categories
      *   deliverable_id - id of the deliverable
+     *   resourcetype - id of the resourcetype
+     *   category_id - id of the categories
+     *   (other) - depending on resourcetype
      */
     case 'add-resource':
+        $resource_manager = new ResourceManager(array($_GET['resourcetype']));
+        $resourcetype =& $resource_manager->resourcetypes[$_GET['resourcetype']];
+        
+        $data = array(
+            'deliverable_id' => $_GET['deliverable_id'],
+            'resourcetype' => $_GET['resourcetype'],
+            'data' => serialize($resourcetype->getFieldsToSave($_GET))
+        );
+        
+        // Insert into db
+        list($Resource) = load_models('Resource');
+        
+        if (!is_array($_GET['category_id'])) {
+            $_GET['category_id'] = array($_GET['category_id']);
+        }
+        
+        foreach ($_GET['category_id'] as $category_id) {
+            $data['category_id'] = $category_id;
+            $Resource->insert($data);
+        }
         
         break;
 

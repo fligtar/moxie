@@ -22,6 +22,8 @@
             foreach ($resource_manager->resourcetypes as $resourcetype) {
         ?>
                 <div class="type-form <?php echo $resourcetype->id; ?>">
+                    <input type="hidden" name="deliverable_id" value="<?php echo $vars['deliverable_id']; ?>" />
+                    <input type="hidden" name="resourcetype" value="<?php echo $resourcetype->id; ?>" />
                     <div class="form"><?php echo $resourcetype->form(); ?></div>
                     
                     <div class="categories">
@@ -30,7 +32,10 @@
                         <?php
                         if (!empty($vars['categories'])) {
                             foreach ($vars['categories'] as $category) {
-                                echo '<li><a class="category '.strtolower($category['name']).'" href="#" onclick="milestone.selectCategory(this); return false;">'.$category['name'].'</a></li>';
+                                echo '<li><a class="category '.strtolower($category['name']).'" href="#" onclick="milestone.selectCategory(this); return false;">';
+                                echo $category['name'];
+                                echo '<input type="hidden" name="category_id" value="'.$category['id'].'" />';
+                                echo '</a></li>';
                             }
                         }
                         ?>

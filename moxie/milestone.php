@@ -35,10 +35,7 @@ if (!empty($deliverables)) {
         
         if (!empty($categories)) {
             foreach ($categories as $category) {
-                $deliverables[$d]['categories'][$category['name']] = array(
-                    'links' => $Resource->getLinkResources($deliverable['id'], $category['id']),
-                    'bugs' => $Resource->getBugResources($deliverable['id'], $category['id'])
-                );
+                $deliverables[$d]['categories'][$category['name']] = $Resource->getResources($deliverable['id'], $category['id']);
             }
         }
     }
