@@ -7,10 +7,10 @@ foreach ($vars['deliverables'] as $deliverable) {
             <li><a class="refresh" href="#">refresh</a></li>
         </ul>
         <h3><?php echo $deliverable['name']; ?></h3>
-    
+        
+        <input type="hidden" name="deliverable_id" value="<?php echo $deliverable['id']; ?>" />
         <?php
         $this->render('addresource', array(
-                'deliverable_id' => $deliverable['id'],
                 'categories' => $vars['categories']
             ), Template::CACHE_MEMORY);
         ?>

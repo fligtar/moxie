@@ -53,14 +53,15 @@ class ResourceManager {
     /**
      * Calls a string-returning method on all resourcetypes and returns the results
      * @param string $method name of the method (ex: css, js, form)
+     * @param mixed $params parameter(s) to pass to the method
      * @return string
      */
-    public function callMethodOnAll($method) {
+    public function callMethodOnAll($method, &$params) {
         $result = '';
         
         if (!empty($this->resourcetypes)) {
             foreach ($this->resourcetypes as $resourcetype) {
-                $result .= $resourcetype->$method();
+                $result .= $resourcetype->$method($params);
             }
         }
         

@@ -78,7 +78,8 @@ var milestone = {
     addResources: function(button) {
         var typeform = $(button).parent().parent();
         var resourcetype = typeform.find('input[name="resourcetype"]').val();
-        var deliverable_id = typeform.find('input[name="deliverable_id"]').val();
+        // We have to go up to the deliverable box for the id because the addresource template is cached
+        var deliverable_id = typeform.parent().parent().parent().find('input[name="deliverable_id"]').val();
         
         // If resourcetype has a custom validator, call it
         if (resourcetype.beforeAddResource) {
@@ -107,8 +108,7 @@ var milestone = {
         }
         
         $.getJSON(url, function(data) {
-            
-            
+            typeform.parent().find('.close a').click();
         });
     }
     

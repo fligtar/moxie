@@ -22,7 +22,6 @@
             foreach ($resource_manager->resourcetypes as $resourcetype) {
         ?>
                 <div class="type-form <?php echo $resourcetype->id; ?>">
-                    <input type="hidden" name="deliverable_id" value="<?php echo $vars['deliverable_id']; ?>" />
                     <input type="hidden" name="resourcetype" value="<?php echo $resourcetype->id; ?>" />
                     <div class="form"><?php echo $resourcetype->form(); ?></div>
                     

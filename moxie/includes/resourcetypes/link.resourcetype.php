@@ -4,18 +4,32 @@ class link extends Resourcetype {
     public $id = 'link';
     public $name = 'link';
     
-    public $icon = 'link.png';
-    
     public $fields = array(
         'link_name', 'link_url'
     );
     
     /**
-     * This method should RETURN (not render) any JavaScript used by this resource's form
+     * This method should RETURN (not render) the CSS used by the resource.
      * @return string
      */
-    public function js() {
+    public function css(&$template) {
+        if (PAGE != 'milestone') {
+            return '';
+        }
         
+        $img = $template->image('resources/link.png');
+        $css = <<<CSS
+
+.add-resource .content .type-selector ul li a.link {
+    background-image: url({$img});
+    background-position: 3px 50%;
+    background-repeat: no-repeat;
+    padding-left: 23px;
+}
+        
+CSS;
+        
+        return $css;
     }
     
     /**

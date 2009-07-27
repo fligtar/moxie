@@ -1,4 +1,6 @@
 <?php
+define('PAGE', 'milestone');
+
 require 'includes/init.inc.php';
 require 'includes/template.inc.php';
 require 'includes/resourcemanager.inc.php';

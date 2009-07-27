@@ -10,7 +10,7 @@
     <style type="text/css">
     <?php
     global $resource_manager;
-    echo $resource_manager->callMethodOnAll('css');
+    echo $resource_manager->callMethodOnAll('css', $this);
     ?>
     </style>
 </head>

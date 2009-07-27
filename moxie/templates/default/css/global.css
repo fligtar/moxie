@@ -91,10 +91,8 @@ body {
 }
 
 .deliverable-box {
-    background: transparent url(../images/dots.png) center bottom no-repeat;
     clear: both;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 .deliverable-box .deliverable-menu {
     float: right;
@@ -194,16 +192,10 @@ body {
 .add-resource .content .type-selector ul li a {
     border: 1px solid #CCCCCC;
     -moz-border-radius: 6px;
-    padding: 2px 4px 2px 23px;
+    padding: 2px 4px;
     margin: 0 2px;
     text-decoration: none;
     color: #CCCCCC;
-}
-.add-resource .content .type-selector ul li a.bugtracker {
-    background: transparent url(../images/bug.png) 3px 50% no-repeat;
-}
-.add-resource .content .type-selector ul li a.link {
-    background: transparent url(../images/link.png) 3px 50% no-repeat;
 }
 .add-resource .content .type-selector ul li a.selected {
     background-color: #2E5186;
