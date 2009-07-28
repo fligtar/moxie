@@ -54,7 +54,6 @@ switch ($_GET['action']) {
             $bugs[] = $bug;
         }
         
-        header('Content-type: text/plain');
         $template = new Template();
         $template->render('json', array(
                 'data' => $bugs
@@ -72,11 +71,13 @@ switch ($_GET['action']) {
     case 'add-resource':
         $resource_manager = new ResourceManager(array($_GET['resourcetype']));
         $resourcetype =& $resource_manager->resourcetypes[$_GET['resourcetype']];
+        $fields = $resourcetype->getFieldsToSave($_GET);
+        $json = array();
         
         $data = array(
             'deliverable_id' => $_GET['deliverable_id'],
             'resourcetype' => $_GET['resourcetype'],
-            'data' => serialize($resourcetype->getFieldsToSave($_GET))
+            'data' => serialize($fields)
         );
         
         // Insert into db
@@ -88,8 +89,22 @@ switch ($_GET['action']) {
         
         foreach ($_GET['category_id'] as $category_id) {
             $data['category_id'] = $category_id;
-            $Resource->insert($data);
+            //$Resource->insert($data);
+            
+            // Add to JSON output
+            $json[] = array(
+                'resource_id' => $Resource->db->getLastID(),
+                'deliverable_id' => $data['deliverable_id'],
+                'category_id' => $data['category_id'],
+                'resourcetype' => $data['resourcetype'],
+                'link' => $resourcetype->buildLink($fields)
+            );
         }
+        
+        $template = new Template();
+        $template->render('json', array(
+                'data' => $json
+            ));
         
         break;
 

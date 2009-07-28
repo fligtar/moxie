@@ -31,7 +31,7 @@
                         <?php
                         if (!empty($vars['categories'])) {
                             foreach ($vars['categories'] as $category) {
-                                echo '<li><a class="category '.strtolower($category['name']).'" href="#" onclick="milestone.selectCategory(this); return false;">';
+                                echo '<li><a class="category category-'.$category['id'].'" href="#" onclick="milestone.selectCategory(this); return false;">';
                                 echo $category['name'];
                                 echo '<input type="hidden" name="category_id" value="'.$category['id'].'" />';
                                 echo '</a></li>';
@@ -43,6 +43,7 @@
                     
                     <div class="submit">
                         <input type="button" value="Add to Deliverable" onclick="milestone.addResources(this);"/>
+                        <span class="loading">Loading...</span>
                     </div>
                 </div>
         <?php

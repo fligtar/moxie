@@ -141,6 +141,9 @@ body {
     background: transparent url(../images/flag.png) right center no-repeat;
     padding-right: 13px;
 }
+.category-hidden {
+    display: none;
+}
 .category {
     padding: 3px 6px;
     font-size: 0.75em;
@@ -152,13 +155,15 @@ body {
     text-decoration: none;
 }
 
-.category.spec {
+.dragover { background-color: green;}
+
+.category-1 {
     background-color: #D9A300;
 }
-.category.design {
+.category-2 {
     background-color: #541F9B;
 }
-.category.implementation {
+.category-3 {
     background-color: #861304;
 }
 

@@ -1,4 +1,6 @@
 <?php
+header('Content-type: text/plain');
+
 function json($json, $tab = 0, $encode = false) {
     echo "{\n";
     if (!empty($json)) {

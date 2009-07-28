@@ -1,7 +1,32 @@
 $(function() {
-    $('.resources').sortable({
-        placeholder: 'ui-state-highlight'
-    });
+    $('.resource')
+        .attr('draggable', 'true')
+        .bind('dragstart', function(ev) {
+            var dt = ev.originalEvent.dataTransfer;
+            dt.setData("Text", "Dropped in zone!");
+            return true;
+        })
+        .bind('dragend', function(ev) {
+            return false;
+        });
+        
+    $('.resources')
+        .bind('dragenter', function(ev) {
+            $(ev.target).addClass('dragover');
+            return false;
+        })
+        .bind('dragleave', function(ev) {
+            $(ev.target).removeClass('dragover');
+            return false;
+        })
+        .bind('dragover', function(ev) {
+            return false;
+        })
+        .bind('drop', function(ev) {
+            var dt = ev.originalEvent.dataTransfer;
+            alert(dt.getData('Text'));
+            return false;
+        });
 });
 
 var milestone = {
@@ -88,12 +113,14 @@ var milestone = {
             }
         }
         
+        typeform.find('.loading').show();
+        
         // Start building GET URL
         var url = 'ajax.php?action=add-resource&deliverable_id=' + encodeURIComponent(deliverable_id) + '&resourcetype=' + encodeURIComponent(resourcetype);
         
         // Determine which categories are selected
         typeform.find('.category.selected input[name="category_id"]').each(function() {
-            url += '&category_id=' + encodeURIComponent($(this).val());
+            url += '&category_id[]=' + encodeURIComponent($(this).val());
         });
         
         // If the resourcetype has a custom param string builder, use that
@@ -109,6 +136,12 @@ var milestone = {
         
         $.getJSON(url, function(data) {
             typeform.parent().find('.close a').click();
+            
+            $.each(data, function(i, resource) {
+                var deliverable = $('.deliverable-' + resource.deliverable_id);
+                deliverable.find('.category-' + resource.category_id).parent().removeClass('category-hidden');
+                deliverable.find('.category-' + resource.category_id + ' + .resources').append('<li class="resource ' + resource.resourcetype + ' resource-' + resource.resource_id + '">' + resource.link + '</li>');
+            });
         });
     }
     
