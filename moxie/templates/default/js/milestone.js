@@ -2,29 +2,57 @@ $(function() {
     $('.resource')
         .attr('draggable', 'true')
         .bind('dragstart', function(ev) {
+            var resource = $(ev.target).closest('.resource');
             var dt = ev.originalEvent.dataTransfer;
-            dt.setData("Text", "Dropped in zone!");
+            dt.setData('text/uri-list', resource.find('a').attr('href'));
+            dt.setData('text/x-moxie-resource-id', resource.attr('id'));
             return true;
         })
         .bind('dragend', function(ev) {
             return false;
         });
         
-    $('.resources')
+    $('.category')
         .bind('dragenter', function(ev) {
-            $(ev.target).addClass('dragover');
+            var category = $(ev.target).closest('.category');
+            if (!category) return true;
+            
+            category.addClass('dragover');
+            category.closest('.deliverable').addClass('dragover');
             return false;
         })
         .bind('dragleave', function(ev) {
-            $(ev.target).removeClass('dragover');
+            var category = $(ev.target).closest('.category');
+            if (!category) return true;
+            
+            category.removeClass('dragover');
+            category.closest('.deliverable').removeClass('dragover');
             return false;
         })
         .bind('dragover', function(ev) {
+            var category = $(ev.target).closest('.category');
+            if (!category) return true;
             return false;
         })
         .bind('drop', function(ev) {
+            var category = $(ev.target).closest('.category');
+            if (!category) return true;
+            
             var dt = ev.originalEvent.dataTransfer;
-            alert(dt.getData('Text'));
+            var deliverable = category.closest('.deliverable');
+            var resource = $('#' + dt.getData('text/x-moxie-resource-id'));
+            
+            resource.clone(true).appendTo(category.find('.resources')).effect('highlight', {}, 2000);
+            category.removeClass('category-hidden');
+            //alert('moving resource ' + dt.getData('text/x-moxie-resource-id') + ' to deliverable ' + milestone.getDeliverableID(deliverable.attr('class')) + ', category ' + milestone.getCategoryID(category.attr('class')));
+            
+            // Remove the old resource node
+            var oldcategory = resource.closest('.category');
+            resource.remove();
+            oldcategory.find('.resources:empty').parent().addClass('category-hidden');
+            
+            //ev.originalEvent.dataTransfer.clearData();
+            ev.stopPropagation();
             return false;
         });
 });
@@ -52,7 +80,7 @@ var milestone = {
     },
     
     selectCategory: function(a) {
-        $(a).toggleClass('selected');
+        $(a).parent().toggleClass('selected');
     },
     
     showForm: function(a, form_class) {
@@ -138,11 +166,44 @@ var milestone = {
             typeform.parent().find('.close a').click();
             
             $.each(data, function(i, resource) {
-                var deliverable = $('.deliverable-' + resource.deliverable_id);
-                deliverable.find('.category-' + resource.category_id).parent().removeClass('category-hidden');
-                deliverable.find('.category-' + resource.category_id + ' + .resources').append('<li class="resource ' + resource.resourcetype + ' resource-' + resource.resource_id + '">' + resource.link + '</li>');
+                var category = $('.deliverable-' + resource.deliverable_id + ' .category-' + resource.category_id);
+                category.removeClass('category-hidden');
+                category.find('.resources').append('<li class="resource ' + resource.resourcetype + ' resource-' + resource.resource_id + '" id="resource-' + resource.resource_id + '">' + resource.link + '</li>');
             });
         });
+    },
+    
+    getResourceID: function(classnames) {
+        var id = classnames.match(/resource-(\d+)/);
+        
+        if (id[1]) {
+            return [1];
+        }
+        else {
+            return null;
+        }
+    },
+    
+    getDeliverableID: function(classnames) {
+        var id = classnames.match(/deliverable-(\d+)/);
+        
+        if (id[1]) {
+            return [1];
+        }
+        else {
+            return null;
+        }
+    },
+    
+    getCategoryID: function(classnames) {
+        var id = classnames.match(/category-(\d+)/);
+        
+        if (id[1]) {
+            return [1];
+        }
+        else {
+            return null;
+        }
     }
     
 };

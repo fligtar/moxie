@@ -56,7 +56,7 @@ class ResourceManager {
      * @param mixed $params parameter(s) to pass to the method
      * @return string
      */
-    public function callMethodOnAll($method, &$params) {
+    public function callMethodOnAll($method, &$params = array()) {
         $result = '';
         
         if (!empty($this->resourcetypes)) {

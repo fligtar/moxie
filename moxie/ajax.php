@@ -89,7 +89,7 @@ switch ($_GET['action']) {
         
         foreach ($_GET['category_id'] as $category_id) {
             $data['category_id'] = $category_id;
-            //$Resource->insert($data);
+            $Resource->insert($data);
             
             // Add to JSON output
             $json[] = array(

@@ -31,7 +31,7 @@
                         <?php
                         if (!empty($vars['categories'])) {
                             foreach ($vars['categories'] as $category) {
-                                echo '<li><a class="category category-'.$category['id'].'" href="#" onclick="milestone.selectCategory(this); return false;">';
+                                echo '<li class="category category-'.$category['id'].'"><a class="category-label" href="#" onclick="milestone.selectCategory(this); return false;">';
                                 echo $category['name'];
                                 echo '<input type="hidden" name="category_id" value="'.$category['id'].'" />';
                                 echo '</a></li>';

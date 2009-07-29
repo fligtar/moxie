@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 21, 2009 at 05:24 PM
+-- Generation Time: Jul 28, 2009 at 09:26 PM
 -- Server version: 5.0.37
 -- PHP Version: 5.2.1
 
@@ -252,29 +252,68 @@ CREATE TABLE IF NOT EXISTS `projects_users` (
 
 CREATE TABLE IF NOT EXISTS `resources` (
   `id` int(11) unsigned NOT NULL auto_increment,
+  `resourcetype` varchar(255) NOT NULL,
   `deliverable_id` int(11) unsigned NOT NULL,
   `category_id` int(11) unsigned NOT NULL,
-  `bug_id` int(11) unsigned default NULL,
-  `name` varchar(255) default NULL,
-  `url` varchar(255) default NULL,
+  `data` text,
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
   KEY `deliverable_id` (`deliverable_id`),
   KEY `category_id` (`category_id`),
-  KEY `bug_id` (`bug_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+  KEY `resourcetype` (`resourcetype`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `resources`
 --
 
-INSERT INTO `resources` (`id`, `deliverable_id`, `category_id`, `bug_id`, `name`, `url`, `created`, `modified`) VALUES
-(1, 1, 1, NULL, 'wiki spec', 'https://wiki.mozilla.org/AMO:Projects/developer.AMO/Features/News', '2009-06-21 18:21:09', '2009-06-21 18:21:09'),
-(2, 1, 2, 1, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 2, 3, 2, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(4, 1, 2, 3, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 1, 2, 4, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `resources` (`id`, `resourcetype`, `deliverable_id`, `category_id`, `data`, `created`, `modified`) VALUES
+(1, 'link', 1, 3, 'a:2:{s:9:"link_name";s:6:"google";s:8:"link_url";s:21:"http://www.google.com";}', '2009-07-27 00:14:24', '2009-07-27 00:14:24'),
+(2, 'wiki', 1, 1, 'a:2:{s:9:"wiki_name";s:4:"spec";s:8:"wiki_url";s:65:"https://wiki.mozilla.org/AMO:Projects/developer.AMO/Features/News";}', '2009-07-27 00:52:26', '2009-07-27 00:52:26'),
+(3, 'link', 1, 1, 'a:2:{s:9:"link_name";s:4:"spec";s:8:"link_url";s:67:"https://wiki.mozilla.org/AMO:Projects/developer.AMO/Features/Events";}', '2009-07-27 00:52:41', '2009-07-27 00:52:41'),
+(4, 'wiki', 2, 1, 'a:2:{s:9:"wiki_name";s:4:"spec";s:8:"wiki_url";s:67:"https://wiki.mozilla.org/AMO:Projects/developer.AMO/Features/Events";}', '2009-07-27 00:56:26', '2009-07-27 00:56:26'),
+(5, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:49', '2009-07-28 19:50:49'),
+(6, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:50', '2009-07-28 19:50:50'),
+(7, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:55', '2009-07-28 19:50:55'),
+(8, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:56', '2009-07-28 19:50:56'),
+(9, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:56', '2009-07-28 19:50:56'),
+(10, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:56', '2009-07-28 19:50:56'),
+(11, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:57', '2009-07-28 19:50:57'),
+(12, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:57', '2009-07-28 19:50:57'),
+(13, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:57', '2009-07-28 19:50:57'),
+(14, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:57', '2009-07-28 19:50:57'),
+(15, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:57', '2009-07-28 19:50:57'),
+(16, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:58', '2009-07-28 19:50:58'),
+(17, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:58', '2009-07-28 19:50:58'),
+(18, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:58', '2009-07-28 19:50:58'),
+(19, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:58', '2009-07-28 19:50:58'),
+(20, 'link', 1, 1, 'a:2:{s:9:"link_name";s:7:"fligtar";s:8:"link_url";s:22:"http://www.fligtar.com";}', '2009-07-28 19:50:59', '2009-07-28 19:50:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resourcetypes`
+--
+
+CREATE TABLE IF NOT EXISTS `resourcetypes` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `resourcetype` varchar(255) NOT NULL,
+  `project_id` int(11) unsigned NOT NULL,
+  `enabled` tinyint(1) NOT NULL default '1',
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `project_id` (`project_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `resourcetypes`
+--
+
+INSERT INTO `resourcetypes` (`id`, `resourcetype`, `project_id`, `enabled`, `created`, `modified`) VALUES
+(1, 'link', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'wiki', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -337,6 +376,11 @@ ALTER TABLE `projects_bugtrackers`
 -- Constraints for table `resources`
 --
 ALTER TABLE `resources`
-  ADD CONSTRAINT `resources_ibfk_3` FOREIGN KEY (`deliverable_id`) REFERENCES `deliverables` (`id`),
-  ADD CONSTRAINT `resources_ibfk_4` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `resources_ibfk_5` FOREIGN KEY (`bug_id`) REFERENCES `bugs` (`id`);
+  ADD CONSTRAINT `resources_ibfk_6` FOREIGN KEY (`deliverable_id`) REFERENCES `deliverables` (`id`),
+  ADD CONSTRAINT `resources_ibfk_7` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
+
+--
+-- Constraints for table `resourcetypes`
+--
+ALTER TABLE `resourcetypes`
+  ADD CONSTRAINT `resourcetypes_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`);

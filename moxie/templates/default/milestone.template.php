@@ -2,7 +2,7 @@
 global $resource_manager;
 foreach ($vars['deliverables'] as $deliverable) {
 ?>
-    <div class="deliverable-box deliverable-<?php echo $deliverable['id']; ?>">
+    <div class="deliverable deliverable-<?php echo $deliverable['id']; ?>">
         <ul class="deliverable-menu">
             <li><a class="add" href="#" onclick="milestone.showAddPanel(this); return false;">add resource</a></li>
             <li><a class="refresh" href="#">refresh</a></li>
@@ -22,13 +22,13 @@ foreach ($vars['deliverables'] as $deliverable) {
         foreach ($deliverable['categories'] as $category_id => $category) {
             $empty = empty($category['resources']);
             // We display empty categories because we may need to add resources after loading
-            echo '<li class="'.($empty ? 'category-hidden' : '').'"><span class="category category-'.$category['id'].'">'.$category['name'].'</span>';
+            echo '<li class="category category-'.$category['id'].($empty ? ' category-hidden' : '').'"><span class="category-label">'.$category['name'].'</span>';
             
             echo '<ul class="resources">';
             
             if (!$empty) {
                 foreach ($category['resources'] as $resource) {
-                    echo '<li class="resource '.$resource['resourcetype'].' resource-'.$resource['id'].'">'.$resource_manager->resourcetypes[$resource['resourcetype']]->buildLink(unserialize($resource['data'])).'</li>';
+                    echo '<li class="resource '.$resource['resourcetype'].' resource-'.$resource['id'].'" id="resource-'.$resource['id'].'">'.$resource_manager->resourcetypes[$resource['resourcetype']]->buildLink(unserialize($resource['data'])).'</li>';
                 }
             }
             
