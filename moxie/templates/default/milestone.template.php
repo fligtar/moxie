@@ -5,7 +5,7 @@ foreach ($vars['deliverables'] as $deliverable) {
     <div class="deliverable deliverable-<?php echo $deliverable['id']; ?>">
         <ul class="deliverable-menu">
             <li><a class="add" href="#" onclick="milestone.showAddPanel(this); return false;">add resource</a></li>
-            <li><a class="refresh" href="#">refresh</a></li>
+            <li><a class="refresh" href="#" onclick="milestone.refreshDeliverable(<?php echo $deliverable['id']; ?>); return false;">refresh</a></li>
         </ul>
         <h3><?php echo $deliverable['name']; ?></h3>
         

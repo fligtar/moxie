@@ -109,12 +109,36 @@ switch ($_GET['action']) {
         break;
 
     /**
-     * Refresh the bugs 
+     * Refresh one or more resources 
      * Params:
-     *   bugtracker_id - bugtracker_id of the bugtracker
-     *   bug_id - ids of the bugs to add
+     *   resource_id - id of an individual resource to refresh
+     *   deliverable_id - id of a deliverable to refresh all associated resources
+     *   milestone_id - id of a milestone to refresh all associated resources
      */
-    case 'refresh-bugs':
+    case 'refresh-resources':
+        $resource_manager = new ResourceManager;
+        
+        // Get resource info
+        list($Resource) = load_models('Resource');
+        
+        if (!empty($_GET['resource_id'])) {
+            $query = 'id = \''.escape($_GET['resource_id']).'\'';
+        }
+        elseif (!empty($_GET['deliverable_id'])) {        
+            $query = 'deliverable_id = \''.escape($_GET['deliverable_id']).'\'';
+        }
+        
+        $resources = $Resource->getAll($query);
+        
+        if (!empty($resources)) {
+            foreach ($resources as $resource) {
+                // Make sure resourcetype has been loaded
+                $resource_manager->loadAdditionalResourcetype($resource['resourcetype']);
+                
+                $resource_manager->resourcetypes[$resource['resourcetype']]->refreshAndUpdate($Resource, $resource['id'], unserialize($resource['data']));
+            }
+        }
+        
         
         break;
         

@@ -173,37 +173,12 @@ var milestone = {
         });
     },
     
-    getResourceID: function(classnames) {
-        var id = classnames.match(/resource-(\d+)/);
+    refreshDeliverable: function(deliverable_id) {
+        var url = "ajax.php?action=refresh-resources&deliverable_id=" + deliverable_id;
         
-        if (id[1]) {
-            return [1];
-        }
-        else {
-            return null;
-        }
-    },
-    
-    getDeliverableID: function(classnames) {
-        var id = classnames.match(/deliverable-(\d+)/);
-        
-        if (id[1]) {
-            return [1];
-        }
-        else {
-            return null;
-        }
-    },
-    
-    getCategoryID: function(classnames) {
-        var id = classnames.match(/category-(\d+)/);
-        
-        if (id[1]) {
-            return [1];
-        }
-        else {
-            return null;
-        }
+        $.getJSON(url, function(data) {
+            
+        });
     }
     
 };

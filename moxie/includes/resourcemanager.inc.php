@@ -5,8 +5,22 @@ class ResourceManager {
     public $resourcetypes = array();
     public $resourcetype_list = array();
     
-    public function __construct($resourcetype_list) {
+    public function __construct($resourcetype_list = array()) {
         $this->resourcetype_list = $resourcetype_list;
+        
+        $this->loadResourcetypes();
+    }
+    
+    public function isLoaded($resourcetype) {
+        return array_key_exists($resourcetype, $this->resourcetypes);
+    }
+    
+    public function loadAdditionalResourcetype($resourcetype) {
+        if ($this->isLoaded($resourcetype)) {
+            return false;
+        }
+        
+        $this->resourcetype_list[] = $resourcetype;
         
         $this->loadResourcetypes();
     }
@@ -14,6 +28,11 @@ class ResourceManager {
     public function loadResourcetypes() {
         if (!empty($this->resourcetype_list)) {
             foreach ($this->resourcetype_list as $k => $resourcetype) {
+                // Make sure the resource type hasn't already been loaded
+                if ($this->isLoaded($resourcetype)) {
+                    continue;
+                }
+                
                 if (strpos($resourcetype, array('/')) === false && $this->loadResourcetypeFile($resourcetype)) {
                     $this->resourcetypes[$resourcetype] = new $resourcetype;
                 }
