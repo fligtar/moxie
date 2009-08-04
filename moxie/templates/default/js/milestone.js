@@ -92,42 +92,6 @@ var milestone = {
         content.find('.type-form.' + form_class).addClass('selected');
     },
     
-    bugLookup: function(button) {
-        var form = $(button).parent();
-        var bugnumbers = form.find('.bug_number').val();
-        if (bugnumbers == '') return;
-        
-        form.find('.loading').show();
-        
-        var url = 'ajax.php?action=bug-lookup&bugtracker_id=' + form.find('.bugtracker_id').val() + '&bug_numbers=' + milestone.formatBugNumberString(bugnumbers);
-        
-        $.getJSON(url, function(data) {
-            form.find('.loading').hide();
-            
-            $.each(data, function(i, bug) {
-               form.find('.preview').append('<li><label><input type="checkbox" name="bug_id" value="' + bug.id + '" checked="checked" />' + bug.number + ' - ' + milestone.truncateSummary(bug.summary) + '</label></li>'); 
-            });
-            
-            form.parent().find('.categories,.submit').show();
-            form.find('.bug_number').val('');
-            
-        });
-    },
-    
-    truncateSummary: function(summary) {
-        if (summary.length > 50) {
-            summary =  summary.substring(0, 50) + '...';
-        }
-        
-        return summary;
-    },
-    
-    formatBugNumberString: function(bugnumbers) {
-        bugnumbers = bugnumbers.replace(/\s*[\,\;\s]+\s*/g, ',');
-        
-        return bugnumbers;
-    },
-    
     addResources: function(button) {
         var typeform = $(button).parent().parent();
         var resourcetype = typeform.find('input[name="resourcetype"]').val();
