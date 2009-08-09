@@ -8,6 +8,8 @@ class wiki extends Resourcetype {
         'wiki_name', 'wiki_url', 'wiki_lastupdate'
     );
     
+    public $icon = 'link.png';
+    
     /**
      * This method should RETURN (not render) the HTML for the resource's form
      * Do not use id="" in your tags, and prepend your resource id whenever possible.

@@ -8,6 +8,8 @@ class bugzilla extends Resourcetype {
         'bz_number', 'bz_summary', 'bz_assignee', 'bz_fixed', 'bz_verified'
     );
     
+    public $icon = 'bug.png';
+    
     public function css(&$template) {
         if (PAGE != 'milestone') {
             return '';

@@ -8,6 +8,8 @@ class link extends Resourcetype {
         'link_name', 'link_url'
     );
     
+    public $icon = 'link.png';
+    
     /**
      * This method should RETURN (not render) the CSS used by the resource.
      * @return string

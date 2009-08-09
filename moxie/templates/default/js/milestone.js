@@ -146,3 +146,18 @@ var milestone = {
     }
     
 };
+
+var add_resources = {
+    hide: function() {
+        $('#add-resources').slideUp();
+    },
+    
+    show: function() {
+        $('#add-resources').slideDown();
+    },
+    
+    showPanel: function(resourcetype) {
+        $('#add-resources .sidebar .selected, #add-resources .panel .resource-panel.selected').removeClass('selected');
+        $('#add-resources #tab-' + resourcetype + ', #add-resources #panel-' + resourcetype).addClass('selected');
+    }
+};

@@ -87,7 +87,7 @@ a:hover {
 }
 #global-header #breadcrumbs li {
     display: inline-block;
-    padding: 0 5px;
+    padding: 0 5px2;
 }
 
 #global-header #account-box {
@@ -119,6 +119,8 @@ a:hover {
     width: 90%;
     -moz-box-shadow: 2px 2px 15px #333;
     color: #000000;
+    position: relative;
+    min-height: 600px;
 }
 
 #page a {
@@ -135,13 +137,15 @@ a:hover {
 }
 
 #toolbar {
-    float: right;
-    margin-right: 40px;
+    position: absolute;
+    top: 0;
+    right: 40px;
 }
-#toolbar li {
+#toolbar > li {
     display: inline-block;
+    position: relative;
 }
-#toolbar li a {
+#toolbar a.tab {
     background-color: #999999;
     -moz-border-radius-bottomleft: 6px;
     -moz-border-radius-bottomright: 6px;
@@ -152,9 +156,45 @@ a:hover {
     display: block;
     text-decoration: none;
 }
-#toolbar li a:hover {
+#toolbar > li:hover a.tab {
     color: yellow;
     text-decoration: none;
+    -moz-border-radius: 0;
+    -moz-box-shadow: 2px 2px 1px #333;
+}
+
+#toolbar .menu {
+    display: none;
+    position: absolute;
+    background-color: #FFFFFF;
+    border: 2px solid #999999;
+    right: 5px;
+    width: 175px;
+    -moz-border-radius-topleft: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    -moz-border-radius-bottomright: 6px;
+    -moz-box-shadow: 2px 2px 1px #333;
+    
+}
+#toolbar .menu li.separator {
+    border-bottom: 1px solid #999999;
+}
+
+#toolbar .menu li a {
+    display: block;
+    text-align: right;
+    padding: 5px;
+    text-decoration: none;
+}
+#toolbar .menu li a:hover {
+    text-decoration: underline;
+}
+#toolbar .menu li a.selected {
+    font-weight: bold;
+}
+
+#toolbar > li:hover .menu {
+    display: block;
 }
 
 #header #title {
@@ -265,7 +305,7 @@ a:hover {
 .category-3 .category-label {
     background-color: #861304;
 }
-
+/*
 .add-resource {
     position: absolute;
     right: 100px;
@@ -342,6 +382,109 @@ a:hover {
 }
 .add-resource .content .type-form .categories {
     margin: 10px 0;
+}
+*/
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 13%;
+    right: 13%;
+    width: 74%;
+    height: 500px;
+    background-color: #6389B3;
+    -moz-border-radius-bottomleft: 15px;
+    -moz-border-radius-bottomright: 15px;
+    -moz-box-shadow: 0px 0px 15px #333;
+}
+
+#add-resources.overlay .sidebar {
+    background-color: #6389B3;
+    width: 20%;
+    height: 92%;
+    -moz-border-radius-bottomleft: 15px;
+    float: left;
+}
+
+#add-resources.overlay .panel {
+    background-color: #C7D8EA;
+    height: 92%;
+    float: right;
+    width: 80%;
+}
+
+#add-resources.overlay .footer {
+    clear: both;
+    width: 100%;
+    height: 8%;
+    -moz-border-radius-bottomleft: 15px;
+    -moz-border-radius-bottomright: 15px;
+}
+
+#add-resources.overlay .sidebar h4 {
+    font-size: 0.85em;
+    font-weight: bold;
+    padding: 5px 10px;
+    color: #DDDDDD;
+}
+
+#page #add-resources.overlay .sidebar ul li a {
+    display: block;
+    padding: 7px 10px 7px 25px;
+    border-bottom: 1px dashed #84B7F0;
+    background-position: 5px 50%;
+    background-repeat: no-repeat;
+    text-decoration: none;
+    color: #DDDDDD;
+    position: relative;
+}
+#page #add-resources.overlay .sidebar ul li a:hover,
+#page #add-resources.overlay .sidebar ul li a.selected {
+    background-color: #C7D8EA;
+    color: #6389B3;
+}
+
+#page #add-resources.overlay .sidebar ul li a span.badge {
+    background-color: #84B7F0;
+    -moz-border-radius: 10px;
+    position: absolute;
+    right: 5px;
+    font-size: 0.9em;
+    padding: 1px 5px;
+    color: #2963A4;
+    display: none;
+}
+
+#add-resources.overlay .footer button {
+    float: right;
+    margin: 5px 20px;
+}
+
+#page #add-resources.overlay .footer a.cancel {
+    margin: 10px 0 0 22%;
+    color: #DDDDDD;
+    font-size: 0.95em;
+    display: inline-block;
+}
+
+#add-resources.overlay .panel .resource-panel {
+    display: none;
+}
+#add-resources.overlay .panel .resource-panel.selected {
+    display: block;
+}
+
+#add-resources {
+    /*display: none;*/
+}
+
+button.pretty-button {
+    background-color: #C7D8EA;
+    -moz-border-radius: 6px;
+    border: 2px solid #84B7F0;
+    font-size: 1em;
+    color: #333333;
+    -moz-box-shadow: 0px 0px 10px #84B7F0;
 }
 
 #global-footer {

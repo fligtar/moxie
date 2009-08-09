@@ -41,8 +41,33 @@
 
     <div id="header">
         <ul id="toolbar">
-            <li><a href="#">project</a></li>
-            <li><a href="#">milestone</a></li>
+            <li>
+                <a href="#" onclick="return false;" class="tab">view</a>
+                <ul class="menu">
+                    <li><a href="#" class="selected" onclick="return false;">summary view</a></li>
+                    <li><a href="#" onclick="return false;">detailed view</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onclick="return false;" class="tab">milestone</a>
+                <ul class="menu">
+                    <li><a href="#" onclick="return false;">edit milestone</a></li>
+                    <li class="separator"></li>
+                    <li><a href="#" onclick="return false;">new deliverable</a></li>
+                    <li><a href="#" onclick="return false;">arrange deliverables</a></li>
+                    <li class="separator"></li>
+                    <li><a href="#" onclick="add_resources.show(); return false;">add resources</a></li>
+                    <li><a href="#" onclick="return false;">refresh resources</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onclick="return false;" class="tab">project</a>
+                <ul class="menu">
+                    <li><a href="#" onclick="return false;">edit project</a></li>
+                    <li><a href="#" onclick="return false;">new milestone</a></li>
+                </ul>
+            </li>
+            <li><a href="#" onclick="return false;" class="tab">admin</a></li>
         </ul>
     
         <div id="title">

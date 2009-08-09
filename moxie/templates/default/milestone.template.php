@@ -4,17 +4,11 @@ foreach ($vars['deliverables'] as $deliverable) {
 ?>
     <div class="deliverable deliverable-<?php echo $deliverable['id']; ?>">
         <ul class="deliverable-menu">
-            <li><a class="add" href="#" onclick="milestone.showAddPanel(this); return false;">add resource</a></li>
-            <li><a class="refresh" href="#" onclick="milestone.refreshDeliverable(<?php echo $deliverable['id']; ?>); return false;">refresh</a></li>
+
         </ul>
         <h3><?php echo $deliverable['name']; ?></h3>
         
         <input type="hidden" name="deliverable_id" value="<?php echo $deliverable['id']; ?>" />
-        <?php
-        $this->render('addresource', array(
-                'categories' => $vars['categories']
-            ), Template::CACHE_MEMORY);
-        ?>
         
         <ul class="categories">
         <?php
@@ -42,3 +36,9 @@ foreach ($vars['deliverables'] as $deliverable) {
 <?php
 }
 ?>
+
+    <?php
+    $this->render('addresource', array(
+            'categories' => $vars['categories']
+        ));
+    ?>
