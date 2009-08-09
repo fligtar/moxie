@@ -5,6 +5,7 @@ class Template {
     public $backup_theme;
     public $default_theme = 'default';
     public $template_dir;
+    public $breadcrumbs = array();
     
     private $cache = array();
     

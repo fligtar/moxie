@@ -128,49 +128,26 @@ FORM;
         return $data;
     }
     
-    public function lookup() {
-        require INCLUDES.'/bugtracking.inc.php';
+    public function lookup($data) {
+        list($Temp) = load_models('Temp');
         
-        list($Bug, $Bugtracker) = load_models('Bug', 'Bugtracker');
+        $q = $data['bug_query'];
+        
+        // Determine what kind of input we have
+        
+        if (strpos($q, 'http') !== false) {
+            // We have a URL. Now figure out if it's a bug or a search
+            
+        }
+        else {
+            // Hopefully we have one or more bug numbers
+            
+        }
         
         $bug_numbers = explode(',', $_GET['bug_numbers']);
         $bugs = array();
         
-        foreach ($bug_numbers as $bug_number) {
-            // See if we already have information on the bug
-            $bug = $Bug->getAll('number = \''.escape($bug_number).'\' AND bugtracker_id = '.escape($_GET['bugtracker_id']));
-            
-            if (!empty($bug)) {
-                $bug = $bug[0];
-            }
-            else {
-                // If we don't have it in the database, look it up in the tracker
-                $bugtracker = $Bugtracker->get($_GET['bugtracker_id']);
-        
-                if (!empty($bugtracker)) {
-                    $trackertype = Bugtracking::getTrackerInfo($bugtracker['type']);
-                    
-                    if (!class_exists($trackertype['shortname'])) {
-                        require 'includes/bugtracking/'.$trackertype['shortname'].'.inc.php';
-                    }
-                    
-                    $tracker = new $trackertype['shortname']($bugtracker['url']);
-                    
-                    $bug = $tracker->getBugInfo($bug_number);
-                    
-                    if (!empty($bug[$bug_number])) {
-                        $bug = $bug[$bug_number];
-                        $bug['bugtracker_id'] = $_GET['bugtracker_id'];
-                        
-                        // Add bug to db
-                        $Bug->insert($bug);
-                        $bug['id'] = $Bug->db->getLastID();
-                    }
-                }
-            }
-            
-            $bugs[] = $bug;
-        }
+  
         
         $template = new Template();
         $template->render('json', array(

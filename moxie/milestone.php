@@ -54,6 +54,12 @@ if (!empty($bugtrackers)) {
 
 $template = new Template($project['theme'], $Config->get('theme'));
 
+$template->breadcrumbs = array(
+        $template->getBaseURL() => 'mozilla',
+        $template->getBaseURL().'/'.$project['url'] => $project['name'],
+        $template->getBaseURL().'/'.$project['url'].'/milestones/'.$milestone['id'] => $milestone['name']
+    );
+
 $template->render('head', array(
         'title' => $project['name'].' - '.$milestone['name'].' @ '. $Config->get('site_name').' moxie',
         'css' => $template->cssString('global')

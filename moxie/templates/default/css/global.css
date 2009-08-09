@@ -57,32 +57,126 @@ blockquote, q {
 	quotes: "" "";
 }
 
+/* End reset stylesheet */
+
 body {
+    font-family: helvetica,arial,sans-serif;
+    background-color: #2963A4;
+    color: #FFFFFF;
+    min-width: 800px;
+}
+
+a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+#global-header {
+    width: 90%;
+    margin: 5px auto;
+    height: 1em;
+    font-size: 0.75em;
+}
+
+#global-header #breadcrumbs {
+    float: left;
+    font-size: 1.25em;
+}
+#global-header #breadcrumbs li {
+    display: inline-block;
+    padding: 0 5px;
+}
+
+#global-header #account-box {
+    float: right;
+}
+
+#global-header #account-box #login-form {
+    display: none;
+}
+
+#global-header #account-box #account-links {
+    display: inline-block;
+}
+#global-header #account-box #account-links li {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid #FFFFFF;
+}
+#global-header #account-box #account-links li:first-child {
+    border: none;
+}
+
+#page {
     font-family: "Lucida Grande",arial,sans-serif;
+    font-size: 1em;
+    background-color: #FFFFFF;
+    margin: 15px auto 20px;
+    -moz-border-radius: 15px;
+    width: 90%;
+    -moz-box-shadow: 2px 2px 15px #333;
+    color: #000000;
 }
 
-#header {
-    padding: 10px 50px;
+#page a {
+    color: #666666;
+    text-decoration: underline;
 }
-
-#header #breadcrumbs ul li {
-    display: inline;
+#page a:hover {
+    color: #000000;
+    text-decoration: underline;
 }
 
 #header #logo {
     display: inline;
 }
 
+#toolbar {
+    float: right;
+    margin-right: 40px;
+}
+#toolbar li {
+    display: inline-block;
+}
+#toolbar li a {
+    background-color: #999999;
+    -moz-border-radius-bottomleft: 6px;
+    -moz-border-radius-bottomright: 6px;
+    padding: 5px 8px;
+    margin: 0 5px;
+    color: #FFFFFF;
+    text-shadow: 0 0 3px #333333;
+    display: block;
+    text-decoration: none;
+}
+#toolbar li a:hover {
+    color: yellow;
+    text-decoration: none;
+}
+
+#header #title {
+    padding: 10px 20px 2px;
+}
+
+#header img {
+    vertical-align: middle;
+}
 #header h1 {
     font-weight: bold;
     display: inline;
-    font-size: 2.2em;
-    font-family: "Museo";
+    font-size: 2.5em;
+    text-shadow: 0 0 5px white, 0px 3px 7px yellow, -3px 0px 7px lime, 3px 0px 7px blue, 0px -3px 7px red;
+    vertical-align: middle;
+    margin: 0 5px;
 }
 #header h2 {
     display: inline;
     font-size: 1.8em;
     font-family: "Museo";
+    vertical-align: text-top;
 }
 
 #content {
@@ -248,4 +342,8 @@ body {
 }
 .add-resource .content .type-form .categories {
     margin: 10px 0;
+}
+
+#global-footer {
+    text-align: center;
 }
