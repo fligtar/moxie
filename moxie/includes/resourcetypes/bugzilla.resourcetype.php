@@ -18,11 +18,16 @@ class bugzilla extends Resourcetype {
         $img = $template->image('resources/bug.png');
         $css = <<<CSS
 
-.add-resource .content .type-selector ul li a.bugzilla {
-    background-image: url({$img});
-    background-position: 3px 50%;
-    background-repeat: no-repeat;
-    padding-left: 23px;
+#panel-bugzilla .form .bug-lookup {
+    text-align: center;
+}
+#panel-bugzilla .form .bug-lookup input {
+    font-size: 1.3em;
+    width: 80%;
+    margin: 10px;
+}
+#panel-bugzilla .form .bug-lookup .pretty-button {
+    background-color: #FFFFFF;
 }
 
 CSS;
@@ -84,12 +89,13 @@ JS;
     public function form() {
         $form = <<<FORM
 
-<form>
-    <label>Bug numbers<input type="text" name="query" class="query" /></label>
-    <span class="loading">Loading...</span>
-    <input type="submit" value="Look up" onclick="bugzilla.bugLookup(this); return false;" class="button"/>
-    <ul class="preview"></ul>
-</form>
+<h2>Add Bug Resources</h2>
+
+<div class="bug-lookup">
+    <p>Enter one or more bug numbers, a bug's URL, or a search results URL.</p>
+    <input type="text" name="q" /><br />
+    <button type="button" class="pretty-button">Retrieve Bugs</button>
+</div>
 
 FORM;
         return $form;

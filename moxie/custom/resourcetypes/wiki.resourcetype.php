@@ -16,9 +16,16 @@ class wiki extends Resourcetype {
      * @return string
      */
     public function form() {
-        $form = '<label>Name<input type="text" name="wiki_name"/></label><br />';
-        $form .= '<label>URL<input type="text" name="wiki_url" /></label>';
-        
+        $form = <<<FORM
+
+<h2>Add Wiki Page</h2>
+
+<p>Enter the URL of a MediaWiki or DekiWiki page to be checked for updates.</p>
+
+<label>Name <input type="text" name="wiki_name" /></label><br />
+<label>URL <input type="text" name="wiki_url" /></label><br />
+
+FORM;
         return $form;
     }
     

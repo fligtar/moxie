@@ -35,10 +35,9 @@ foreach ($vars['deliverables'] as $deliverable) {
     </div>
 <?php
 }
-?>
 
-    <?php
-    $this->render('addresource', array(
-            'categories' => $vars['categories']
-        ));
-    ?>
+$this->render('addresource', array(
+        'deliverables' => $vars['deliverables'],
+        'categories' => $vars['categories']
+    ));
+?>

@@ -26,19 +26,69 @@
                 <input type="hidden" name="resourcetype" value="<?php echo $resourcetype->id; ?>" />
                 <div class="form"><?php echo $resourcetype->form(); ?></div>
                 
-                <div class="categories">
-                    <label>Categories:</label>
-                    <ul>
-                    <?php
-                    if (!empty($vars['categories'])) {
-                        foreach ($vars['categories'] as $category) {
-                            echo '<li class="category category-'.$category['id'].'"><a class="category-label" href="#" onclick="milestone.selectCategory(this); return false;">';
-                            echo $category['name'];
-                            echo '<input type="hidden" name="category_id" value="'.$category['id'].'" />';
-                            echo '</a></li>';
+                <div class="uncategorized-box">
+                    <h3>Uncategorized:</h3>
+                    <div class="chooser">
+                        <p>Assign a deliverable and category to each resource before it can be added:</p>
+                        <label>Deliverable:
+                        <select>
+                            <option></option>
+                        <?php
+                        if (!empty($vars['deliverables'])) {
+                            foreach ($vars['deliverables'] as $deliverable) {
+                                echo '<option>'.$deliverable['name'].'</option>';
+                            }
                         }
-                    }
-                    ?>
+                        ?>
+                        </select></label>
+                        
+                        <label>Category: 
+                        <select>
+                            <option></option>
+                        <?php
+                        if (!empty($vars['categories'])) {
+                            foreach ($vars['categories'] as $category) {
+                                echo '<option>'.$category['name'].'</option>';
+                            }
+                        }
+                        ?>
+                        </select></label>
+                        
+                        <button type="button">Assign Selected</button>
+                    </div>
+                    
+                    <ul class="resource-grid">
+                        <li>
+                            <h5><input type="checkbox">bug 1234430</h5>
+                            <p>something something</p>
+                            <p class="uncategorized">Uncategorized<p>
+                        </li>
+                        <li>
+                            <h5><input type="checkbox">bug 1234430</h5>
+                            <p>something something something</p>
+                            <p>Uncategorized<p>
+                        </li>
+                        <li>
+                            <h5><input type="checkbox">bug 1234430</h5>
+                            <p>something something something</p>
+                            <p>Uncategorized<p>
+                        </li>
+                        <li>
+                            <h5><input type="checkbox">bug 1234430</h5>
+                            <p>something something something</p>
+                            <p>Uncategorized<p>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="tobeadded-box">
+                    <h3>To be added:</h3>
+                    <ul class="resource-grid">
+                        <li>
+                            <h5><input type="checkbox">bug 1234430</h5>
+                            <p>something something something</p>
+                            <p>Uncategorized<p>
+                        </li>
                     </ul>
                 </div>
             </div>

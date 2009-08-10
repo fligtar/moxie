@@ -411,6 +411,7 @@ a:hover {
     height: 92%;
     float: right;
     width: 80%;
+    overflow-y: auto;
 }
 
 #add-resources.overlay .footer {
@@ -469,9 +470,60 @@ a:hover {
 
 #add-resources.overlay .panel .resource-panel {
     display: none;
+    padding: 10px;
 }
 #add-resources.overlay .panel .resource-panel.selected {
     display: block;
+}
+
+#add-resources.overlay .panel .resource-panel h2 {
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+}
+
+#add-resources.overlay .panel .resource-panel .tobeadded-box,
+#add-resources.overlay .panel .resource-panel .uncategorized-box {
+    clear: both;
+    margin: 15px 0;
+}
+
+#add-resources.overlay .panel .resource-panel h3 {
+    font-weight: bold;
+    font-size: 1em;
+    margin: 10px 0;
+}
+
+#add-resources.overlay .panel .resource-panel .chooser {
+    font-size: 0.8em;
+}
+
+#add-resources.overlay .panel .resource-panel .chooser select {
+    font-size: 1.2em;
+}
+
+#add-resources.overlay .panel .resource-panel .resource-grid li {
+    display: inline-block;
+    border: 1px solid #2963A4;
+    -moz-border-radius: 6px;
+    padding: 5px;
+    font-size: 0.85em;
+    width: 28%;
+    min-width: 100px;
+    margin: 0 10px 10px 0;
+}
+
+#add-resources.overlay .panel .resource-panel .resource-grid li h5 {
+    font-weight: bold;
+    color: #2963A4;
+}
+
+#add-resources.overlay .panel .resource-panel .resource-grid li p {
+    width: 100%;
+}
+
+#add-resources.overlay .panel .resource-panel .resource-grid li p.uncategorized {
+    font-style: italic;
 }
 
 #add-resources {

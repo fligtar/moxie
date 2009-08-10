@@ -22,12 +22,7 @@ class link extends Resourcetype {
         $img = $template->image('resources/link.png');
         $css = <<<CSS
 
-.add-resource .content .type-selector ul li a.link {
-    background-image: url({$img});
-    background-position: 3px 50%;
-    background-repeat: no-repeat;
-    padding-left: 23px;
-}
+
         
 CSS;
         
@@ -40,9 +35,14 @@ CSS;
      * @return string
      */
     public function form() {
-        $form = '<label>Name<input type="text" name="link_name"/></label><br />';
-        $form .= '<label>URL<input type="text" name="link_url" /></label>';
-        
+        $form = <<<FORM
+
+<h2>Add Link</h2>
+
+<label>Name <input type="text" name="link_name" /></label><br />
+<label>URL <input type="text" name="link_url" /></label><br />
+
+FORM;
         return $form;
     }
     
