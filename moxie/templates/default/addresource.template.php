@@ -31,65 +31,38 @@
                     <div class="chooser">
                         <p>Assign a deliverable and category to each resource before it can be added:</p>
                         <label>Deliverable:
-                        <select>
+                        <select name="deliverable">
                             <option></option>
                         <?php
                         if (!empty($vars['deliverables'])) {
                             foreach ($vars['deliverables'] as $deliverable) {
-                                echo '<option>'.$deliverable['name'].'</option>';
+                                echo '<option value="'.$deliverable['id'].'">'.$deliverable['name'].'</option>';
                             }
                         }
                         ?>
                         </select></label>
                         
                         <label>Category: 
-                        <select>
+                        <select name="category">
                             <option></option>
                         <?php
                         if (!empty($vars['categories'])) {
                             foreach ($vars['categories'] as $category) {
-                                echo '<option>'.$category['name'].'</option>';
+                                echo '<option value="'.$category['id'].'">'.$category['name'].'</option>';
                             }
                         }
                         ?>
                         </select></label>
                         
-                        <button type="button">Assign Selected</button>
+                        <button type="button" onclick="add_resources.assignSelectedResources('<?php echo $resourcetype->id; ?>');">Assign Selected</button>
                     </div>
                     
-                    <ul class="resource-grid">
-                        <li>
-                            <h5><input type="checkbox">bug 1234430</h5>
-                            <p>something something</p>
-                            <p class="uncategorized">Uncategorized<p>
-                        </li>
-                        <li>
-                            <h5><input type="checkbox">bug 1234430</h5>
-                            <p>something something something</p>
-                            <p>Uncategorized<p>
-                        </li>
-                        <li>
-                            <h5><input type="checkbox">bug 1234430</h5>
-                            <p>something something something</p>
-                            <p>Uncategorized<p>
-                        </li>
-                        <li>
-                            <h5><input type="checkbox">bug 1234430</h5>
-                            <p>something something something</p>
-                            <p>Uncategorized<p>
-                        </li>
-                    </ul>
+                    <ul class="resource-grid"></ul>
                 </div>
                 
-                <div class="tobeadded-box">
-                    <h3>To be added:</h3>
-                    <ul class="resource-grid">
-                        <li>
-                            <h5><input type="checkbox">bug 1234430</h5>
-                            <p>something something something</p>
-                            <p>Uncategorized<p>
-                        </li>
-                    </ul>
+                <div class="ready-box">
+                    <h3>Ready to be added:</h3>
+                    <ul class="resource-grid"></ul>
                 </div>
             </div>
     <?php
@@ -99,7 +72,7 @@
     </div>
     
     <div class="footer">
-        <a href="#" onclick="add_resources.hide(); return false;" class="cancel">Cancel</a>
-        <button type="button" class="pretty-button">Add Resources</button>
+        <a href="#" onclick="add_resources.hide(); return false;" class="cancel">Close</a>
+        <button type="button" class="pretty-button" disabled="disabled">Add Resources</button>
     </div>
 </div>

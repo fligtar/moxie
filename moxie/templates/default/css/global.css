@@ -482,10 +482,11 @@ a:hover {
     margin-bottom: 10px;
 }
 
-#add-resources.overlay .panel .resource-panel .tobeadded-box,
+#add-resources.overlay .panel .resource-panel .ready-box,
 #add-resources.overlay .panel .resource-panel .uncategorized-box {
     clear: both;
     margin: 15px 0;
+    display: none;
 }
 
 #add-resources.overlay .panel .resource-panel h3 {
@@ -537,6 +538,11 @@ button.pretty-button {
     font-size: 1em;
     color: #333333;
     -moz-box-shadow: 0px 0px 10px #84B7F0;
+}
+
+button.loading {
+    background: transparent url(../images/ajax-loader.gif) no-repeat 7px 50%;
+    padding-left: 25px;
 }
 
 #global-footer {

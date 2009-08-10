@@ -7,7 +7,7 @@
 </div> <!-- /#page -->
 
 <div id="global-footer">
-    <a href="http://www.moxieproject.org"><img src="<?php echo $this->image('moxie-logo.gif') ?>" alt="moxie" title="powered by moxie" /></a>
+    <a href="http://www.moxieproject.org"><img src="<?php echo $this->image('moxie-logo.png') ?>" alt="moxie" title="powered by moxie" /></a>
 </div>
 
 <?php echo $this->jsString('jquery/jquery.min', 'jquery/jquery-ui.min'); ?>

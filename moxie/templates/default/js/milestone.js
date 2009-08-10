@@ -148,6 +148,8 @@ var milestone = {
 };
 
 var add_resources = {
+    readyCount: 0,
+    
     hide: function() {
         $('#add-resources').slideUp();
     },
@@ -159,5 +161,49 @@ var add_resources = {
     showPanel: function(resourcetype) {
         $('#add-resources .sidebar .selected, #add-resources .panel .resource-panel.selected').removeClass('selected');
         $('#add-resources #tab-' + resourcetype + ', #add-resources #panel-' + resourcetype).addClass('selected');
+    },
+    
+    addUncategorizedResource: function(resourcetype, title, description) {
+        var short_desc = description;
+        if (short_desc.length > 25) {
+            short_desc =  short_desc.substring(0, 24) + '&hellip;';
+        }
+        
+        var li = '<li><h5><input type="checkbox" checked="checked"/>' + title + '</h5><p title="' + description + '">' + short_desc + '</p><p class="assignment uncategorized">uncategorized</p></li>';
+        $('#add-resources #panel-' + resourcetype + ' .uncategorized-box .resource-grid').append(li);
+        $('#add-resources #panel-' + resourcetype + ' .uncategorized-box').show();
+    },
+    
+    assignSelectedResources: function(resourcetype) {
+        var deliverable = $('#add-resources #panel-' + resourcetype + ' .uncategorized-box select[name="deliverable"]');
+        var category = $('#add-resources #panel-' + resourcetype + ' .uncategorized-box select[name="category"]');
+        
+        $('#add-resources #panel-' + resourcetype + ' .uncategorized-box .resource-grid input[type="checkbox"]:checked').each(function() {
+            var resource = $(this).closest('li');
+            resource.find('input[type="checkbox"]').remove();
+            resource.find('.assignment').removeClass('uncategorized').html(deliverable.find('option:selected').text() + ' / ' + category.find('option:selected').text());
+            
+            resource.clone(true).appendTo('#add-resources #panel-' + resourcetype + ' .ready-box .resource-grid');
+            resource.remove();
+            
+            $('#add-resources #panel-' + resourcetype + ' .ready-box').show();
+            
+            if ($('#add-resources #panel-' + resourcetype + ' .uncategorized-box .resource-grid').children().size() == 0) {
+                $('#add-resources #panel-' + resourcetype + ' .uncategorized-box').hide();
+            }
+            
+            add_resources.incrementReadyCount(resourcetype);
+        });
+    },
+    
+    incrementReadyCount: function(resourcetype) {
+        add_resources.readyCount++;
+        var badge = $('#add-resources .sidebar #tab-' + resourcetype + ' .badge');
+        var resourcetype_count = badge.text();
+        resourcetype_count = resourcetype_count ? parseInt(resourcetype_count) + 1 : 1;
+        
+        badge.text(resourcetype_count).show();
+        
+        $('#add-resources .footer button').text('Add ' + add_resources.readyCount + ' Resource' + (add_resources.readyCount == 1 ? '' : 's')).attr('disabled', '');
     }
 };

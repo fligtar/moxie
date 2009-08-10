@@ -1,8 +1,19 @@
 <?php
 
-class bugzilla extends Bugtracking {
+class bugzilla_library {
+    private $url = '';
     
-    protected function getBugs($bug_numbers) {
+    /**
+     * Set the URL of the bugzilla instance
+     */
+    public function __construct($url) {
+        $this->url = $url;
+    }
+    
+    /**
+     * Breaks the bugs into groups of 200 and fetches their details
+     */
+    public function getBugs($bug_numbers) {
         $bugs = array();
         
         // More than 200 bugs at a time is not good for Bugzilla's health
@@ -20,22 +31,32 @@ class bugzilla extends Bugtracking {
         return $bugs;
     }
     
+    /**
+     * Parses out the bug numbers of the search results
+     */
+    public function getBugsFromSearch($search_url) {
+        $results = load_url($search_url);
+        
+        $start = strpos($results, '<input type="hidden" name="ctype" value="xml">');
+        $results = substr($results, $start, strlen($results) - $start);
+
+        preg_match_all('<input type="hidden" name="id" value="(\d+?)">', $results, $matches);
+        
+        return $matches[1];
+    }
+    
+    /**
+     * Gets the bug XML for each specified bug
+     */
     private function getXML($bug_numbers) {
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $this->url."/show_bug.cgi");
-
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,"ctype=xml&id=".implode($bug_numbers, "&id=").$this->getExcludedFields());
-
-        $xml = curl_exec($ch);
-
-        curl_close($ch);
+        $xml = load_url($this->url.'/show_bug.cgi', 'ctype=xml&id='.implode($bug_numbers, '&id=').$this->getExcludedFields());
         
         return $xml;
     }
     
+    /**
+     * Parses the bug XML to get the details we want
+     */
     private function parseXML($xml) {
         $data = simplexml_load_string($xml);
         

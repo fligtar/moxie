@@ -44,36 +44,27 @@ CSS;
         $js = <<<JS
 
 var bugzilla = {
-    bugLookup: function(button) {
-        var form = $(button).parent();
-        var query = form.find('.query').val();
+    lookup: function() {
+        var form = $('#add-resources #panel-bugzilla .form');
+        var query = form.find('.bug-lookup input').val();
         if (query == '') return;
 
-        form.find('.loading').show();
+        form.find('button').addClass('loading').text('Retrieving Bugs...').blur();
+        form.find('.bug-lookup input, .bug-lookup button').attr('disabled', 'disabled');
 
-        var url = 'ajax.php?action=resourcetype-custom&resourcetype=bugzilla&handler=lookup&bug_query=' + query;
+        var url = 'ajax.php?action=resourcetype-custom&resourcetype=bugzilla&handler=lookup&query=' + query;
 
         $.getJSON(url, function(data) {
-            form.find('.loading').hide();
-
+            form.find('button').removeClass('loading').text('Retrieve Bugs');
+            form.find('.bug-lookup input, .bug-lookup button').attr('disabled', '');
+            
             $.each(data, function(i, bug) {
-               form.find('.preview').append('<li><label><input type="checkbox" name="bug_id" value="' + bug.id + '" checked="checked" />' + bug.number + ' - ' + milestone.truncateSummary(bug.summary) + '</label></li>'); 
+                add_resources.addUncategorizedResource('bugzilla', 'bug ' + bug.number, bug.summary);
             });
 
-            form.parent().find('.categories,.submit').show();
-            form.find('.bug_number').val('');
-
+            form.find('.bug-lookup input').val('');
         });
-    },
-
-    truncateSummary: function(summary) {
-        if (summary.length > 50) {
-            summary =  summary.substring(0, 50) + '...';
-        }
-
-        return summary;
     }
-    
 };
 
 JS;
@@ -92,9 +83,9 @@ JS;
 <h2>Add Bug Resources</h2>
 
 <div class="bug-lookup">
-    <p>Enter one or more bug numbers, a bug's URL, or a search results URL.</p>
-    <input type="text" name="q" /><br />
-    <button type="button" class="pretty-button">Retrieve Bugs</button>
+    <p>Enter one or more bug numbers, bug URLs, or a search results URL.</p>
+    <input type="text" name="q" value="506751"/><br />
+    <button type="button" class="pretty-button" onclick="bugzilla.lookup();">Retrieve Bugs</button>
 </div>
 
 FORM;
@@ -137,24 +128,31 @@ FORM;
     }
     
     public function lookup($data) {
+        require_once dirname(__FILE__).'/bugzilla/bugzilla.inc.php';
+        
+        $lib = new bugzilla_library('https://bugzilla.mozilla.org');
+        
         list($Temp) = load_models('Temp');
         
-        $q = $data['bug_query'];
+        $q = $data['query'];
         
         // Determine what kind of input we have
         
-        if (strpos($q, 'http') !== false) {
-            // We have a URL. Now figure out if it's a bug or a search
-            
+        if (strpos($q, 'http') !== false && strpos($q, 'buglist') !== false) {
+            // If it's a URL and is a buglist, get the bugs from it
+            $bug_numbers = $lib->getBugsFromSearch($q);
         }
-        else {
-            // Hopefully we have one or more bug numbers
-            
+        elseif (preg_match_all('/\d+/', $q, $matches) >= 1) {
+            // Otherwise, get the bug numbers directly from the query
+            // Hopefully this is one or more bug numbers, or a bug's url
+            $bug_numbers = $matches[0];
         }
         
-        $bug_numbers = explode(',', $_GET['bug_numbers']);
-        $bugs = array();
+        if (empty($bug_numbers)) {
+            // Error
+        }
         
+        $bugs = $lib->getBugs($bug_numbers);
   
         
         $template = new Template();
