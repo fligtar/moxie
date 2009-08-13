@@ -73,6 +73,6 @@
     
     <div class="footer">
         <a href="#" onclick="add_resources.hide(); return false;" class="cancel">Close</a>
-        <button type="button" class="pretty-button" disabled="disabled">Add Resources</button>
+        <button type="button" class="pretty-button" disabled="disabled" onclick="add_resources.addResources();">Add Resources</button>
     </div>
 </div>

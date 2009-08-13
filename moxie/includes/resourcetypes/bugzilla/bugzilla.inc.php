@@ -67,11 +67,11 @@ class bugzilla_library {
             $id = (string) $bug->bug_id;
             
             $bugs[$id] = array(
-                'number' => $id,
-                'summary' => (string) $bug->short_desc,
-                'assignee' => (string) $bug->assigned_to,
-                'fixed' => (string) $bug->resolution == 'FIXED' ? 1 : 0,
-                'verified' => (string) $bug->bug_status == 'VERIFIED' ? 1 : 0
+                'bz_number' => $id,
+                'bz_summary' => (string) $bug->short_desc,
+                'bz_assignee' => (string) $bug->assigned_to,
+                'bz_fixed' => (string) $bug->resolution == 'FIXED' ? 1 : 0,
+                'bz_verified' => (string) $bug->bug_status == 'VERIFIED' ? 1 : 0
             );
         }
         

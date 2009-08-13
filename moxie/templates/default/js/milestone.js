@@ -163,13 +163,21 @@ var add_resources = {
         $('#add-resources #tab-' + resourcetype + ', #add-resources #panel-' + resourcetype).addClass('selected');
     },
     
-    addUncategorizedResource: function(resourcetype, title, description) {
+    addUncategorizedResource: function(resourcetype, title, description, additional_params) {
         var short_desc = description;
         if (short_desc.length > 25) {
             short_desc =  short_desc.substring(0, 24) + '&hellip;';
         }
         
-        var li = '<li><h5><input type="checkbox" checked="checked"/>' + title + '</h5><p title="' + description + '">' + short_desc + '</p><p class="assignment uncategorized">uncategorized</p></li>';
+        var li = '<li>';
+        li += '<h5><input type="checkbox" checked="checked"/>' + title + '</h5>';
+        li += '<p title="' + description + '">' + short_desc + '</p>';
+        li += '<p class="assignment uncategorized">uncategorized</p>';
+        if (additional_params) {
+            li += '<input type="hidden" name="additional_params" value="' + additional_params + '" />';
+        }
+        li += '</li>';
+        
         $('#add-resources #panel-' + resourcetype + ' .uncategorized-box .resource-grid').append(li);
         $('#add-resources #panel-' + resourcetype + ' .uncategorized-box').show();
     },
@@ -181,7 +189,11 @@ var add_resources = {
         $('#add-resources #panel-' + resourcetype + ' .uncategorized-box .resource-grid input[type="checkbox"]:checked').each(function() {
             var resource = $(this).closest('li');
             resource.find('input[type="checkbox"]').remove();
-            resource.find('.assignment').removeClass('uncategorized').html(deliverable.find('option:selected').text() + ' / ' + category.find('option:selected').text());
+            
+            var label = '<span class="deliverable">' + deliverable.find('option:selected').text() + '</span> / <span class="category">' + category.find('option:selected').text() + '</span>';
+            var hidden = '<input type="hidden" name="deliverable_id" value="' + deliverable.val() + '" /><input type="hidden" name="category_id" value="' + category.val() + '"/>';
+            
+            resource.find('.assignment').removeClass('uncategorized').html(label + hidden);
             
             resource.clone(true).appendTo('#add-resources #panel-' + resourcetype + ' .ready-box .resource-grid');
             resource.remove();
@@ -205,5 +217,11 @@ var add_resources = {
         badge.text(resourcetype_count).show();
         
         $('#add-resources .footer button').text('Add ' + add_resources.readyCount + ' Resource' + (add_resources.readyCount == 1 ? '' : 's')).attr('disabled', '');
+    },
+    
+    addResources: function() {
+        $('#add-resources .ready-box li').each(function() {
+            
+        });
     }
 };
