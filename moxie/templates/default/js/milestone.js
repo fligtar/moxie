@@ -216,12 +216,51 @@ var add_resources = {
         
         badge.text(resourcetype_count).show();
         
-        $('#add-resources .footer button').text('Add ' + add_resources.readyCount + ' Resource' + (add_resources.readyCount == 1 ? '' : 's')).attr('disabled', '');
+        $('#add-resources .footer button').text('Add ' + add_resources.readyCount + ' Resource' + (add_resources.readyCount == 1 ? '' : 's')).attr('onclick', 'add_resources.addResources();');
+    },
+    
+    decrementReadyCount: function(resourcetype) {
+        add_resources.readyCount--;
+        var badge = $('#add-resources .sidebar #tab-' + resourcetype + ' .badge');
+        var resourcetype_count = parseInt(badge.text());
+        
+        if (resourcetype_count > 1) {
+            badge.text(resourcetype_count - 1);
+            $('#add-resources .footer button').text('Add ' + add_resources.readyCount + ' Resource' + (add_resources.readyCount == 1 ? '' : 's'));
+        }
+        else {
+            badge.text('').hide();
+            $('#add-resources .footer button').text('Finished').attr('onclick', 'add_resources.hide();');
+            $('#add-resources .footer a').text('Add More Resources').attr('onclick', 'add_resources.reset(); return false;').attr('display', 'inline-block');
+        }
     },
     
     addResources: function() {
+        $('#add-resources .sidebar .selected, #add-resources .panel .resource-panel.selected').removeClass('selected');
+        $('#add-resources #add-panel').addClass('selected');
+        
         $('#add-resources .ready-box li').each(function() {
+            var loading_item = $(this).clone(true).appendTo('#add-resources #add-panel .resource-grid').addClass('loading');
             
+            var url = 'ajax.php?action=add-resource';
+            url += '&resourcetype=' + $(this).closest('.resource-panel').find('input[name="resourcetype"]').val();
+            url += '&category_id=' + $(this).find('input[name="category_id"]').val();
+            url += '&deliverable_id=' + $(this).find('input[name="deliverable_id"]').val();
+            url += '&' + $(this).find('input[name="additional_params"]').val();
+            
+            $.getJSON(url, function(data) {
+                loading_item.addClass('loaded').removeClass('loading');
+                var html = '<li class="resource ' + data.resourcetype + '" id="resource-' + data.resource_id + '">' + data.link + '</li>';
+                $('#deliverable-' + data.deliverable_id + ' #category-' + data.category_id + ' .resources').append(html);
+                
+                add_resources.decrementReadyCount(data.resourcetype);
+            });
         });
-    }
+    },
+    
+    resetReadyCount: function() {
+        add_resources.readyCount = 0;
+        $('#add-resources .sidebar .badge').text('').hide();
+        $('#add-resources .footer button').text('Close').attr('disabled', '').attr('onclick', 'add_resources.hide();');
+    },
 };

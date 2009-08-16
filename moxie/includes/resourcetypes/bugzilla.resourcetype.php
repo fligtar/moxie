@@ -129,6 +129,14 @@ FORM;
         return $data;
     }
     
+    public function getFieldsToSave($data) {
+        list($Temp) = load_models('Temp');
+        
+        $fields = $Temp->retrieveAndDestroyTempEntry($data['temp_id']);
+        
+        return $fields;
+    }
+    
     public function lookup($data) {
         require_once dirname(__FILE__).'/bugzilla/bugzilla.inc.php';
         

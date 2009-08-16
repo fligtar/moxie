@@ -11,6 +11,16 @@ class TempModel extends Model {
             return false;
         }
     }
+    
+    public function retrieveAndDestroyTempEntry($temp_id) {
+        if ($data = $this->get($temp_id)) {
+            $this->delete($temp_id);
+            
+            return unserialize($data['data']);
+        }
+        
+        return false;
+    }
 }
 
 ?>

@@ -17,10 +17,10 @@ switch ($_GET['action']) {
         $resource_manager = new ResourceManager(array($_GET['resourcetype']));
         $resourcetype =& $resource_manager->resourcetypes[$_GET['resourcetype']];
         $fields = $resourcetype->getFieldsToSave($_GET);
-        $json = array();
         
         $data = array(
             'deliverable_id' => $_GET['deliverable_id'],
+            'category_id' => $_GET['category_id'],
             'resourcetype' => $_GET['resourcetype'],
             'data' => serialize($fields)
         );
@@ -28,23 +28,16 @@ switch ($_GET['action']) {
         // Insert into db
         list($Resource) = load_models('Resource');
         
-        if (!is_array($_GET['category_id'])) {
-            $_GET['category_id'] = array($_GET['category_id']);
-        }
+        $Resource->insert($data);
         
-        foreach ($_GET['category_id'] as $category_id) {
-            $data['category_id'] = $category_id;
-            $Resource->insert($data);
-            
-            // Add to JSON output
-            $json[] = array(
-                'resource_id' => $Resource->db->getLastID(),
-                'deliverable_id' => $data['deliverable_id'],
-                'category_id' => $data['category_id'],
-                'resourcetype' => $data['resourcetype'],
-                'link' => $resourcetype->buildLink($fields)
-            );
-        }
+        // Add to JSON output
+        $json = array(
+            'resource_id' => $Resource->db->getLastID(),
+            'deliverable_id' => $data['deliverable_id'],
+            'category_id' => $data['category_id'],
+            'resourcetype' => $data['resourcetype'],
+            'link' => $resourcetype->buildLink($fields)
+        );
         
         $template = new Template();
         $template->render('json', array(

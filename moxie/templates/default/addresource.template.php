@@ -69,10 +69,15 @@
         }
     }
     ?>
+        <div class="resource-panel" id="add-panel">
+            <h2>Adding Resources...</h2>
+            
+            <ul class="resource-grid"></ul>
+        </div>
     </div>
     
     <div class="footer">
-        <a href="#" onclick="add_resources.hide(); return false;" class="cancel">Close</a>
-        <button type="button" class="pretty-button" disabled="disabled" onclick="add_resources.addResources();">Add Resources</button>
+        <a href="#" onclick="add_resources.hide(); return false;" class="alternate">Close</a>
+        <button type="button" class="pretty-button" onclick="add_resources.hide();">Close</button>
     </div>
 </div>
