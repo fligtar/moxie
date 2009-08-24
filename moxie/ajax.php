@@ -36,7 +36,7 @@ switch ($_GET['action']) {
             'deliverable_id' => $data['deliverable_id'],
             'category_id' => $data['category_id'],
             'resourcetype' => $data['resourcetype'],
-            'link' => $resourcetype->buildLink($fields)
+            'link' => $resourcetype->getLink($fields)
         );
         
         $template = new Template();
@@ -102,16 +102,14 @@ switch ($_GET['action']) {
      * Calls a resourcetype's custom handler function
      * Params:
      *   resourcetype - the resourcetype
-     *   handler - name of the function to call
+     *   handler - name of the handler
      *   (other) - other data to be passed on to handler
      */
     case 'resourcetype-custom':
         $resource_manager = new ResourceManager(array($_GET['resourcetype']));
         $resourcetype =& $resource_manager->resourcetypes[$_GET['resourcetype']];
         
-        list($Resource) = load_models('Resource');
-        
-        $resourcetype->{$_GET['handler']}($_GET);
+        $resourcetype->handle($_GET['handler'], $_GET);
         
         break;
         

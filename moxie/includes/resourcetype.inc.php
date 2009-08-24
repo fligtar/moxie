@@ -4,6 +4,8 @@ class Resourcetype {
     public $id = '';
     public $name = '';
     
+    private $handlers = array();
+    
     public function __construct() {
         // Set default metdata
         if (empty($this->id)) {
@@ -35,6 +37,8 @@ class Resourcetype {
     // Required methods
     public function getLink() {}
     public function renderAddResourcesPanel() {}
+    
+    // Optional methods
     public function refresh() {}
     
     /**
@@ -78,6 +82,25 @@ class Resourcetype {
     public function addHook($action, $method) {
         add_hook($action, array(get_class($this), $method));
     }
+    
+    /**
+     * Registers a custom handler function for an AJAX call
+     */
+     public function addHandler($action, $handler) {
+         $this->handlers[$action] = $handler;
+     }
+     
+     /**
+      * Calls a custom handler for the resourcetype
+      */
+     public function handle($action) {
+         if (!empty($this->handlers[$action])) {
+             $params = func_get_args();
+             unset($params[0]);
+
+             call_user_func_array(array($this, $this->handlers[$action]), $params);
+         }
+     }
     
 }
 

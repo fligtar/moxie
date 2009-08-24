@@ -12,6 +12,7 @@ class bugzilla extends Resourcetype {
     
     public function init() {
         $this->addHook('render_deliverable', 'renderDeliverableHeading');
+        $this->addHandler('lookup', 'lookup');
     }
     
     public function css() {
@@ -27,6 +28,15 @@ class bugzilla extends Resourcetype {
         }
         #panel-bugzilla .form .bug-lookup .pretty-button {
             background-color: #FFFFFF;
+        }
+        #page li.resource.bugzilla a.fixed {
+            text-decoration: line-through;
+            color: green;
+        }
+        #page li.resource.bugzilla a.verified {
+            text-decoration: line-through;
+            color: green;
+            font-weight: bold;
         }
     <?php
         }
@@ -44,7 +54,7 @@ class bugzilla extends Resourcetype {
                 form.find('button').addClass('loading').text('Retrieving Bugs...').blur();
                 form.find('.bug-lookup input, .bug-lookup button').attr('disabled', 'disabled');
 
-                var url = 'ajax.php?action=resourcetype-custom&resourcetype=bugzilla&handler=lookup&query=' + query;
+                var url = 'ajax.php?action=resourcetype-custom&resourcetype=bugzilla&handler=lookup&query=' + encodeURIComponent(query);
 
                 $.getJSON(url, function(data) {
                     form.find('button').removeClass('loading').text('Retrieve Bugs');
@@ -75,7 +85,33 @@ class bugzilla extends Resourcetype {
     }
     
     public function renderDeliverableHeading($deliverable) {
-        echo $deliverable['id'];
+        list($Resource) = load_models('Resource');
+        
+        // Get all bugzilla resources from this deliverable in counted categories
+        $resources = $Resource->getAll("deliverable_id = '".escape($deliverable['id'])."' AND resourcetype = 'bugzilla'", 'data');
+        
+        if (!empty($resources)) {
+            $totals = array(
+                'bz_assignee' => array(),
+                'bz_fixed' => array(),
+                'bz_verified' => array()
+            );
+            
+            foreach ($resources as $resource) {
+                $bug = unserialize($resource['data']);
+                
+                foreach ($totals as $field => $counts) {
+                    if (empty($totals[$field][$bug[$field]])) {
+                        $totals[$field][$bug[$field]] = 1;
+                    }
+                    else{
+                        $totals[$field][$bug[$field]]++;
+                    }
+                }
+            }
+            
+            echo $totals['bz_fixed'][1].' of '.($totals['bz_fixed'][1] + $totals['bz_fixed'][0]).' bugs fixed';
+        }
     }
     
     /**
@@ -83,7 +119,9 @@ class bugzilla extends Resourcetype {
      * @return string
      */
     public function getLink($data, $type = 'summary') {
-        $link = '<a href="'.addslashes($this->bugzilla_url.'/show_bug.cgi?id='.$data['bz_number']).'" title="'.addslashes($data['bz_assignee'].' - '.$data['bz_summary']).'">bug '.$data['bz_number'].'</a>';
+        $link = '<a class="'.($data['bz_fixed'] == 1 ? ($data['bz_verified'] == 1 ? 'verified' : 'fixed') : '').'" ';
+        $link .= 'href="'.addslashes($this->bugzilla_url.'/show_bug.cgi?id='.$data['bz_number']).'" ';
+        $link .= 'title="'.addslashes($data['bz_assignee'].' - '.$data['bz_summary']).'">bug '.$data['bz_number'].'</a>';
         
         return $link;
     }

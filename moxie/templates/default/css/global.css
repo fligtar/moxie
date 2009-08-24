@@ -277,7 +277,7 @@ a:hover {
 .deliverable ul.categories ul.resources,
 .deliverable ul.categories ul.resources li {
     display: inline-block;
-    margin: 0 5px;
+    margin: 4px 5px;
 }
 
 #page .editable .resource a {

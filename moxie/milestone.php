@@ -44,14 +44,6 @@ if (!empty($deliverables)) {
     }
 }
 
-// Get the bugtrackers for this project
-$bugtrackers = $Bugtracker->getBugtrackers($project['id']);
-if (!empty($bugtrackers)) {
-    foreach ($bugtrackers as $bugtracker_id => $bugtracker) {
-        $bugtrackers[$bugtracker_id]['tracker_info'] = Bugtracking::getTrackerInfo($bugtracker['type']);
-    }
-}
-
 $template = new Template($project['theme'], $Config->get('theme'));
 
 $template->breadcrumbs = array(
@@ -74,7 +66,6 @@ $template->render('milestone', array(
         'project' => $project,
         'milestone' => $milestone,
         'deliverables' => $deliverables,
-        'bugtrackers' => $bugtrackers,
         'categories' => $categories
     ));
 

@@ -151,8 +151,8 @@ var add_resources = {
     
     addUncategorizedResource: function(resourcetype, title, description, additional_params) {
         var short_desc = description;
-        if (short_desc.length > 25) {
-            short_desc =  short_desc.substring(0, 24) + '&hellip;';
+        if (short_desc.length > 24) {
+            short_desc =  short_desc.substring(0, 23) + '&hellip;';
         }
         
         var li = '<li>';

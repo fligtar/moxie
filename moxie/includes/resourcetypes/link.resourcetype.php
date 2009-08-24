@@ -11,7 +11,7 @@ class link extends Resourcetype {
     public function renderAddResourcesPanel() {
     ?>
         <h2>Add Link</h2>
-
+        <p>Add a resource that links to any URL</p>
         <label>Name <input type="text" name="link_name" /></label><br />
         <label>URL <input type="text" name="link_url" /></label><br />
     <?php
