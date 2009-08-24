@@ -79,7 +79,8 @@ $template->render('milestone', array(
     ));
 
 $template->render('footer', array(
-        'js' => $template->jsString('milestone')
+        'js' => "var milestone_id = '{$milestone['id']}';",
+        'jsFiles' => $template->jsString('milestone')
     ));
 
 ?>

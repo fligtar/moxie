@@ -258,6 +258,11 @@ a:hover {
     font-weight: bold;
     font-size: 1.3em;
 }
+.deliverable h3 input {
+    font-size: 1em;
+    font-weight: bold;
+    min-width: 25em;
+}
 .deliverable ul.categories {
     margin: 10px;
 }
@@ -275,6 +280,14 @@ a:hover {
     margin: 0 5px;
 }
 
+#page .editable .resource a {
+    text-decoration: none;
+}
+#page .editable .resource a:hover {
+    cursor: move;
+    color: #666666;
+}
+
 .category-box {
     background: transparent url(../images/flag.png) right center no-repeat;
     padding-right: 13px;
@@ -282,7 +295,8 @@ a:hover {
 .category-hidden {
     display: none;
 }
-.dragover .category-hidden {
+.dragover .category-hidden,
+.editable .category-hidden {
     display: block;
 }
 .category .category-label {
@@ -317,6 +331,7 @@ a:hover {
     -moz-border-radius-bottomleft: 15px;
     -moz-border-radius-bottomright: 15px;
     -moz-box-shadow: 0px 0px 15px #333;
+    display: none;
 }
 
 #add-resources.overlay .sidebar {
@@ -380,13 +395,18 @@ a:hover {
 #add-resources.overlay .footer button {
     float: right;
     margin: 5px 20px;
+    display: none;
 }
 
-#page #add-resources.overlay .footer a.alternate {
+#page #add-resources.overlay .footer a {
     margin: 10px 0 0 22%;
     color: #DDDDDD;
     font-size: 0.95em;
     display: none;
+}
+
+#page #add-resources.overlay .footer .close-button {
+    display: inline-block;
 }
 
 #add-resources.overlay .panel .resource-panel {

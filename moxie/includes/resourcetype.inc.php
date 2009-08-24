@@ -1,10 +1,40 @@
 <?php
 
 class Resourcetype {
+    public $id = '';
+    public $name = '';
     
-    public function js() {}
-    public function css() {}
-    public function form() {}
+    public function __construct() {
+        // Set default metdata
+        if (empty($this->id)) {
+            $this->id = get_class($this);
+        }
+        
+        if (empty($this->name)) {
+            $this->name = $this->id;
+        }
+        
+        // Add callbacks for certain methods if they exist
+        
+        // CSS
+        if (method_exists($this, 'css')) {
+            $this->addHook('output_css', 'css');
+        }
+        
+        // JavaScript
+        if (method_exists($this, 'js')) {
+            $this->addHook('output_js', 'js');
+        }
+        
+        // Call init method if it exists
+        if (method_exists($this, 'init')) {
+            $this->init();
+        }
+    }
+    
+    // Required methods
+    public function getLink() {}
+    public function renderAddResourcesPanel() {}
     public function refresh() {}
     
     /**
@@ -37,6 +67,16 @@ class Resourcetype {
         }
         
         return $fields;
+    }
+    
+    // Helpers
+    
+    /**
+     * Adds a hook that will call the given callback.
+     * Callback must be a method in the calling class.
+     */
+    public function addHook($action, $method) {
+        add_hook($action, array(get_class($this), $method));
     }
     
 }

@@ -1,10 +1,11 @@
+<div class="deliverables">
 <?php
 global $resource_manager;
 foreach ($vars['deliverables'] as $deliverable) {
 ?>
     <div class="deliverable" id="deliverable-<?php echo $deliverable['id']; ?>">
+        <?php hook('render_deliverable', $deliverable); ?>
         <input type="hidden" name="deliverable_id" value="<?php echo $deliverable['id']; ?>" />
-        <ul class="deliverable-menu"></ul>
         <h3><?php echo $deliverable['name']; ?></h3>
         
         <ul class="categories">
@@ -19,7 +20,7 @@ foreach ($vars['deliverables'] as $deliverable) {
             
             if (!$empty) {
                 foreach ($category['resources'] as $resource) {
-                    echo '<li class="resource '.$resource['resourcetype'].'" id="resource-'.$resource['id'].'">'.$resource_manager->resourcetypes[$resource['resourcetype']]->buildLink(unserialize($resource['data'])).'</li>';
+                    echo '<li class="resource '.$resource['resourcetype'].'" id="resource-'.$resource['id'].'">'.$resource_manager->resourcetypes[$resource['resourcetype']]->getLink(unserialize($resource['data'])).'</li>';
                 }
             }
             
@@ -32,7 +33,9 @@ foreach ($vars['deliverables'] as $deliverable) {
     </div>
 <?php
 }
-
+?>
+</div>
+<?php
 $this->render('addresource', array(
         'deliverables' => $vars['deliverables'],
         'categories' => $vars['categories']

@@ -10,17 +10,25 @@
     <a href="http://www.moxieproject.org"><img src="<?php echo $this->image('moxie-logo.png') ?>" alt="moxie" title="powered by moxie" /></a>
 </div>
 
-<?php echo $this->jsString('jquery/jquery.min', 'jquery/jquery-ui.min'); ?>
-<?php if (!empty($vars['js'])) echo $vars['js']; ?>
-
-<script type="text/javascript">
 <?php
-global $resource_manager;
-echo $resource_manager->callMethodOnAll('js');
-?>
-</script>
+echo $this->jsString('jquery/jquery.min', 'jquery/jquery-ui.min');
 
-<?php
+// Custom JS in the page
+if (!empty($vars['js'])) {
+    echo '<script type="text/javascript">';
+    echo $vars['js'];
+    echo '</script>';
+}
+
+// Page-specific js files
+if (!empty($vars['jsFiles'])) {
+    echo $vars['jsFiles'];
+}
+
+echo '<script type="text/javascript">';
+hook('output_js');
+echo '</script>';
+
 /*global $starttime;
 $endtime = microtime();
 $endarray = explode(" ", $endtime);

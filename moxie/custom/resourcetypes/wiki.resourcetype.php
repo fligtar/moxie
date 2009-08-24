@@ -1,39 +1,29 @@
 <?php
 
 class wiki extends Resourcetype {
-    public $id = 'wiki';
-    public $name = 'wiki';
-    
+
     public $fields = array(
         'wiki_name', 'wiki_url', 'wiki_lastupdate'
     );
     
     public $icon = 'link.png';
     
-    /**
-     * This method should RETURN (not render) the HTML for the resource's form
-     * Do not use id="" in your tags, and prepend your resource id whenever possible.
-     * @return string
-     */
-    public function form() {
-        $form = <<<FORM
+    public function renderAddResourcesPanel() {
+    ?>
+        <h2>Add Wiki Page</h2>
 
-<h2>Add Wiki Page</h2>
+        <p>Enter the URL of a MediaWiki or DekiWiki page to be checked for updates.</p>
 
-<p>Enter the URL of a MediaWiki or DekiWiki page to be checked for updates.</p>
-
-<label>Name <input type="text" name="wiki_name" /></label><br />
-<label>URL <input type="text" name="wiki_url" /></label><br />
-
-FORM;
-        return $form;
+        <label>Name <input type="text" name="wiki_name" /></label><br />
+        <label>URL <input type="text" name="wiki_url" /></label><br />
+    <?php
     }
     
     /**
      * This method should RETURN (not render) the HTML for the resource's link
      * @return string
      */
-    public function buildLink($data) {
+    public function getLink($data, $type = 'summary') {
         $link = '<a href="'.$data['wiki_url'].'" title="'.(!empty($data['wiki_lastupdate']) ? 'Last updated: '.date('M j, Y H:i', $data['wiki_lastupdate']) : '').'">'.$data['wiki_name'].'</a>';
         
         return $link;

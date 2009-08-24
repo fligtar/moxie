@@ -18,13 +18,16 @@
     </div>
     
     <div class="panel">
+        <div class="resource-panel selected" id="main-panel">
+            <h2>Add Resources</h2>
+        </div>
     <?php
     if (!empty($resource_manager->resourcetypes)) {
         foreach ($resource_manager->resourcetypes as $resourcetype) {
     ?>
             <div class="resource-panel" id="panel-<?php echo $resourcetype->id; ?>">
                 <input type="hidden" name="resourcetype" value="<?php echo $resourcetype->id; ?>" />
-                <div class="form"><?php echo $resourcetype->form(); ?></div>
+                <div class="form"><?php echo $resourcetype->renderAddResourcesPanel(); ?></div>
                 
                 <div class="uncategorized-box">
                     <h3>Uncategorized:</h3>
@@ -77,7 +80,11 @@
     </div>
     
     <div class="footer">
-        <a href="#" onclick="add_resources.hide(); return false;" class="alternate">Close</a>
-        <button type="button" class="pretty-button" onclick="add_resources.hide();">Close</button>
+        <a href="#" onclick="add_resources.hide(); return false;" class="close-link">Close</a>
+        <a href="#" onclick="add_resources.clearAddQueue(); return false;" class="clear-queue-link">Clear Add Queue</a>
+        <a href="#" onclick="add_resources.showMain(); return false;" class="add-more-link">Add More Resources</a>
+        <button type="button" class="pretty-button close-button" onclick="add_resources.hide();">Close</button>
+        <button type="button" class="pretty-button finished-button" onclick="add_resources.hide();">Finished</button>
+        <button type="button" class="pretty-button add-button" onclick="add_resources.addResources();">Add 1 Resource</button>
     </div>
 </div>

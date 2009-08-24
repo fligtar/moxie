@@ -58,93 +58,71 @@ $(function() {
 });
 
 var milestone = {
-    showAddPanel: function(a) {
-        $(a).addClass('selected');
-        var panel = $(a).parent().parent().parent().find('.add-resource');
-        panel.find('.type-selector ul li:first-child a').click();
-        milestone.resetAddPanel(panel);
-        panel.slideDown();
-    },
-    
-    hideAddPanel: function(a) {
-        var panel = $(a).parent().parent().parent();
-        panel.slideUp();
-        panel.parent().find('.deliverable-menu .add').removeClass('selected');
-    },
-    
-    resetAddPanel: function(panel) {
-        panel.find('.loading').hide();
-        panel.find('input[type="text"]').val('');
-        panel.find('.categories li a').removeClass('selected');
-        panel.find('.preview li').remove();
-    },
-    
-    selectCategory: function(a) {
-        $(a).parent().toggleClass('selected');
-    },
-    
-    showForm: function(a, form_class) {
-        $(a).parent().parent().find('a').removeClass('selected');
-        $(a).addClass('selected');
+    toggleEditing: function() {
+        $('.deliverables').addClass('editable');
         
-        var content = $(a).parent().parent().parent().parent();
-        content.find('.type-form').removeClass('selected');
-        content.find('.type-form.' + form_class).addClass('selected');
+        // Deliverable name editing
+        $('.deliverable h3').dblclick(milestone.editDeliverableName);
+        
+        // Resource name editing
+        $('.resource a').click(function() { return false; }).dblclick(milestone.editResourceName);
     },
     
-    addResources: function(button) {
-        var typeform = $(button).parent().parent();
-        var resourcetype = typeform.find('input[name="resourcetype"]').val();
-        // We have to go up to the deliverable box for the id because the addresource template is cached
-        var deliverable_id = typeform.parent().parent().parent().find('input[name="deliverable_id"]').val();
+    editDeliverableName: function() {
+        var current = $(this).text();
+        $(this).html('<input type="text" value="' + current + '"/>');
         
-        // If resourcetype has a custom validator, call it
-        if (resourcetype.beforeAddResource) {
-            if (!resourcetype.beforeAddResource(typeform)) {
-                return false;
+        var saveChanges = function() {
+            var newtext = $(this).val();
+            
+            if (newtext == '') {
+                $(this).closest('h3').text(current);
+            }
+            else {
+                $(this).closest('h3').text(newtext);
             }
         }
         
-        typeform.find('.loading').show();
-        
-        // Start building GET URL
-        var url = 'ajax.php?action=add-resource&deliverable_id=' + encodeURIComponent(deliverable_id) + '&resourcetype=' + encodeURIComponent(resourcetype);
-        
-        // Determine which categories are selected
-        typeform.find('.category.selected input[name="category_id"]').each(function() {
-            url += '&category_id[]=' + encodeURIComponent($(this).val());
-        });
-        
-        // If the resourcetype has a custom param string builder, use that
-        if (resourcetype.buildParamString) {
-            url += resourcetype.buildParamString(typeform);
-        }
-        else {
-            // Otherwise, pass all input fields and values
-            typeform.find('.form input').each(function() {
-                url += '&' + encodeURIComponent($(this).attr('name')) + '=' + encodeURIComponent($(this).val());
-            });
-        }
-        
-        $.getJSON(url, function(data) {
-            typeform.parent().find('.close a').click();
-            
-            $.each(data, function(i, resource) {
-                var category = $('.deliverable-' + resource.deliverable_id + ' .category-' + resource.category_id);
-                category.removeClass('category-hidden');
-                category.find('.resources').append('<li class="resource ' + resource.resourcetype + ' resource-' + resource.resource_id + '" id="resource-' + resource.resource_id + '">' + resource.link + '</li>');
-            });
+        $(this).find('input').focus().blur(saveChanges).keypress(function(e) {
+            if (e.which == 13) {
+                saveChanges();
+                return false;
+            }
         });
     },
     
-    refreshDeliverable: function(deliverable_id) {
-        var url = "ajax.php?action=refresh-resources&deliverable_id=" + deliverable_id;
+    editResourceName: function() {
+        var current = $(this).text();
+        $(this).html('<input type="text" value="' + current + '"/>');
+        
+        var saveChanges = function() {
+            var newtext = $(this).val();
+            
+            if (newtext == '') {
+                $(this).closest('a').text(current);
+            }
+            else {
+                $(this).closest('a').text(newtext);
+            }
+        }
+        
+        $(this).find('input').focus().blur(saveChanges).keypress(function(e) {
+            if (e.which == 13) {
+                saveChanges();
+                return false;
+            }
+        });
+    },
+    
+    refreshResources: function() {
+        var url = 'ajax.php?action=refresh-resources&milestone_id=' + milestone_id;
         
         $.getJSON(url, function(data) {
-            
+            $.each(data, function(i, resource) {
+                $('#resource-' + resource.resource_id).html(resource.link).effect('highlight', {}, 4000);
+            });
         });
     }
-    
 };
 
 var add_resources = {
@@ -152,15 +130,23 @@ var add_resources = {
     
     hide: function() {
         $('#add-resources').slideUp();
+        
+        $('.just-added').effect('highlight', {}, 4000).removeClass('just-added');
     },
     
     show: function() {
+        add_resources.showMain();
         $('#add-resources').slideDown();
     },
     
     showPanel: function(resourcetype) {
         $('#add-resources .sidebar .selected, #add-resources .panel .resource-panel.selected').removeClass('selected');
         $('#add-resources #tab-' + resourcetype + ', #add-resources #panel-' + resourcetype).addClass('selected');
+    },
+    
+    showMain: function() {
+        $('#add-resources .sidebar .selected, #add-resources .panel .resource-panel.selected').removeClass('selected');
+        $('#add-resources #main-panel').addClass('selected');
     },
     
     addUncategorizedResource: function(resourcetype, title, description, additional_params) {
@@ -216,7 +202,9 @@ var add_resources = {
         
         badge.text(resourcetype_count).show();
         
-        $('#add-resources .footer button').text('Add ' + add_resources.readyCount + ' Resource' + (add_resources.readyCount == 1 ? '' : 's')).attr('onclick', 'add_resources.addResources();');
+        $('#add-resources .footer .close-button').hide();
+        $('#add-resources .footer .add-button').text('Add ' + add_resources.readyCount + ' Resource' + (add_resources.readyCount == 1 ? '' : 's')).css('display', 'inline-block');
+        $('#add-resources .footer .close-link, #addon-resources .footer .clear-queue-link').css('display', 'inline-block');
     },
     
     decrementReadyCount: function(resourcetype) {
@@ -226,12 +214,12 @@ var add_resources = {
         
         if (resourcetype_count > 1) {
             badge.text(resourcetype_count - 1);
-            $('#add-resources .footer button').text('Add ' + add_resources.readyCount + ' Resource' + (add_resources.readyCount == 1 ? '' : 's'));
+            $('#add-resources .footer .add-button').text('Add ' + add_resources.readyCount + ' Resource' + (add_resources.readyCount == 1 ? '' : 's'));
         }
         else {
             badge.text('').hide();
-            $('#add-resources .footer button').text('Finished').attr('onclick', 'add_resources.hide();');
-            $('#add-resources .footer a').text('Add More Resources').attr('onclick', 'add_resources.reset(); return false;').attr('display', 'inline-block');
+            $('#add-resources .footer *').hide();
+            $('#add-resources .footer .add-more-link, #add-resources .footer .finished-button').css('display', 'inline-block');
         }
     },
     
@@ -250,17 +238,23 @@ var add_resources = {
             
             $.getJSON(url, function(data) {
                 loading_item.addClass('loaded').removeClass('loading');
-                var html = '<li class="resource ' + data.resourcetype + '" id="resource-' + data.resource_id + '">' + data.link + '</li>';
+                var html = '<li class="just-added resource ' + data.resourcetype + '" id="resource-' + data.resource_id + '">' + data.link + '</li>';
                 $('#deliverable-' + data.deliverable_id + ' #category-' + data.category_id + ' .resources').append(html);
+                $('#deliverable-' + data.deliverable_id + ' #category-' + data.category_id).show();
                 
                 add_resources.decrementReadyCount(data.resourcetype);
             });
         });
     },
     
+    clearAddQueue: function() {
+        add_resources.resetReadyCount();
+    },
+    
     resetReadyCount: function() {
         add_resources.readyCount = 0;
         $('#add-resources .sidebar .badge').text('').hide();
-        $('#add-resources .footer button').text('Close').attr('disabled', '').attr('onclick', 'add_resources.hide();');
+        $('#add-resources .footer *').hide();
+        $('#add-resources .footer .close-button').css('display', 'inline-block');
     },
 };

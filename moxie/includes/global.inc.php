@@ -49,4 +49,30 @@ function load_url($url, $post = '') {
     return $response;
 }
 
+/* Hooks */
+$hooks = array();
+
+function add_hook($action, $callback) {
+    global $hooks;
+    
+    if (!array_key_exists($action, $hooks)) {
+        $hooks[$action] = array();
+    }
+    
+    $hooks[$action][] = $callback;
+}
+
+function hook($action) {
+    global $hooks;
+    
+    if (!empty($hooks[$action])) {
+        $params = func_get_args();
+        unset($params[0]);
+        
+        foreach ($hooks[$action] as $function) {
+            call_user_func_array($function, $params);
+        }
+    }
+}
+
 ?>

@@ -61,21 +61,39 @@ switch ($_GET['action']) {
         
         if (!empty($_GET['resource_id'])) {
             $query = 'id = \''.escape($_GET['resource_id']).'\'';
+            $resources = $Resource->getAll($query);
         }
         elseif (!empty($_GET['deliverable_id'])) {        
             $query = 'deliverable_id = \''.escape($_GET['deliverable_id']).'\'';
+            $resources = $Resource->getAll($query);
+        }
+        elseif (!empty($_GET['milestone_id'])) {
+            $query = "SELECT resources.* FROM resources INNER JOIN deliverables ON resources.deliverable_id = deliverables.id WHERE deliverables.milestone_id = ".escape($_GET['milestone_id']);
+            $resources = $Resource->db->query($query);
         }
         
-        $resources = $Resource->getAll($query);
+        $updated = array();
         
         if (!empty($resources)) {
             foreach ($resources as $resource) {
                 // Make sure resourcetype has been loaded
                 $resource_manager->loadAdditionalResourcetype($resource['resourcetype']);
                 
-                $resource_manager->resourcetypes[$resource['resourcetype']]->refreshAndUpdate($Resource, $resource['id'], unserialize($resource['data']));
+                $new = $resource_manager->resourcetypes[$resource['resourcetype']]->refreshAndUpdate($Resource, $resource['id'], unserialize($resource['data']));
+                
+                if (is_array($new)) {
+                    $updated[] = array(
+                        'resource_id' => $resource['id'],
+                        'link' => $resource_manager->resourcetypes[$resource['resourcetype']]->getLink($new)
+                    );
+                }
             }
         }
+        
+        $template = new Template();
+        $template->render('json', array(
+                'data' => $updated
+            ));
         
         
         break;

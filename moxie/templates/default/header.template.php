@@ -57,7 +57,7 @@
                     <li><a href="#" onclick="return false;">arrange deliverables</a></li>
                     <li class="separator"></li>
                     <li><a href="#" onclick="add_resources.show(); return false;">add resources</a></li>
-                    <li><a href="#" onclick="return false;">refresh resources</a></li>
+                    <li><a href="#" onclick="milestone.refreshResources(); return false;">refresh resources</a></li>
                 </ul>
             </li>
             <li>
@@ -68,6 +68,7 @@
                 </ul>
             </li>
             <li><a href="#" onclick="return false;" class="tab">admin</a></li>
+            <li><a href="#" onclick="milestone.toggleEditing(); return false;" class="tab">edit mode</a></li>
         </ul>
     
         <div id="title">

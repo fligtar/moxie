@@ -8,10 +8,7 @@
     <?php if (!empty($vars['css'])) echo $vars['css']; ?>
     <?php echo $this->cssString('smoothness/jquery-ui'); ?>
     <style type="text/css">
-    <?php
-    global $resource_manager;
-    echo $resource_manager->callMethodOnAll('css', $this);
-    ?>
+    <?php hook('output_css'); ?>
     </style>
 </head>
 
