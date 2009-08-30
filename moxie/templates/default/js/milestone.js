@@ -170,14 +170,13 @@ var add_resources = {
     
     assignSelectedResources: function(resourcetype) {
         var deliverable = $('#add-resources #panel-' + resourcetype + ' .uncategorized-box select[name="deliverable"]');
-        var category = $('#add-resources #panel-' + resourcetype + ' .uncategorized-box select[name="category"]');
         
         $('#add-resources #panel-' + resourcetype + ' .uncategorized-box .resource-grid input[type="checkbox"]:checked').each(function() {
             var resource = $(this).closest('li');
             resource.find('input[type="checkbox"]').remove();
             
-            var label = '<span class="deliverable">' + deliverable.find('option:selected').text() + '</span> / <span class="category">' + category.find('option:selected').text() + '</span>';
-            var hidden = '<input type="hidden" name="deliverable_id" value="' + deliverable.val() + '" /><input type="hidden" name="category_id" value="' + category.val() + '"/>';
+            var label = '<span class="deliverable">' + deliverable.find('option:selected').text() + '</span>';
+            var hidden = '<input type="hidden" name="deliverable_id" value="' + deliverable.val() + '" />';
             
             resource.find('.assignment').removeClass('uncategorized').html(label + hidden);
             
@@ -232,15 +231,13 @@ var add_resources = {
             
             var url = 'ajax.php?action=add-resource';
             url += '&resourcetype=' + $(this).closest('.resource-panel').find('input[name="resourcetype"]').val();
-            url += '&category_id=' + $(this).find('input[name="category_id"]').val();
             url += '&deliverable_id=' + $(this).find('input[name="deliverable_id"]').val();
             url += '&' + $(this).find('input[name="additional_params"]').val();
             
             $.getJSON(url, function(data) {
                 loading_item.addClass('loaded').removeClass('loading');
                 var html = '<li class="just-added resource ' + data.resourcetype + '" id="resource-' + data.resource_id + '">' + data.link + '</li>';
-                $('#deliverable-' + data.deliverable_id + ' #category-' + data.category_id + ' .resources').append(html);
-                $('#deliverable-' + data.deliverable_id + ' #category-' + data.category_id).show();
+                $('#deliverable-' + data.deliverable_id + ' .resources').append(html);
                 
                 add_resources.decrementReadyCount(data.resourcetype);
             });

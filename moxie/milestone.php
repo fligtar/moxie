@@ -6,8 +6,8 @@ require 'includes/template.inc.php';
 require 'includes/resourcemanager.inc.php';
 require 'includes/bugtracking.inc.php';
 
-list($Bug, $Bugtracker, $Category, $Deliverable, $Milestone, $Resource, $Resourcetype, $Project) = 
-load_models('Bug', 'Bugtracker', 'Category', 'Deliverable', 'Milestone', 'Resource', 'Resourcetype', 'Project');
+list($Deliverable, $Milestone, $Resource, $Resourcetype, $Project) = 
+load_models('Deliverable', 'Milestone', 'Resource', 'Resourcetype', 'Project');
 
 if (is_numeric($_GET['project'])) {
     $project = $Project->get($_GET['project']);
@@ -25,23 +25,13 @@ $resource_manager = new ResourceManager($resourcetypes);
 $milestone = $Milestone->get($_GET['milestone']);
 
 // Get all deliverables for the milestone
-$deliverables = $Deliverable->getAll("milestone_id = ".$milestone['id']);
+$deliverables = $Deliverable->getAll("milestone_id = {$milestone['id']}", '*', 'parent_id, id');
 
-// Get all categories
-$categories = $Category->getAll();
-
-// Pull details for each deliverable
+// Get resources for each deliverable
 if (!empty($deliverables)) {
-    foreach ($deliverables as $d => $deliverable) {
-        $deliverables[$d]['categories'] = array();
-        
-        if (!empty($categories)) {
-            foreach ($categories as $category) {
-                $deliverables[$d]['categories'][$category['id']] = $category;
-                $deliverables[$d]['categories'][$category['id']]['resources'] = $Resource->getResources($deliverable['id'], $category['id']);
-            }
-        }
-    }
+    $deliverables = $Resource->addResourcesToDeliverables($deliverables);
+    
+    $deliverables = $Deliverable->nestDeliverables($deliverables);
 }
 
 $template = new Template($project['theme'], $Config->get('theme'));
@@ -65,8 +55,7 @@ $template->render('header', array(
 $template->render('milestone', array(
         'project' => $project,
         'milestone' => $milestone,
-        'deliverables' => $deliverables,
-        'categories' => $categories
+        'deliverables' => $deliverables
     ));
 
 $template->render('footer', array(

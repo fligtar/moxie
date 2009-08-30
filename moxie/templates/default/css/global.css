@@ -224,34 +224,14 @@ a:hover {
     clear: both;
 }
 
-.deliverable {
+/* Deliverables */
+div.deliverable {
     clear: both;
     margin-bottom: 30px;
+    padding-left: 30px;
 }
-.deliverable .deliverable-menu {
-    float: right;
-}
-.deliverable .deliverable-menu li {
-    display: inline;
-}
-.deliverable .deliverable-menu li a {
-    border: 1px solid #CCCCCC;
-    -moz-border-radius: 6px;
-    padding: 2px 4px 2px 23px;
-    margin: 0 5px;
-    text-decoration: none;
-    color: #CCCCCC;
-}
-.deliverable .deliverable-menu li a:hover,
-.deliverable .deliverable-menu li a.selected {
-    border-color: #2E5186;
-    color: #2E5186;
-}
-.deliverable .deliverable-menu li a.add {
-    background: transparent url(../images/add.png) 3px 50% no-repeat;
-}
-.deliverable .deliverable-menu li a.refresh {
-    background: transparent url(../images/arrow_refresh.png) 3px 50% no-repeat;
+div.deliverable.level-0 {
+    padding-left: 0;
 }
 
 .deliverable h3 {
@@ -263,19 +243,9 @@ a:hover {
     font-weight: bold;
     min-width: 25em;
 }
-.deliverable ul.categories {
-    margin: 10px;
-}
-.deliverable ul.categories li.category {
-    padding: 6px 0 9px;
-    border: 1px solid transparent;
-}
-.deliverable ul.categories li.category.dragover {
-    border: 1px solid black;
-}
 
-.deliverable ul.categories ul.resources,
-.deliverable ul.categories ul.resources li {
+.deliverable ul.resources,
+.deliverable ul.resources li {
     display: inline-block;
     margin: 4px 5px;
 }
@@ -286,38 +256,6 @@ a:hover {
 #page .editable .resource a:hover {
     cursor: move;
     color: #666666;
-}
-
-.category-box {
-    background: transparent url(../images/flag.png) right center no-repeat;
-    padding-right: 13px;
-}
-.category-hidden {
-    display: none;
-}
-.dragover .category-hidden,
-.editable .category-hidden {
-    display: block;
-}
-.category .category-label {
-    padding: 3px 6px;
-    font-size: 0.75em;
-    -moz-border-radius: 15px;
-    text-transform: uppercase;
-    color: white;
-    font-family: arial;
-    text-shadow: 1px 1px 1px #666666;
-    text-decoration: none;
-}
-
-#category-1 .category-label {
-    background-color: #D9A300;
-}
-#category-2 .category-label {
-    background-color: #541F9B;
-}
-#category-3 .category-label {
-    background-color: #861304;
 }
 
 .overlay {
@@ -331,7 +269,6 @@ a:hover {
     -moz-border-radius-bottomleft: 15px;
     -moz-border-radius-bottomright: 15px;
     -moz-box-shadow: 0px 0px 15px #333;
-    display: none;
 }
 
 #add-resources.overlay .sidebar {
@@ -485,7 +422,7 @@ a:hover {
 }
 
 #add-resources {
-    /*display: none;*/
+    display: none;
 }
 
 button.pretty-button {

@@ -19,6 +19,10 @@ class mysql extends db {
     }
     
     public function query($query) {
+        if ($this->debug) {
+            echo $query;
+        }
+        
         $_result = mysql_query($query, $this->dbh);
         
         $results = array();

@@ -3,13 +3,24 @@
 class ResourceModel extends Model {
     public $table = 'resources';
     
-    public function getResources($deliverable_id, $category_id) {
-        $results = $this->getAll("
-                category_id = {$category_id} AND 
-                deliverable_id = {$deliverable_id}
-            ");
+    public function addResourcesToDeliverables($deliverables) {
+        $deliverable_ids = array();
+        foreach ($deliverables as $deliverable) {
+            $deliverable_ids[] = $deliverable['id'];
+        }
         
-        return $results;
+        $resources = $this->getAll('deliverable_id IN ('.implode(',', $deliverable_ids).')');
+        
+        if (!empty($resources)) {
+            foreach ($resources as $resource) {
+                if (empty($deliverables[$resource['deliverable_id']])) {
+                    $deliverables[$resource['deliverable_id']]['resources'] = array();
+                }
+                $deliverables[$resource['deliverable_id']]['resources'][] = $resource;
+            }
+        }
+        
+        return $deliverables;
     }
 }
 

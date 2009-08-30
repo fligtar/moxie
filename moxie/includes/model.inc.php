@@ -7,10 +7,11 @@ class Model {
         $this->db =& $db;
     }
     
-    public function getAll($conditions = '', $fields = '*') {
+    public function getAll($conditions = '', $fields = '*', $order = '') {
         $conditions = !empty($conditions) ? "WHERE {$conditions}" : '';
+        $order = !empty($order) ? "ORDER BY {$order}" : '';
         
-        $query = "SELECT {$fields} FROM {$this->table} {$conditions}";
+        $query = "SELECT {$fields} FROM {$this->table} {$conditions} {$order}";
         
         return $this->db->query($query);
     }

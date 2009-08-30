@@ -10,7 +10,6 @@ switch ($_GET['action']) {
      * Params:
      *   deliverable_id - id of the deliverable
      *   resourcetype - id of the resourcetype
-     *   category_id - id of the categories
      *   (other) - depending on resourcetype
      */
     case 'add-resource':
@@ -20,7 +19,6 @@ switch ($_GET['action']) {
         
         $data = array(
             'deliverable_id' => $_GET['deliverable_id'],
-            'category_id' => $_GET['category_id'],
             'resourcetype' => $_GET['resourcetype'],
             'data' => serialize($fields)
         );
@@ -34,7 +32,6 @@ switch ($_GET['action']) {
         $json = array(
             'resource_id' => $Resource->db->getLastID(),
             'deliverable_id' => $data['deliverable_id'],
-            'category_id' => $data['category_id'],
             'resourcetype' => $data['resourcetype'],
             'link' => $resourcetype->getLink($fields)
         );

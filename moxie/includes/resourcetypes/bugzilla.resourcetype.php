@@ -110,7 +110,10 @@ class bugzilla extends Resourcetype {
                 }
             }
             
-            echo $totals['bz_fixed'][1].' of '.($totals['bz_fixed'][1] + $totals['bz_fixed'][0]).' bugs fixed';
+            $fixed = !empty($totals['bz_fixed'][1]) ? $totals['bz_fixed'][1] : 0;
+            $unfixed = !empty($totals['bz_fixed'][0]) ? $totals['bz_fixed'][0] : 0;
+            $total = $fixed + $unfixed;
+            echo "{$fixed} of {$total} bug".($total == 1 ? '' : 's')." fixed";
         }
     }
     

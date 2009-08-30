@@ -1,3 +1,16 @@
+<?php
+function deliverableOptions($deliverables, $level = 0) {
+    if (!empty($deliverables)) {
+        foreach ($deliverables as $deliverable_id => $deliverable) {
+            echo '<option value="'.$deliverable['id'].'" style="padding-left: '.($level * 20).'px;">'.$deliverable['name'].'</option>';
+
+            if (!empty($deliverable['children'])) {
+                deliverableOptions($deliverable['children'], $level + 1);
+            }
+        }
+    }
+}
+?>
 <div id="add-resources" class="overlay">
     <div class="sidebar">
         <h4>Add resources:</h4>
@@ -32,30 +45,11 @@
                 <div class="uncategorized-box">
                     <h3>Uncategorized:</h3>
                     <div class="chooser">
-                        <p>Assign a deliverable and category to each resource before it can be added:</p>
-                        <label>Deliverable:
+                        <p>Assign a deliverable to each resource before it can be added:</p>
                         <select name="deliverable">
                             <option></option>
-                        <?php
-                        if (!empty($vars['deliverables'])) {
-                            foreach ($vars['deliverables'] as $deliverable) {
-                                echo '<option value="'.$deliverable['id'].'">'.$deliverable['name'].'</option>';
-                            }
-                        }
-                        ?>
-                        </select></label>
-                        
-                        <label>Category: 
-                        <select name="category">
-                            <option></option>
-                        <?php
-                        if (!empty($vars['categories'])) {
-                            foreach ($vars['categories'] as $category) {
-                                echo '<option value="'.$category['id'].'">'.$category['name'].'</option>';
-                            }
-                        }
-                        ?>
-                        </select></label>
+                        <?php deliverableOptions($vars['deliverables']); ?>
+                        </select>
                         
                         <button type="button" onclick="add_resources.assignSelectedResources('<?php echo $resourcetype->id; ?>');">Assign Selected</button>
                     </div>
