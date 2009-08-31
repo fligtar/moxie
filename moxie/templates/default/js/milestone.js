@@ -149,6 +149,100 @@ var add_resources = {
         $('#add-resources #main-panel').addClass('selected');
     },
     
+    createResourceBox: function(resource, additional_params) {
+        var short_desc = resource.description;
+        if (short_desc.length > 24) {
+            short_desc =  short_desc.substring(0, 23) + '&hellip;';
+        }
+        
+        var li = '<li>';
+        li += '<h5>';
+        if (!resource.deliverable) {
+            li += '<input type="checkbox" checked="checked"/>';
+        }
+        li += resource.title + '</h5>';
+        li += '<p title="' + resource.description + '">' + short_desc + '</p>';
+        if (resource.deliverable) {
+            li += '<p class="assignment"><span class="deliverable">' + resource.deliverable + '</span>';
+        }
+        if (resource.deliverable_id) {
+            li += '<input type="hidden" name="deliverable_id" value="' + resource.deliverable_id + '" /></p>';
+        }
+        else {
+            li += '<p class="assignment uncategorized">uncategorized</p>';
+        }
+        if (additional_params) {
+            li += '<input type="hidden" name="additional_params" value="' + additional_params + '" />';
+        }
+        li += '</li>';
+        
+        return li;
+    },
+    
+    addResource: function(resourcetype, validation_callback) {
+        var form = $('#add-resources #panel-' + resourcetype + ' .form');
+        
+        if (validation_callback) {
+            var validation_results = eval(validation_callback + '(form);');
+            
+            if (validation_results == false) {
+                return false;
+            }
+        }
+        
+        var deliverable = form.find('select[name="deliverable"] option:selected');
+        var deliverable_id = deliverable.val();
+        
+        if (deliverable_id == '') {
+            deliverable.parent().effect('highlight');
+            return false;
+        }
+        
+        validation_results.resource.resourcetype = resourcetype;
+        validation_results.resource.deliverable = deliverable.text();
+        validation_results.resource.deliverable_id = deliverable_id;
+        
+        var resourceBox = add_resources.queueResource(validation_results.resource);
+         
+        form.find('input').val('');
+        
+        var url = 'ajax.php?action=add-resource&resourcetype=' + resourcetype + '&deliverable_id=' + deliverable_id;
+        
+        $.each(validation_results.fields, function(key, value) {
+            url += '&' + key + '=' + encodeURIComponent(value);
+        });
+         
+        $.getJSON(url, function(data) {
+            add_resources.resourceAdded(data, resourceBox);
+        });
+    },
+    
+    queueResource: function(resource, additional_params) {
+        var resourceBox = add_resources.createResourceBox(resource, additional_params);
+        
+        $('#add-resources #panel-' + resource.resourcetype + ' .ready-box .resource-grid').append(resourceBox);
+        $('#add-resources #panel-' + resource.resourcetype + ' .ready-box').show();
+        
+        var newBox = $('#add-resources #panel-' + resource.resourcetype + ' .ready-box .resource-grid li:last-child');
+        newBox.addClass('loading');
+        
+        return newBox;
+    },
+    
+    resourceAdded: function(data, resourceBox) {
+        // Move resource box to added
+        resourceBox.clone().removeClass('loading').addClass('loaded').appendTo('#add-resources #panel-' + data.resourcetype + ' .added-box .resource-grid');
+        resourceBox.remove();
+        if ($('#add-resources #panel-' + data.resourcetype + ' .ready-box .resource-grid').children().size() == 0) {
+            $('#add-resources #panel-' + data.resourcetype + ' .ready-box').hide();
+        }
+        $('#add-resources #panel-' + data.resourcetype + ' .added-box').show();
+        
+        // Add resource link to deliverable
+        var html = '<li class="just-added resource ' + data.resourcetype + '" id="resource-' + data.resource_id + '">' + data.link + '</li>';
+        $('#deliverable-' + data.deliverable_id + ' .resources').append(html);
+    },
+    
     addUncategorizedResource: function(resourcetype, title, description, additional_params) {
         var short_desc = description;
         if (short_desc.length > 24) {

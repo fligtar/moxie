@@ -43,6 +43,8 @@ class ResourceManager {
                 }
             }
         }
+        
+        ksort($this->resourcetypes);
     }
     
     public function loadResourcetypeFile($resourcetype) {

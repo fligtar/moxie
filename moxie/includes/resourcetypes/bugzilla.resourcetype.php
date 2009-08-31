@@ -38,6 +38,9 @@ class bugzilla extends Resourcetype {
             color: green;
             font-weight: bold;
         }
+        .bugzilla-stats {
+            float: right;
+        }
     <?php
         }
     }
@@ -82,6 +85,7 @@ class bugzilla extends Resourcetype {
             <button type="button" class="pretty-button" onclick="bugzilla.lookup();">Retrieve Bugs</button>
         </div>
     <?php
+        return array('multibox' => true);
     }
     
     public function renderDeliverableHeading($deliverable) {
@@ -113,7 +117,10 @@ class bugzilla extends Resourcetype {
             $fixed = !empty($totals['bz_fixed'][1]) ? $totals['bz_fixed'][1] : 0;
             $unfixed = !empty($totals['bz_fixed'][0]) ? $totals['bz_fixed'][0] : 0;
             $total = $fixed + $unfixed;
+            
+            echo '<div class="bugzilla-stats">';
             echo "{$fixed} of {$total} bug".($total == 1 ? '' : 's')." fixed";
+            echo '</div>';
         }
     }
     

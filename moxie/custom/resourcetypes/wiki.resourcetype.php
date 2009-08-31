@@ -6,17 +6,61 @@ class wiki extends Resourcetype {
         'wiki_name', 'wiki_url', 'wiki_lastupdate'
     );
     
-    public $icon = 'link.png';
+    public $icon = 'wiki.png';
+    
+    public function js() {
+        if (PAGE == 'milestone') {
+    ?>
+        var wiki = {
+            validate: function(form) {
+                var fields = {
+                    'wiki_name': form.find('input[name="wiki_name"]').val(),
+                    'wiki_url': form.find('input[name="wiki_url"]').val()
+                };
+                
+                var errors = false;
+                if (fields.wiki_name == '') {
+                    form.find('input[name="wiki_name"]').effect('highlight');
+                    errors = true;
+                }
+                if (fields.wiki_url == '') {
+                    form.find('input[name="wiki_url"]').effect('highlight');
+                    errors = true;
+                }
+                
+                if (errors) {
+                    return false;
+                }
+                
+                if (fields.wiki_url.indexOf('://') == -1) {
+                    fields.wiki_url = 'http://' + fields.wiki_url;
+                }
+                
+                var resource = {
+                    'title': fields.wiki_name,
+                    'description': fields.wiki_url
+                }
+                
+                return {
+                    'fields': fields,
+                    'resource': resource
+                };
+            }
+        };
+    <?php
+        }
+    }
     
     public function renderAddResourcesPanel() {
     ?>
         <h2>Add Wiki Page</h2>
 
         <p>Enter the URL of a MediaWiki or DekiWiki page to be checked for updates.</p>
-
+        
         <label>Name <input type="text" name="wiki_name" /></label><br />
         <label>URL <input type="text" name="wiki_url" /></label><br />
     <?php
+        return array('validate' => 'wiki.validate');
     }
     
     /**
