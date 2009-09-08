@@ -3,6 +3,20 @@
 class DeliverableModel extends Model {
     public $table = 'deliverables';
     
+    public function getKeyedDeliverables($milestone_id) {
+        $_deliverables = $this->getAll("milestone_id = {$milestone_id}", '*', 'parent_id, id');
+        
+        $deliverables = array();
+        
+        if (!empty($_deliverables)) {
+            foreach ($_deliverables as $deliverable) {
+                $deliverables[$deliverable['id']] = $deliverable;
+            }
+        }
+        
+        return $deliverables;
+    }
+    
     public function nestDeliverables($deliverables) {
         $parents = array();
         if (!empty($deliverables)) {

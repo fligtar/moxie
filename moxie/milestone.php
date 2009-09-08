@@ -25,7 +25,7 @@ $resource_manager = new ResourceManager($resourcetypes);
 $milestone = $Milestone->get($_GET['milestone']);
 
 // Get all deliverables for the milestone
-$deliverables = $Deliverable->getAll("milestone_id = {$milestone['id']}", '*', 'parent_id, id');
+$deliverables = $Deliverable->getKeyedDeliverables($milestone['id']);
 
 // Get resources for each deliverable
 if (!empty($deliverables)) {

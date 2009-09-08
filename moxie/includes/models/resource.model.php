@@ -9,7 +9,7 @@ class ResourceModel extends Model {
             $deliverable_ids[] = $deliverable['id'];
         }
         
-        $resources = $this->getAll('deliverable_id IN ('.implode(',', $deliverable_ids).')');
+        $resources = $this->getAll('deliverable_id IN ('.implode(',', $deliverable_ids).')', '*', 'resourcetype');
         
         if (!empty($resources)) {
             foreach ($resources as $resource) {

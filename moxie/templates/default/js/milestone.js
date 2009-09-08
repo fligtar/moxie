@@ -179,42 +179,106 @@ var add_resources = {
         return li;
     },
     
-    addResource: function(resourcetype, validation_callback) {
+    addSingle: function(resourcetype, validation_callback) {
         var form = $('#add-resources #panel-' + resourcetype + ' .form');
         
         if (validation_callback) {
-            var validation_results = eval(validation_callback + '(form);');
+            var valid = eval(validation_callback + '(form);');
             
-            if (validation_results == false) {
+            if (!valid) {
                 return false;
             }
         }
         
         var deliverable = form.find('select[name="deliverable"] option:selected');
-        var deliverable_id = deliverable.val();
         
-        if (deliverable_id == '') {
-            deliverable.parent().effect('highlight');
+        if (deliverable.val() == '') {
+            add_resources.markInvalid(form, 'select[name="deliverable"]');
             return false;
         }
         
-        validation_results.resource.resourcetype = resourcetype;
-        validation_results.resource.deliverable = deliverable.text();
-        validation_results.resource.deliverable_id = deliverable_id;
+        var resource = {
+            'title': form.find('.resource-title').val(),
+            'description': form.find('.resource-description').val(),
+            'deliverable': deliverable.text(),
+            'deliverable_id': deliverable.val(),
+            'resourcetype': resourcetype
+        };
         
-        var resourceBox = add_resources.queueResource(validation_results.resource);
-         
+        var resourceBox = add_resources.queueResource(resource);
+        
+        add_resources.addResource(resourcetype, resourceBox);
+        
         form.find('input').val('');
+    },
+    
+    addResource: function(resourcetype, resourceBox) {
+        var form = $('#add-resources #panel-' + resourcetype + ' .form');
         
-        var url = 'ajax.php?action=add-resource&resourcetype=' + resourcetype + '&deliverable_id=' + deliverable_id;
+        var deliverable = form.find('select[name="deliverable"] option:selected');
         
-        $.each(validation_results.fields, function(key, value) {
+        var url = 'ajax.php?action=add-resource&resourcetype=' + resourcetype + '&deliverable_id=' + deliverable.val();
+        
+        var fields = add_resources.getFields(form);
+        
+        $.each(fields, function(key, value) {
             url += '&' + key + '=' + encodeURIComponent(value);
         });
-         
+        
+        var additional_params = resourceBox.find('input[name="additional_params"]').val();
+        if (additional_params) {
+            url += '&' + additional_params;
+        }
+        
         $.getJSON(url, function(data) {
             add_resources.resourceAdded(data, resourceBox);
         });
+    },
+    
+    addMultiple: function(resourcetype) {
+        var uncategorizedBox = $('#add-resources #panel-' + resourcetype + ' .uncategorized-box');
+        var deliverable = uncategorizedBox.find('select[name="deliverable"]');
+        
+        uncategorizedBox.find('.resource-grid input[type="checkbox"]:checked').each(function() {
+            var resource = $(this).closest('li');
+            resource.find('input[type="checkbox"]').remove();
+            
+            var label = '<span class="deliverable">' + deliverable.find('option:selected').text() + '</span>';
+            var hidden = '<input type="hidden" name="deliverable_id" value="' + deliverable.val() + '" />';
+            
+            resource.find('.assignment').removeClass('uncategorized').html(label + hidden);
+            
+            resource.clone(true).appendTo('#add-resources #panel-' + resourcetype + ' .ready-box .resource-grid');
+            resource.remove();
+            
+            var newBox = $('#add-resources #panel-' + resourcetype + ' .ready-box .resource-grid li:last-child');
+            newBox.addClass('loading');
+            
+            $('#add-resources #panel-' + resourcetype + ' .ready-box').show();
+            
+            if ($('#add-resources #panel-' + resourcetype + ' .uncategorized-box .resource-grid').children().size() == 0) {
+                $('#add-resources #panel-' + resourcetype + ' .uncategorized-box').hide();
+            }
+            
+            add_resources.addResource(resourcetype, newBox);
+        });
+    },
+    
+    getFields: function(form) {
+        var fields = {};
+        
+        form.find('.field').each(function() {
+            var field = $(this);
+            
+            if (this.tagName == 'TEXTAREA') {
+                fields[field.attr('name')] = field.text();
+            }
+            else {
+                fields[field.attr('name')] = field.val();
+            }
+        });
+        
+        return fields;
     },
     
     queueResource: function(resource, additional_params) {
@@ -243,48 +307,13 @@ var add_resources = {
         $('#deliverable-' + data.deliverable_id + ' .resources').append(html);
     },
     
-    addUncategorizedResource: function(resourcetype, title, description, additional_params) {
-        var short_desc = description;
-        if (short_desc.length > 24) {
-            short_desc =  short_desc.substring(0, 23) + '&hellip;';
-        }
+    addUncategorizedResource: function(resource, additional_params) {
+        var resourceBox = add_resources.createResourceBox(resource, additional_params);
         
-        var li = '<li>';
-        li += '<h5><input type="checkbox" checked="checked"/>' + title + '</h5>';
-        li += '<p title="' + description + '">' + short_desc + '</p>';
-        li += '<p class="assignment uncategorized">uncategorized</p>';
-        if (additional_params) {
-            li += '<input type="hidden" name="additional_params" value="' + additional_params + '" />';
-        }
-        li += '</li>';
+        $('#add-resources #panel-' + resource.resourcetype + ' .uncategorized-box .resource-grid').append(resourceBox);
+        $('#add-resources #panel-' + resource.resourcetype + ' .uncategorized-box').show();
         
-        $('#add-resources #panel-' + resourcetype + ' .uncategorized-box .resource-grid').append(li);
-        $('#add-resources #panel-' + resourcetype + ' .uncategorized-box').show();
-    },
-    
-    assignSelectedResources: function(resourcetype) {
-        var deliverable = $('#add-resources #panel-' + resourcetype + ' .uncategorized-box select[name="deliverable"]');
-        
-        $('#add-resources #panel-' + resourcetype + ' .uncategorized-box .resource-grid input[type="checkbox"]:checked').each(function() {
-            var resource = $(this).closest('li');
-            resource.find('input[type="checkbox"]').remove();
-            
-            var label = '<span class="deliverable">' + deliverable.find('option:selected').text() + '</span>';
-            var hidden = '<input type="hidden" name="deliverable_id" value="' + deliverable.val() + '" />';
-            
-            resource.find('.assignment').removeClass('uncategorized').html(label + hidden);
-            
-            resource.clone(true).appendTo('#add-resources #panel-' + resourcetype + ' .ready-box .resource-grid');
-            resource.remove();
-            
-            $('#add-resources #panel-' + resourcetype + ' .ready-box').show();
-            
-            if ($('#add-resources #panel-' + resourcetype + ' .uncategorized-box .resource-grid').children().size() == 0) {
-                $('#add-resources #panel-' + resourcetype + ' .uncategorized-box').hide();
-            }
-            
-            add_resources.incrementReadyCount(resourcetype);
-        });
+        add_resources.incrementReadyCount(resource.resourcetype);
     },
     
     incrementReadyCount: function(resourcetype) {
@@ -294,10 +323,6 @@ var add_resources = {
         resourcetype_count = resourcetype_count ? parseInt(resourcetype_count) + 1 : 1;
         
         badge.text(resourcetype_count).show();
-        
-        $('#add-resources .footer .close-button').hide();
-        $('#add-resources .footer .add-button').text('Add ' + add_resources.readyCount + ' Resource' + (add_resources.readyCount == 1 ? '' : 's')).css('display', 'inline-block');
-        $('#add-resources .footer .close-link, #addon-resources .footer .clear-queue-link').css('display', 'inline-block');
     },
     
     decrementReadyCount: function(resourcetype) {
@@ -307,35 +332,10 @@ var add_resources = {
         
         if (resourcetype_count > 1) {
             badge.text(resourcetype_count - 1);
-            $('#add-resources .footer .add-button').text('Add ' + add_resources.readyCount + ' Resource' + (add_resources.readyCount == 1 ? '' : 's'));
         }
         else {
             badge.text('').hide();
-            $('#add-resources .footer *').hide();
-            $('#add-resources .footer .add-more-link, #add-resources .footer .finished-button').css('display', 'inline-block');
         }
-    },
-    
-    addResources: function() {
-        $('#add-resources .sidebar .selected, #add-resources .panel .resource-panel.selected').removeClass('selected');
-        $('#add-resources #add-panel').addClass('selected');
-        
-        $('#add-resources .ready-box li').each(function() {
-            var loading_item = $(this).clone(true).appendTo('#add-resources #add-panel .resource-grid').addClass('loading');
-            
-            var url = 'ajax.php?action=add-resource';
-            url += '&resourcetype=' + $(this).closest('.resource-panel').find('input[name="resourcetype"]').val();
-            url += '&deliverable_id=' + $(this).find('input[name="deliverable_id"]').val();
-            url += '&' + $(this).find('input[name="additional_params"]').val();
-            
-            $.getJSON(url, function(data) {
-                loading_item.addClass('loaded').removeClass('loading');
-                var html = '<li class="just-added resource ' + data.resourcetype + '" id="resource-' + data.resource_id + '">' + data.link + '</li>';
-                $('#deliverable-' + data.deliverable_id + ' .resources').append(html);
-                
-                add_resources.decrementReadyCount(data.resourcetype);
-            });
-        });
     },
     
     clearAddQueue: function() {
@@ -344,8 +344,9 @@ var add_resources = {
     
     resetReadyCount: function() {
         add_resources.readyCount = 0;
-        $('#add-resources .sidebar .badge').text('').hide();
-        $('#add-resources .footer *').hide();
-        $('#add-resources .footer .close-button').css('display', 'inline-block');
     },
+    
+    markInvalid: function(form, selector) {
+        form.find(selector).effect('highlight');
+    }
 };

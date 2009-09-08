@@ -46,11 +46,8 @@ $options = deliverableOptions($vars['deliverables']);
                 <input type="hidden" name="resourcetype" value="<?php echo $resourcetype->id; ?>" />
                 <div class="form">
                 <?php
-                    $panelSettings = $resourcetype->renderAddResourcesPanel();
-                ?>
-                
-                
-                <?php
+                $panelSettings = $resourcetype->renderAddResourcesPanel();
+
                 if (!empty($panelSettings['multibox']) && $panelSettings['multibox'] == true) {
                 ?>
                     <div class="uncategorized-box">
@@ -62,14 +59,9 @@ $options = deliverableOptions($vars['deliverables']);
                                 <?php echo $options; ?>
                             </select>
                         
-                            <button type="button" onclick="add_resources.assignSelectedResources('<?php echo $resourcetype->id; ?>');">Assign Selected</button>
+                            <button type="button" onclick="add_resources.addMultiple('<?php echo $resourcetype->id; ?>');">Add Selected Resources</button>
                         </div>
                     
-                        <ul class="resource-grid"></ul>
-                    </div>
-                
-                    <div class="ready-box">
-                        <h3>Ready to be added:</h3>
                         <ul class="resource-grid"></ul>
                     </div>
                 <?php
@@ -84,9 +76,11 @@ $options = deliverableOptions($vars['deliverables']);
                     </label>
                     
                     <div>
-                        <button type="button" onclick="add_resources.addResource('<?php echo $resourcetype->id; ?>'<?php if (!empty($panelSettings['validate'])) { echo ", '{$panelSettings['validate']}'"; } ?>);" class="pretty-button">Add Resource</button>
+                        <button type="button" onclick="add_resources.addSingle('<?php echo $resourcetype->id; ?>'<?php if (!empty($panelSettings['validate'])) { echo ", '{$panelSettings['validate']}'"; } ?>);" class="pretty-button">Add Resource</button>
                     </div>
-                    
+                <?php
+                }
+                ?>
                     <div class="ready-box">
                         <h3>Adding resources...</h3>
                         <ul class="resource-grid"></ul>
@@ -96,9 +90,6 @@ $options = deliverableOptions($vars['deliverables']);
                         <h3>Successfully Added</h3>
                         <ul class="resource-grid"></ul>
                     </div>
-                <?php
-                }
-                ?>
                 </div>
             </div>
     <?php
@@ -113,11 +104,6 @@ $options = deliverableOptions($vars['deliverables']);
     </div>
     
     <div class="footer">
-        <a href="#" onclick="add_resources.hide(); return false;" class="close-link">Close</a>
-        <a href="#" onclick="add_resources.clearAddQueue(); return false;" class="clear-queue-link">Clear Add Queue</a>
-        <a href="#" onclick="add_resources.showMain(); return false;" class="add-more-link">Add More Resources</a>
         <button type="button" class="pretty-button close-button" onclick="add_resources.hide();">Close</button>
-        <button type="button" class="pretty-button finished-button" onclick="add_resources.hide();">Finished</button>
-        <button type="button" class="pretty-button add-button" onclick="add_resources.addResources();">Add 1 Resource</button>
     </div>
 </div>

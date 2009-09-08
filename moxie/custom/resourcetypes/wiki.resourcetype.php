@@ -13,18 +13,17 @@ class wiki extends Resourcetype {
     ?>
         var wiki = {
             validate: function(form) {
-                var fields = {
-                    'wiki_name': form.find('input[name="wiki_name"]').val(),
-                    'wiki_url': form.find('input[name="wiki_url"]').val()
-                };
+                var wiki_name = form.find('input[name="wiki_name"]').val();
+                var wiki_url = form.find('input[name="wiki_url"]').val();
                 
                 var errors = false;
-                if (fields.wiki_name == '') {
-                    form.find('input[name="wiki_name"]').effect('highlight');
+                
+                if (wiki_name == '') {
+                    add_resources.markInvalid(form, 'input[name="wiki_name"]');
                     errors = true;
                 }
-                if (fields.wiki_url == '') {
-                    form.find('input[name="wiki_url"]').effect('highlight');
+                if (wiki_url == '') {
+                    add_resources.markInvalid(form, 'input[name="wiki_url"]');
                     errors = true;
                 }
                 
@@ -32,19 +31,11 @@ class wiki extends Resourcetype {
                     return false;
                 }
                 
-                if (fields.wiki_url.indexOf('://') == -1) {
-                    fields.wiki_url = 'http://' + fields.wiki_url;
+                if (wiki_url.indexOf('://') == -1) {
+                    form.find('input[name="wiki_url"]').val('http://' + wiki_url);
                 }
                 
-                var resource = {
-                    'title': fields.wiki_name,
-                    'description': fields.wiki_url
-                }
-                
-                return {
-                    'fields': fields,
-                    'resource': resource
-                };
+                return true;
             }
         };
     <?php
@@ -57,8 +48,8 @@ class wiki extends Resourcetype {
 
         <p>Enter the URL of a MediaWiki or DekiWiki page to be checked for updates.</p>
         
-        <label>Name <input type="text" name="wiki_name" /></label><br />
-        <label>URL <input type="text" name="wiki_url" /></label><br />
+        <label>Name <input type="text" name="wiki_name" class="field resource-title"/></label><br />
+        <label>URL <input type="text" name="wiki_url" class="field resource-description"/></label><br />
     <?php
         return array('validate' => 'wiki.validate');
     }

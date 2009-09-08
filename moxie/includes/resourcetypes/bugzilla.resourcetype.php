@@ -54,17 +54,23 @@ class bugzilla extends Resourcetype {
                 var query = form.find('.bug-lookup input').val();
                 if (query == '') return;
 
-                form.find('button').addClass('loading').text('Retrieving Bugs...').blur();
+                form.find('.bug-lookup button').addClass('loading').text('Retrieving Bugs...').blur();
                 form.find('.bug-lookup input, .bug-lookup button').attr('disabled', 'disabled');
 
                 var url = 'ajax.php?action=resourcetype-custom&resourcetype=bugzilla&handler=lookup&query=' + encodeURIComponent(query);
 
                 $.getJSON(url, function(data) {
-                    form.find('button').removeClass('loading').text('Retrieve Bugs');
+                    form.find('.bug-lookup button').removeClass('loading').text('Retrieve Bugs');
                     form.find('.bug-lookup input, .bug-lookup button').attr('disabled', '');
             
                     $.each(data, function(i, bug) {
-                        add_resources.addUncategorizedResource('bugzilla', 'bug ' + bug.bz_number, bug.bz_summary, 'temp_id=' + bug.temp_id);
+                        var resource = {
+                            'title': 'bug ' + bug.bz_number,
+                            'description': bug.bz_summary,
+                            'resourcetype': 'bugzilla'
+                        };
+                        
+                        add_resources.addUncategorizedResource(resource, 'temp_id=' + bug.temp_id);
                     });
 
                     form.find('.bug-lookup input').val('');

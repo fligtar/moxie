@@ -12,8 +12,8 @@ class link extends Resourcetype {
     ?>
         <h2>Add Link</h2>
         <p>Add a resource that links to any URL</p>
-        <label>Name <input type="text" name="link_name" /></label><br />
-        <label>URL <input type="text" name="link_url" /></label><br />
+        <label>Name <input type="text" name="link_name" class="field resource-title"/></label><br />
+        <label>URL <input type="text" name="link_url" class="field resource-description"/></label><br />
     <?php
     }
     
