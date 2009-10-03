@@ -61,7 +61,7 @@ blockquote, q {
 
 body {
     font-family: helvetica,arial,sans-serif;
-    background-color: #2963A4;
+    background-color: #218FB1;
     color: #FFFFFF;
     min-width: 800px;
 }
@@ -452,6 +452,101 @@ button[disabled="disabled"] {
 button.loading {
     background: transparent url(../images/ajax-loader.gif) no-repeat 7px 50%;
     padding-left: 25px;
+}
+
+/* roadmap */
+.roadmap {
+    display: table;
+    margin: 0 auto;
+}
+.roadmap .quarter {
+    display: table-row;
+}
+.roadmap .quarter > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+.roadmap .quarter .quarter-label {
+    text-align: center;
+    font-size: 2em;
+    color: #333333;
+    padding: 0 30px;
+    border-top: 2px dashed #666666;
+}
+.roadmap .quarter.first .quarter-label {
+    border-top: none;
+}
+.roadmap .quarter .quarter-label span {
+    font-weight: bold;
+    display: block;
+    font-size: 2em;
+    color: #000000;
+}
+.roadmap .quarter .months {
+    border-left: 2px solid #000000;
+    border-right: 2px solid #000000;
+}
+.roadmap .quarter.first .months {
+    border-top: 2px solid #000000;
+}
+.roadmap .quarter .months li {
+    display: block;
+    height: 3em;
+    width: 8em;
+    vertical-align: middle;
+    text-align: center;
+}
+.roadmap .quarter .months li span {
+    padding: 1em 0;
+    position: relative;
+    z-index: 1;
+    display: none;
+    color: #333333;
+    text-shadow: 1px 1px 2px #EEEEEE;
+}
+.roadmap .quarter:hover .months li span,
+.roadmap .quarter.active .months li span {
+    display: block;
+}
+.roadmap .start-row {
+    display: table-row;
+}
+.roadmap .start-row > div {
+    display: table-cell;
+}
+.roadmap .start-row .start {
+    background-color: #34B138;
+    display: block;
+    position: absolute;
+    width: 8em;
+    margin: 2px 2px 0 2px;
+    z-index: 0;
+}
+
+.roadmap .quarter .items {
+    border-top: 2px dashed #666666;
+    padding: 0 30px;
+}
+.roadmap .quarter.first .items {
+    border-top: none;
+}
+
+.roadmap .quarter .items ul {
+    list-style: disc;
+}
+.roadmap .end-row {
+    display: table-row;
+}
+.roadmap .end-row > div {
+    display: table-cell;
+}
+.roadmap .end-row .end {
+    border-left: 2px solid #000000;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    -moz-border-radius-bottomleft: 8em;
+    -moz-border-radius-bottomright: 8em;
+    height: 4em;
 }
 
 #global-footer {

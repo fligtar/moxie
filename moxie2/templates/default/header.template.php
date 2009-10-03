@@ -40,6 +40,7 @@
 <div id="page">
 
     <div id="header">
+    <!--
         <ul id="toolbar">
             <li>
                 <a href="#" onclick="return false;" class="tab">view</a>
@@ -70,11 +71,11 @@
             <li><a href="#" onclick="return false;" class="tab">admin</a></li>
             <li><a href="#" onclick="milestone.toggleEditing(); return false;" class="tab">edit mode</a></li>
         </ul>
-    
+    -->
         <div id="title">
-            <img id="logo" src="<?php echo $this->image('logo.png') ?>" alt="<?php echo $vars['project']['name']; ?> logo" />
-            <h1><?php echo $vars['project']['name']; ?></h1>
-            <h2><?php echo $vars['milestone']['name']; ?></h2>
+            <img id="logo" src="<?php echo $this->image('logo.png') ?>" alt="<?php echo $vars['product']['name']; ?> logo" />
+            <h1><?php echo $vars['product']['name']; ?></h1>
+            <!--<h2><?php echo $vars['milestone']['name']; ?></h2>-->
         </div>
     </div>
 

@@ -2,17 +2,21 @@
     RewriteEngine On
     
     # Milestone redirect
-    # Example: /projects/1/milestones/2 -> milestone.php?project=1&milestone=2&extra=
-    RewriteRule ^projects\/([^\/]+)\/milestones\/(\d+)(.*)$ milestone.php?project=$1&milestone=$2&extra=$3 [L]
+    # Example: /products/1/milestones/2 -> milestone.php?product=1&milestone=2&extra=
+    RewriteRule ^products\/([^\/]+)\/milestones\/(\d+)(.*)$ milestone.php?product=$1&milestone=$2&extra=$3 [L]
     
-    # Project redirect
-    # Example: /projects/1 -> project.php?project=1&extra=
-    RewriteRule ^projects\/([^\/]+)(.*)$ project.php?project=$1&extra=$2 [L]
+    # Roadmap redirect
+    # Example: /products/1/roadmap -> roadmap.php?product=1&extra=
+    RewriteRule ^products\/([^\/]+)\/roadmap\/?(.*)$ roadmap.php?product=$1&extra=$2 [L]
     
-    # Project redirect (nickname)
-    # Example: /amo/milestones/2 -> projects/amo/milestones/2 -> milestone.php?project=amo&milestone=2&extra=
+    # product redirect
+    # Example: /products/1 -> product.php?product=1&extra=
+    RewriteRule ^products\/([^\/]+)(.*)$ product.php?product=$1&extra=$2 [L]
+    
+    # product redirect (nickname)
+    # Example: /amo/milestones/2 -> products/amo/milestones/2 -> milestone.php?product=amo&milestone=2&extra=
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^([^\/]+)\/?(.*)$ projects/$1/$2
+    RewriteRule ^([^\/]+)\/?(.*)$ products/$1/$2
     
 </IfModule>
