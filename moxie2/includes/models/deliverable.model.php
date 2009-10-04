@@ -3,8 +3,11 @@
 class DeliverableModel extends Model {
     public $table = 'deliverables';
     
-    public function getKeyedDeliverables($milestone_id) {
-        $_deliverables = $this->getAll("milestone_id = {$milestone_id}", '*', 'parent_id, id');
+    /**
+     * Gets all deliverables for the given project
+     */
+    public function getKeyedDeliverables($project_id) {
+        $_deliverables = $this->getAll("project_id = {$project_id}", '*', 'parent_id, id');
         
         $deliverables = array();
         
@@ -17,10 +20,18 @@ class DeliverableModel extends Model {
         return $deliverables;
     }
     
+    /**
+     * Nests deliverables based on their parent
+     */
     public function nestDeliverables($deliverables) {
         $parents = array();
         if (!empty($deliverables)) {
             foreach ($deliverables as $deliverable) {
+                // Deliverables that have no parent are NULL due to FK
+                if (empty($deliverable['parent_id'])) {
+                    $deliverable['parent_id'] = 0;
+                }
+                
                 if (empty($parents[$deliverable['parent_id']])) {
                     $parents[$deliverable['parent_id']] = array();
                 }
@@ -34,6 +45,9 @@ class DeliverableModel extends Model {
         return $deliverables;
     }
     
+    /**
+     * Finds the children of the deliverable
+     */
     private function findChildren($deliverables, &$parents) {
         foreach ($deliverables as $deliverable_id => $deliverable) {
             if (array_key_exists($deliverable_id, $parents)) {
