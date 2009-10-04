@@ -17,7 +17,7 @@ class Model {
     }
     
     public function get($id) {
-        $result = $this->getAll('id = '.escape($id));
+        $result = $this->getAll("id = '".escape($id)."'");
         
         if (!empty($result)) {
             return $result[0];

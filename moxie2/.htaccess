@@ -3,17 +3,21 @@
     
     # Milestone redirect
     # Example: /products/1/milestones/2 -> milestone.php?product=1&milestone=2&extra=
-    RewriteRule ^products\/([^\/]+)\/milestones\/(\d+)(.*)$ milestone.php?product=$1&milestone=$2&extra=$3 [L]
+    RewriteRule ^products\/([^\/]+)\/milestones\/([^\/]+)(.*)$ milestone.php?product=$1&milestone=$2&extra=$3 [L]
+    
+    # Project redirect
+    # Example: /products/1/projects/2 -> project.php?product=1&project=2&extra=
+    RewriteRule ^products\/([^\/]+)\/projects\/([^\/]+)(.*)$ project.php?product=$1&project=$2&extra=$3 [L]
     
     # Roadmap redirect
     # Example: /products/1/roadmap -> roadmap.php?product=1&extra=
     RewriteRule ^products\/([^\/]+)\/roadmap\/?(.*)$ roadmap.php?product=$1&extra=$2 [L]
     
-    # product redirect
+    # Product redirect
     # Example: /products/1 -> product.php?product=1&extra=
     RewriteRule ^products\/([^\/]+)(.*)$ product.php?product=$1&extra=$2 [L]
     
-    # product redirect (nickname)
+    # Product redirect (nickname)
     # Example: /amo/milestones/2 -> products/amo/milestones/2 -> milestone.php?product=amo&milestone=2&extra=
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

@@ -15,12 +15,16 @@ class mysql extends db {
     }
     
     public function execute($query) {
-       return mysql_query($query, $this->dbh);
+        if ($this->debug) {
+            echo $query.'<br/>';
+        }
+        
+        return mysql_query($query, $this->dbh);
     }
     
     public function query($query) {
         if ($this->debug) {
-            echo $query;
+            echo $query.'<br/>';
         }
         
         $_result = mysql_query($query, $this->dbh);

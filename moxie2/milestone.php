@@ -6,56 +6,46 @@ require 'includes/template.inc.php';
 require 'includes/resourcemanager.inc.php';
 require 'includes/bugtracking.inc.php';
 
-list($Deliverable, $Milestone, $Resource, $Resourcetype, $Project) = 
-load_models('Deliverable', 'Milestone', 'Resource', 'Resourcetype', 'Project');
+list($Attachment, $Bug, $Date, $Deliverable, $Milestone, $Product, $Project) = 
+load_models('Attachment', 'Bug', 'Date', 'Deliverable', 'Milestone', 'Product', 'Project');
 
-if (is_numeric($_GET['project'])) {
-    $project = $Project->get($_GET['project']);
-}
-else {
-    $projects = $Project->getAll("url = '".escape($_GET['project'])."'");
-    $project = $projects[0];
-}
-
-// Get resourcetypes for the project
-$resourcetypes = $Resourcetype->getActiveForProject($project['id']);
-$resource_manager = new ResourceManager($resourcetypes);
+$product = $Product->getProductFromURL($_GET['product']);
 
 // Get the milestone's info
-$milestone = $Milestone->get($_GET['milestone']);
+$milestone = $Milestone->getMilestoneFromURL($_GET['milestone']);
 
-// Get all deliverables for the milestone
-$deliverables = $Deliverable->getKeyedDeliverables($milestone['id']);
+// Get the milestone's projects
+$projects = $Project->getProjectsForMilestone($milestone['id']);
 
-// Get resources for each deliverable
-if (!empty($deliverables)) {
-    $deliverables = $Resource->addResourcesToDeliverables($deliverables);
-    
-    $deliverables = $Deliverable->nestDeliverables($deliverables);
-}
+//$b = new Bugtracking();
+//$b->retrieveAndUpdateBugs($milestone['id'], $milestone['bugquery']);
 
-$template = new Template($project['theme'], $Config->get('theme'));
+// Get the milestone's bugs
+$bugs = $Bug->getBugsForMilestone($milestone['id']);
+
+$template = new Template($product['theme'], $Config->get('theme'));
 
 $template->breadcrumbs = array(
         $template->getBaseURL() => 'mozilla',
-        $template->getBaseURL().'/'.$project['url'] => $project['name'],
-        $template->getBaseURL().'/'.$project['url'].'/milestones/'.$milestone['id'] => $milestone['name']
+        $template->getBaseURL().'/'.$product['url'] => $product['name'],
+        $template->getBaseURL().'/'.$product['url'].'/milestones/'.$milestone['url'] => $milestone['name']
     );
 
 $template->render('head', array(
-        'title' => $project['name'].' - '.$milestone['name'].' @ '. $Config->get('site_name').' moxie',
+        'title' => $product['name'].' - '.$milestone['name'].' @ '. $Config->get('site_name').' moxie',
         'css' => $template->cssString('global')
     ));
 
 $template->render('header', array(
-        'project' => $project,
+        'product' => $product,
         'milestone' => $milestone,
     ));
 
 $template->render('milestone', array(
-        'project' => $project,
+        'product' => $product,
         'milestone' => $milestone,
-        'deliverables' => $deliverables
+        'projects' => $projects,
+        'bugs' => $bugs
     ));
 
 $template->render('footer', array(

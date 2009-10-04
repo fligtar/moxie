@@ -37,6 +37,9 @@ function load_url($url, $post = '') {
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     
+    // @TODO remove later
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    
     if (!empty($post)) {
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);

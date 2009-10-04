@@ -7,13 +7,7 @@ require 'includes/template.inc.php';
 list($Date, $Milestone, $Product, $Project) = 
 load_models('Date', 'Milestone', 'Product', 'Project');
 
-if (is_numeric($_GET['product'])) {
-    $product = $Product->get($_GET['product']);
-}
-else {
-    $products = $Product->getAll("url = '".escape($_GET['product'])."'");
-    $product = $products[0];
-}
+$product = $Product->getProductFromURL($_GET['product']);
 
 $view = !empty($_GET['extra']) ? $_GET['extra'] : 'upcoming';
 
