@@ -17,9 +17,6 @@ $milestone = $Milestone->getMilestoneFromURL($_GET['milestone']);
 // Get the milestone's projects
 $projects = $Project->getProjectsForMilestone($milestone['id']);
 
-//$b = new Bugtracking();
-//$b->retrieveAndUpdateBugs($milestone['id'], $milestone['bugquery']);
-
 // Get the milestone's bugs
 $bugs = $Bug->getBugsForMilestone($milestone['id']);
 
