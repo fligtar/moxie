@@ -3,36 +3,370 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 23, 2009 at 11:44 PM
+-- Generation Time: Oct 04, 2009 at 03:35 PM
 -- Server version: 5.0.37
 -- PHP Version: 5.2.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Database: `moxie`
+-- Database: `moxie2`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categories`
+-- Table structure for table `attachments`
 --
 
-CREATE TABLE IF NOT EXISTS `categories` (
+CREATE TABLE IF NOT EXISTS `attachments` (
   `id` int(11) unsigned NOT NULL auto_increment,
+  `deliverable_id` int(11) unsigned default NULL,
   `name` varchar(255) NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+  `file` varchar(255) NOT NULL,
+  `created` datetime NOT NULL default '0000-00-00 00:00:00',
+  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`),
+  KEY `deliverable_id` (`deliverable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `categories`
+-- Dumping data for table `attachments`
 --
 
-INSERT INTO `categories` (`id`, `name`) VALUES
-(1, 'Spec'),
-(2, 'Design'),
-(3, 'Implementation');
+INSERT INTO `attachments` (`id`, `deliverable_id`, `name`, `file`, `created`, `modified`) VALUES
+(1, 1, 'Individual How-to Page', 'How-To.png', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 1, 'How-to Landing Page', 'How-Tos.png', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bugs`
+--
+
+CREATE TABLE IF NOT EXISTS `bugs` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `number` int(11) unsigned NOT NULL,
+  `summary` text NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
+  `assignee` varchar(255) NOT NULL,
+  `priority` varchar(255) NOT NULL,
+  `product` varchar(255) NOT NULL,
+  `component` varchar(255) NOT NULL,
+  `lastupdated` datetime NOT NULL default '0000-00-00 00:00:00',
+  `created` datetime NOT NULL default '0000-00-00 00:00:00',
+  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`),
+  KEY `number` (`number`),
+  KEY `status` (`status`),
+  KEY `assignee` (`assignee`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=130 ;
+
+--
+-- Dumping data for table `bugs`
+--
+
+INSERT INTO `bugs` (`id`, `number`, `summary`, `status`, `assignee`, `priority`, `product`, `component`, `lastupdated`, `created`, `modified`) VALUES
+(1, 513181, 'tags/prodexternal doesn''t have the schematic external', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Administration', '2009-08-28 09:12:30', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(2, 514356, 'Integrate zxtm-api into admin panel', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Admin/Editor Tools', '2009-09-03 11:08:21', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(3, 514482, 'stats_share_counts_totals table is broken', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Statistics', '2009-09-03 12:51:13', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(4, 514597, 'Whack the unverified contributions data', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Maintenance Scripts', '2009-09-04 10:59:37', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(5, 518158, 'Sort out forums IDs', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-23 15:26:40', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(6, 518707, 'Add locale column to update_counts', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Statistics', '2009-09-25 16:08:24', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(7, 513700, 'Backport 1.5 Search API into the regular API', 2, 'dd@mozilla.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-05 19:57:07', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(8, 515832, 'Bring the sexy back to the add-ons'' Edit pages', 3, 'nobody@mozilla.org', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-11 08:29:09', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(9, 517964, 'Links on edit an addon page are not properly displayed.', 3, 'nobody@mozilla.org', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-21 12:48:38', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(10, 518431, '"Uploading file" message is seen on navigating to the Validator landing page', 3, 'nobody@mozilla.org', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-23 14:35:15', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(11, 512258, 'Need to Clear Validation cache in maintenance scripts', 2, 'rjbuild1088@gmail.com', '--', 'addons.mozilla.org', 'Maintenance Scripts', '2009-08-28 10:41:50', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(12, 513607, 'Summary, Downloads and Active Daily Users Statistics are not shown.', 3, 'smccammon@mozilla.com', '--', 'addons.mozilla.org', 'Statistics', '2009-08-30 16:57:04', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(13, 518602, 'Fizzypop toolbar button doesn''t work', 2, 'cdolivei.bugzilla@gmail.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-28 08:37:46', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(14, 515537, 'Updates for Fennec', 2, 'clouserw@gmail.com', 'P1', 'addons.mozilla.org', 'Public Pages', '2009-09-25 15:39:14', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(15, 512766, 'Several multi-byte string php function calls use the default non-UTF8 internal encoding', 2, 'smccammon@mozilla.com', 'P1', 'addons.mozilla.org', 'Localization', '2009-09-30 02:26:46', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(16, 509775, 'Cron jobs should only print out errors', 2, 'jbalogh@jeffbalogh.org', 'P2', 'addons.mozilla.org', 'Admin/Editor Tools', '2009-09-04 16:11:58', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(17, 503520, 'we need to pass mb_strlen() an encoding parameter or it''s not accurate', 3, 'bmo@mozilla-srbija.org', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-25 19:14:01', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(18, 511277, 'Inaccurate error message while logging in without any credentials', 2, 'bmo@mozilla-srbija.org', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-01 11:51:31', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(19, 511979, 'Password-reset page should call .focus() on its textfield', 2, 'bmo@mozilla-srbija.org', '--', 'addons.mozilla.org', 'Public Pages', '2009-08-31 10:39:14', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(20, 512022, 'Remove hyphen on developer''s add-on first-run page', 2, 'bmo@mozilla-srbija.org', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-30 02:26:45', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(21, 511932, 'Use Javascript to test image uploads on the profile before the client sends the POST request', 2, 'cdolivei.bugzilla@gmail.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-09 12:38:20', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(22, 514865, '"Often used with" add-on does not exist', 2, 'cdolivei.bugzilla@gmail.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-14 09:48:11', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(23, 518119, 'Mistake in overlay.properties file from builder', 2, 'cdolivei.bugzilla@gmail.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-27 19:51:21', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(24, 512621, 'Update text on "What are add-ons" part of promo module', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-03 16:27:04', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(25, 513274, 'String "Add-on statistics" is unlocalizable on Statistics Dashboard', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Localization', '2009-09-24 18:30:53', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(26, 513743, 'Change message on validation suite for Conduit', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-08 10:24:44', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(27, 513857, '"Users Created" should be "Accounts Created" or "Users Registered"', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Statistics', '2009-09-15 07:07:43', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(28, 513993, 'Convert old-style messages.po Serbian to meet new locales .po file', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Localization', '2009-09-25 17:06:59', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(29, 515835, 'Cannot change add-on version license in dev tools', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 07:02:07', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(30, 516801, 'Enforce unique nicknames', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-28 12:11:03', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(31, 517066, 'Remove NEW! flag from Collections', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Collections', '2009-09-17 14:27:51', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(32, 517173, '"Submit Your Add-on" button is missing its link on the Developers Hub homepage, while logged out', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-17 21:05:34', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(33, 517315, 'Donations page sends base64NONSENSE data to the paypal page', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-10-03 20:54:23', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(34, 518384, 'Statistics page blank if admin', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Statistics', '2009-09-24 18:37:32', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(35, 518717, 'Registering as a New user on AMO fails', 2, 'clouserw@gmail.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-25 10:06:52', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(36, 519312, 'Unstyled button in dev cp', 2, 'craigcook.bugz@gmail.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-28 17:30:15', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(37, 519313, 'Message should be hidden but it''s not', 2, 'craigcook.bugz@gmail.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-28 17:29:21', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(38, 519314, 'Removing a tag forwards the person to the wrong page', 2, 'craigcook.bugz@gmail.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-28 17:38:46', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(39, 519315, 'Options should have linebreaks between them', 2, 'craigcook.bugz@gmail.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-28 17:36:36', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(40, 517344, 'Search for "Stumble Upon" does not result in StumbleUpon', 2, 'dd@mozilla.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-22 11:12:45', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(41, 517357, 'Blank search should list all available addons', 2, 'dd@mozilla.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-19 10:07:26', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(42, 517547, 'Searching for a tag doesn''t return any results', 2, 'dd@mozilla.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-29 15:12:12', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(43, 517572, 'Sub-string search not supported', 2, 'dd@mozilla.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-29 15:25:51', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(44, 517575, 'Search should list only exact matches when search term is enclosed within double quotes', 3, 'dd@mozilla.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-22 09:44:34', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(45, 517589, 'Searching for "ColorZilla 2.0.2"(add-on with latest version) returns no results', 2, 'dd@mozilla.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-29 15:30:11', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(46, 517954, 'Searching for add-ons within a category is broken', 2, 'dd@mozilla.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-29 15:32:07', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(47, 518466, 'SAMO:Searching for "A9 SiteInfo" fails in API', 3, 'dd@mozilla.com', '--', 'addons.mozilla.org', 'API', '2009-09-24 11:08:29', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(48, 518646, 'Search fails to return existing search engines', 2, 'dd@mozilla.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-29 14:38:47', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(49, 516626, 'Breadcrumb usages don''t match', 2, 'fligtar@mozilla.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-14 20:09:30', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(50, 518159, '"forgot my password" link on the forums should go to AMO', 2, 'fligtar@mozilla.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-29 13:22:50', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(51, 514158, 'Remove l10n message context from nav bar entries', 2, 'fwenzel@mozilla.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:27:00', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(52, 514631, 'developer_faq.thtml: "SunBird" should be "Sunbird"', 2, 'fwenzel@mozilla.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-30 02:27:01', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(53, 513226, 'Invalid vcard in about pages', 2, 'jbalogh@jeffbalogh.org', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-30 02:26:57', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(54, 514324, 'Policies and How-to landing pages weirdness', 2, 'jbalogh@jeffbalogh.org', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-17 10:20:28', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(55, 516638, 'Thumbs-up icon isn''t clickable to "like" a dev-doc article', 3, 'jbalogh@jeffbalogh.org', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-26 12:51:17', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(56, 518154, 'Number of results section shows incorrect value when no results are found under Collections', 2, 'jbalogh@jeffbalogh.org', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-24 16:16:11', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(57, 518180, 'No success message after subscribing to the add-ons newsletter', 2, 'jbalogh@jeffbalogh.org', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-24 15:50:39', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(58, 509973, 'Add Extend Firefox 3.5 Badge to AMO Developer Dashboard', 3, 'neilio@mozilla.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-25 20:11:09', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(59, 517140, 'standalone page lacks footer', 3, 'nnguyen@mozilla.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-22 09:54:29', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(60, 513284, 'number_format the table and graph values on the stats dashboard', 2, 'nobody@mozilla.org', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-25 16:29:10', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(61, 515183, 'Make search categories localizable', 3, 'nobody@mozilla.org', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-25 20:08:02', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(62, 517951, 'Subscribing to addons newsletter fails with uninformative user message', 2, 'nobody@mozilla.org', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-22 13:54:10', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(63, 518063, 'Link to Calendar is missing from the Upcoming events section', 3, 'nobody@mozilla.org', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-25 19:42:52', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(64, 518715, 'CAPTCHA should have a refresh button like on spreadfirefox', 3, 'nobody@mozilla.org', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-25 19:36:31', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(65, 512586, 'Make AMO login cookie httponly', 2, 'rdoherty@mozilla.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-10 17:28:33', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(66, 516804, 'Footer bg missing from /developers', 2, 'rdoherty@mozilla.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-15 21:42:36', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(67, 430206, 'Inline auto-completion doesn''t work in the Admin CP when as Senior Editor status', 2, 'rjbuild1088@gmail.com', '--', 'addons.mozilla.org', 'Admin/Editor Tools', '2009-09-18 13:34:45', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(68, 440114, 'Cannot remove platform', 2, 'rjbuild1088@gmail.com', '--', 'addons.mozilla.org', 'Admin/Editor Tools', '2009-09-10 17:26:36', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(69, 461928, 'Add "Back to <extension>..." and "Edit/add your review" links to top of reviews page', 2, 'rjbuild1088@gmail.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-11 13:52:53', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(70, 496392, 'Tighten up bottom-cell padding on Dictionaries & Language Packs page', 2, 'rjbuild1088@gmail.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-11 14:21:58', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(71, 499254, 'Auto-completing "address book" puts add-on''s name in two separate parts', 2, 'rjbuild1088@gmail.com', '--', 'addons.mozilla.org', 'Collections', '2009-09-11 14:46:39', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(72, 511719, 'Link collections'' icons to their pages on the /firefox homepage', 2, 'rjbuild1088@gmail.com', '--', 'addons.mozilla.org', 'Public Pages', '2009-09-11 14:44:41', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(73, 511892, 'We should provide helpful feedback for broken install.rdfs', 2, 'rjbuild1088@gmail.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-11 11:43:07', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(74, 513267, 'Don''t show statistics for today if they are zero', 2, 'smccammon@mozilla.com', '--', 'addons.mozilla.org', 'Statistics', '2009-09-30 02:26:58', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(75, 513343, 'Some CSV files are empty', 2, 'smccammon@mozilla.com', '--', 'addons.mozilla.org', 'Statistics', '2009-09-01 09:33:06', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(76, 515208, 'Need to clarify that contribution graphs are not public', 2, 'smccammon@mozilla.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:27:02', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(77, 516904, 'Validation page shouldn''t require login', 2, 'smccammon@mozilla.com', '--', 'addons.mozilla.org', 'Admin/Editor Tools', '2009-09-30 02:27:04', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(78, 518207, 'Page titles for Developer hub pages are incorrect', 3, 'smccammon@mozilla.com', '--', 'addons.mozilla.org', 'Developer Pages', '2009-09-25 19:41:53', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(79, 517985, 'Fix FizzyPop extensions', 2, 'cdolivei.bugzilla@gmail.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:27:05', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(80, 500486, 'When Fennec uses the search API, homepage is "firefox", not "fennec"', 2, 'clouserw@gmail.com', 'P1', 'addons.mozilla.org', 'API', '2009-09-21 11:52:21', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(81, 513380, '[1.9.2 & 1.9.3] Forum Accounts & Groups', 2, 'clouserw@gmail.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-25 22:49:06', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(82, 513504, 'User info pages no longer have edit link', 2, 'clouserw@gmail.com', 'P1', 'addons.mozilla.org', 'Public Pages', '2009-09-18 18:47:02', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(83, 514769, 'Redirect policy page to new policies section', 2, 'clouserw@gmail.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-22 15:11:22', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(84, 514770, 'Rename Developer Tools to Developer Hub', 2, 'clouserw@gmail.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-15 23:21:59', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(85, 519350, 'Developer Tools tweaks', 2, 'craigcook.bugz@gmail.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-28 20:11:00', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(86, 519382, 'Developer Tools tweaks, pt. II', 2, 'craigcook.bugz@gmail.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-28 20:14:14', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(87, 513364, '[1.9.1] Forum Styling', 2, 'fligtar@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-11 16:56:59', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(88, 513382, '[1.2.1] Getting Started page', 2, 'fligtar@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:59', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(89, 514772, 'Homepage link to Developer Hub', 2, 'fligtar@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:27:02', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(90, 512783, '[1.8] Developer Hub global header and navigation bar', 2, 'fwenzel@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:47', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(91, 513126, 'Specific policy page', 2, 'fwenzel@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:51', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(92, 513128, '[1.2.6] Case Studies Index', 2, 'fwenzel@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:52', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(93, 513130, '[1.2.7] Individual Case Study page', 2, 'fwenzel@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:52', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(94, 513134, '[1.2.8] API and Language Reference page', 2, 'fwenzel@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:53', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(95, 513138, '[1.5.1] Search Engine & Results Page', 2, 'fwenzel@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:54', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(96, 513114, '[1.2.2] How-to Library', 2, 'jbalogh@jeffbalogh.org', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:49', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(97, 513122, '[1.2.3] How-to Category Page', 2, 'jbalogh@jeffbalogh.org', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:50', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(98, 513124, '[1.2.5] Add-on Policies section', 2, 'jbalogh@jeffbalogh.org', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:51', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(99, 513136, '[1.3.1] Add-on Builder', 2, 'jbalogh@jeffbalogh.org', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-25 17:55:16', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(100, 513137, '[1.4.3.] Newsletter signup page', 2, 'jbalogh@jeffbalogh.org', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:54', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(101, 514013, 'Move devhub pages to a new controller so they''re not login-protected', 2, 'jbalogh@jeffbalogh.org', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-15 23:42:23', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(102, 514080, '[1.2.10] Theatre', 3, 'jbalogh@jeffbalogh.org', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-25 20:10:07', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(103, 517965, 'Builder fixes', 2, 'jbalogh@jeffbalogh.org', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-25 17:55:16', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(104, 516020, 'Unique-ify nicknames', 2, 'jeremy.orem+bugs@gmail.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-28 12:23:44', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(105, 512773, '[1.1] Developer Hub Homepage', 2, 'rdoherty@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-15 23:19:52', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(106, 517402, 'Homepage link columns reversed', 2, 'rdoherty@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-28 17:43:00', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(107, 513135, '[1.3.2] Add-on Validator page for non-hosted add-ons', 2, 'rjbuild1088@gmail.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-26 09:31:24', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(108, 512778, '[1.1.2] Developer Hub homepage for developers', 2, 'smccammon@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:46', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(109, 512816, '[1.1.4 & 1.7.2] Developer Promotion Boxes', 2, 'smccammon@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:47', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(110, 512817, '[1.1.6 & 1.7.1] Upcoming Events', 2, 'smccammon@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:48', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(111, 513140, '[1.6.2] Add-on Newsfeed', 2, 'smccammon@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:55', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(112, 513141, 'Newsfeed RSS', 2, 'smccammon@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:56', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(113, 516498, 'Make Submit Your Add-on box prettier', 2, 'smccammon@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:27:03', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(114, 517631, 'Admin-made newsfeed stories have escaping issues', 2, 'smccammon@mozilla.com', 'P1', 'addons.mozilla.org', 'Admin/Editor Tools', '2009-09-30 02:27:05', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(115, 518482, 'Duplicate newsfeed stories when adding author', 2, 'smccammon@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-25 15:03:50', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(116, 518483, 'Don''t show add-on icons so much in newsfeed page', 2, 'smccammon@mozilla.com', 'P1', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:27:06', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(117, 512599, 'Add MOTD to editor tools', 2, 'buchanae@gmail.com', 'P2', 'addons.mozilla.org', 'Admin/Editor Tools', '2009-09-22 11:26:25', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(118, 493311, 'Update AMO Policy Page', 3, 'clouserw@gmail.com', 'P2', 'addons.mozilla.org', 'Public Pages', '2009-09-25 20:06:43', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(119, 513150, '[1.6.1] Re-skin existing Developer Tools', 2, 'craigcook.bugz@gmail.com', 'P2', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 17:47:20', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(120, 512845, 'Cannot remove developer tags when user tags are present', 2, 'fwenzel@mozilla.com', 'P2', 'addons.mozilla.org', 'Developer Pages', '2009-09-30 02:26:49', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(121, 499040, 'Show number of collections in browse/results footer', 2, 'jbalogh@jeffbalogh.org', 'P2', 'addons.mozilla.org', 'Collections', '2009-09-30 02:26:44', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(122, 513173, 'Developer''s e-mail address is not obfuscated in the developer profile', 2, 'jbalogh@jeffbalogh.org', 'P2', 'addons.mozilla.org', 'Public Pages', '2009-09-30 02:26:56', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(123, 513325, 'track clicks on recommended module', 2, 'jbalogh@jeffbalogh.org', 'P2', 'addons.mozilla.org', 'Public Pages', '2009-09-30 02:26:58', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(124, 507852, 'Collection description not properly escaped; less-than "<" and characters after it are not saved', 2, 'cdolivei.bugzilla@gmail.com', 'P3', 'addons.mozilla.org', 'Collections', '2009-09-25 12:19:53', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(125, 494088, 'Restyling of My Accounts page', 2, 'chowse@mozilla.com', 'P3', 'addons.mozilla.org', 'Public Pages', '2009-09-29 18:11:45', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(126, 495208, '"Advanced" search tab flyout panel should only close on an explicit click', 2, 'rjbuild1088@gmail.com', 'P3', 'addons.mozilla.org', 'Public Pages', '2009-09-11 16:31:24', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(127, 498080, 'Collection description character count is counting character escaping and inflating shown total', 2, 'smccammon@mozilla.com', 'P3', 'addons.mozilla.org', 'Collections', '2009-09-30 02:26:43', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(128, 507834, 'Collection descriptions should have character limit, not byte limit', 2, 'smccammon@mozilla.com', 'P3', 'addons.mozilla.org', 'Collections', '2009-09-30 02:26:44', '2009-10-04 00:02:08', '2009-10-04 00:02:08'),
+(129, 513744, 'minor tweaks to public stats dashboard', 2, 'smccammon@mozilla.com', 'P3', 'addons.mozilla.org', 'Statistics', '2009-09-30 02:26:59', '2009-10-04 00:02:08', '2009-10-04 00:02:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bugs_deliverables`
+--
+
+CREATE TABLE IF NOT EXISTS `bugs_deliverables` (
+  `deliverable_id` int(11) unsigned NOT NULL,
+  `bug_id` int(11) unsigned NOT NULL,
+  `role` tinyint(1) NOT NULL,
+  PRIMARY KEY  (`deliverable_id`,`bug_id`),
+  KEY `bug_id` (`bug_id`),
+  KEY `role` (`role`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `bugs_deliverables`
+--
+
+INSERT INTO `bugs_deliverables` (`deliverable_id`, `bug_id`, `role`) VALUES
+(1, 96, 1),
+(1, 97, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bugs_milestones`
+--
+
+CREATE TABLE IF NOT EXISTS `bugs_milestones` (
+  `milestone_id` int(11) unsigned NOT NULL,
+  `bug_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY  (`milestone_id`,`bug_id`),
+  KEY `bug_id` (`bug_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `bugs_milestones`
+--
+
+INSERT INTO `bugs_milestones` (`milestone_id`, `bug_id`) VALUES
+(5, 1),
+(5, 2),
+(5, 3),
+(5, 4),
+(5, 5),
+(5, 6),
+(5, 7),
+(5, 8),
+(5, 9),
+(5, 10),
+(5, 11),
+(5, 12),
+(5, 13),
+(5, 14),
+(5, 15),
+(5, 16),
+(5, 17),
+(5, 18),
+(5, 19),
+(5, 20),
+(5, 21),
+(5, 22),
+(5, 23),
+(5, 24),
+(5, 25),
+(5, 26),
+(5, 27),
+(5, 28),
+(5, 29),
+(5, 30),
+(5, 31),
+(5, 32),
+(5, 33),
+(5, 34),
+(5, 35),
+(5, 36),
+(5, 37),
+(5, 38),
+(5, 39),
+(5, 40),
+(5, 41),
+(5, 42),
+(5, 43),
+(5, 44),
+(5, 45),
+(5, 46),
+(5, 47),
+(5, 48),
+(5, 49),
+(5, 50),
+(5, 51),
+(5, 52),
+(5, 53),
+(5, 54),
+(5, 55),
+(5, 56),
+(5, 57),
+(5, 58),
+(5, 59),
+(5, 60),
+(5, 61),
+(5, 62),
+(5, 63),
+(5, 64),
+(5, 65),
+(5, 66),
+(5, 67),
+(5, 68),
+(5, 69),
+(5, 70),
+(5, 71),
+(5, 72),
+(5, 73),
+(5, 74),
+(5, 75),
+(5, 76),
+(5, 77),
+(5, 78),
+(5, 79),
+(5, 80),
+(5, 81),
+(5, 82),
+(5, 83),
+(5, 84),
+(5, 85),
+(5, 86),
+(5, 87),
+(5, 88),
+(5, 89),
+(5, 90),
+(5, 91),
+(5, 92),
+(5, 93),
+(5, 94),
+(5, 95),
+(5, 96),
+(5, 97),
+(5, 98),
+(5, 99),
+(5, 100),
+(5, 101),
+(5, 102),
+(5, 103),
+(5, 104),
+(5, 105),
+(5, 106),
+(5, 107),
+(5, 108),
+(5, 109),
+(5, 110),
+(5, 111),
+(5, 112),
+(5, 113),
+(5, 114),
+(5, 115),
+(5, 116),
+(5, 117),
+(5, 118),
+(5, 119),
+(5, 120),
+(5, 121),
+(5, 122),
+(5, 123),
+(5, 124),
+(5, 125),
+(5, 126),
+(5, 127),
+(5, 128),
+(5, 129);
 
 -- --------------------------------------------------------
 
@@ -62,18 +396,25 @@ INSERT INTO `config` (`key`, `value`) VALUES
 
 CREATE TABLE IF NOT EXISTS `dates` (
   `id` int(11) unsigned NOT NULL auto_increment,
+  `type` int(11) NOT NULL,
   `date` date NOT NULL default '0000-00-00',
-  `milestone_id` int(11) unsigned default NULL,
-  `deliverable_id` int(11) unsigned default NULL,
+  `milestone_id` int(11) unsigned NOT NULL,
   PRIMARY KEY  (`id`),
-  KEY `milestone_id` (`milestone_id`),
-  KEY `deliverable_id` (`deliverable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `milestone_id` (`milestone_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `dates`
 --
 
+INSERT INTO `dates` (`id`, `type`, `date`, `milestone_id`) VALUES
+(1, 2, '2009-09-29', 5),
+(2, 1, '2009-09-30', 6),
+(3, 2, '2009-10-20', 6),
+(4, 1, '2009-10-21', 7),
+(5, 2, '2009-11-10', 7),
+(6, 1, '2009-11-11', 8),
+(7, 2, '2009-12-01', 8);
 
 -- --------------------------------------------------------
 
@@ -83,21 +424,27 @@ CREATE TABLE IF NOT EXISTS `dates` (
 
 CREATE TABLE IF NOT EXISTS `deliverables` (
   `id` int(11) unsigned NOT NULL auto_increment,
-  `milestone_id` int(11) unsigned NOT NULL,
+  `project_id` int(11) unsigned NOT NULL,
+  `parent_id` int(11) unsigned default NULL,
+  `position` int(11) unsigned NOT NULL default '0',
   `name` varchar(255) NOT NULL,
+  `description` text,
+  `bug_id` int(11) unsigned default NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY  (`id`),
-  KEY `milestone_id` (`milestone_id`)
+  KEY `project_id` (`project_id`),
+  KEY `parent_id` (`parent_id`),
+  KEY `bug_id` (`bug_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `deliverables`
 --
 
-INSERT INTO `deliverables` (`id`, `milestone_id`, `name`, `created`, `modified`) VALUES
-(1, 1, 'Add-on Collector', '2009-06-21 01:14:43', '2009-06-21 01:14:43'),
-(2, 1, 'Collections', '2009-06-21 01:14:43', '2009-06-21 01:14:43');
+INSERT INTO `deliverables` (`id`, `project_id`, `parent_id`, `position`, `name`, `description`, `bug_id`, `created`, `modified`) VALUES
+(1, 1, NULL, 0, 'How-to Library', 'The how-to listing page will have each category of how-tos with a brief description and link to that category''s page. This page will be static and localizable.', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 1, NULL, 0, 'Case Studies', 'The Case Studies landing page should have introductory text followed by a list of the case studies, with a brief description of each and links to their individual pages. This page will be static and localizable.', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -107,20 +454,75 @@ INSERT INTO `deliverables` (`id`, `milestone_id`, `name`, `created`, `modified`)
 
 CREATE TABLE IF NOT EXISTS `milestones` (
   `id` int(11) unsigned NOT NULL auto_increment,
-  `project_id` int(11) unsigned NOT NULL,
+  `product_id` int(11) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `bugquery` text NOT NULL,
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
-  KEY `project_id` (`project_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `milestones`
 --
 
-INSERT INTO `milestones` (`id`, `project_id`, `name`, `created`, `modified`) VALUES
-(1, 1, 'Bandwagon, Phase II', '2009-06-21 01:14:03', '2009-06-21 01:14:03');
+INSERT INTO `milestones` (`id`, `product_id`, `name`, `url`, `bugquery`, `created`, `modified`) VALUES
+(1, 1, '5.0.6', '5.0.6', 'https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&product=addons.mozilla.org&target_milestone=5.0.6', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 1, '5.0.7', '5.0.7', 'https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&product=addons.mozilla.org&target_milestone=5.0.7', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 1, '5.0.8', '5.0.8', 'https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&product=addons.mozilla.org&target_milestone=5.0.8', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 1, '5.0.9', '5.0.9', 'https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&product=addons.mozilla.org&target_milestone=5.0.9', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 1, '5.1', '5.1', 'https://api-dev.bugzilla.mozilla.org/0.1/bug?product=addons.mozilla.org&target_milestone=5.1', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 1, '5.2', '5.2', 'https://api-dev.bugzilla.mozilla.org/0.1/bug?product=addons.mozilla.org&target_milestone=5.2', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(7, 1, '5.3', '5.3', 'https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&product=addons.mozilla.org&target_milestone=5.3', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, 1, '5.4', '5.4', 'https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&product=addons.mozilla.org&target_milestone=5.4', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `name` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `theme` varchar(255) NOT NULL default 'default',
+  `created` datetime NOT NULL default '0000-00-00 00:00:00',
+  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `url` (`url`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `url`, `theme`, `created`, `modified`) VALUES
+(1, 'AMO', 'amo', 'default', '2009-06-21 01:13:23', '2009-06-21 01:13:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products_users`
+--
+
+CREATE TABLE IF NOT EXISTS `products_users` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `product_id` int(11) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `role` int(11) unsigned NOT NULL,
+  `created` datetime NOT NULL default '0000-00-00 00:00:00',
+  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `project_id` (`product_id`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `products_users`
+--
+
 
 -- --------------------------------------------------------
 
@@ -130,329 +532,25 @@ INSERT INTO `milestones` (`id`, `project_id`, `name`, `created`, `modified`) VAL
 
 CREATE TABLE IF NOT EXISTS `projects` (
   `id` int(11) unsigned NOT NULL auto_increment,
+  `product_id` int(11) unsigned NOT NULL,
+  `milestone_id` int(11) unsigned default NULL,
   `name` varchar(255) NOT NULL,
   `url` varchar(255) NOT NULL,
-  `open` tinyint(1) NOT NULL,
-  `theme` varchar(255) NOT NULL default 'default',
+  `description` text NOT NULL,
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `url` (`url`)
+  KEY `product_id` (`product_id`),
+  KEY `milestone_id` (`milestone_id`),
+  KEY `url` (`url`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`id`, `name`, `url`, `open`, `theme`, `created`, `modified`) VALUES
-(1, 'AMO', 'amo', 1, 'default', '2009-06-21 01:13:23', '2009-06-21 01:13:23');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `projects_users`
---
-
-CREATE TABLE IF NOT EXISTS `projects_users` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `project_id` int(11) unsigned NOT NULL,
-  `user_id` int(11) unsigned NOT NULL,
-  `role` int(11) unsigned NOT NULL,
-  `created` datetime NOT NULL default '0000-00-00 00:00:00',
-  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `project_id` (`project_id`,`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `projects_users`
---
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `resources`
---
-
-CREATE TABLE IF NOT EXISTS `resources` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `resourcetype` varchar(255) NOT NULL,
-  `deliverable_id` int(11) unsigned NOT NULL,
-  `category_id` int(11) unsigned NOT NULL,
-  `data` text,
-  `created` datetime NOT NULL default '0000-00-00 00:00:00',
-  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`),
-  KEY `deliverable_id` (`deliverable_id`),
-  KEY `category_id` (`category_id`),
-  KEY `resourcetype` (`resourcetype`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=107 ;
-
---
--- Dumping data for table `resources`
---
-
-INSERT INTO `resources` (`id`, `resourcetype`, `deliverable_id`, `category_id`, `data`, `created`, `modified`) VALUES
-(1, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"511931";s:10:"bz_summary";s:116:"On viewing the same collection using different locales,it gets listed multiple times under "Recently viewed" section";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(2, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"512134";s:10:"bz_summary";s:49:"chrome.manifest not actually required for themes?";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(3, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"512025";s:10:"bz_summary";s:74:"Collection barometer wraps for more than 4 digits on /collections/ listing";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(4, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"512135";s:10:"bz_summary";s:23:"Themes can be in a .xpi";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(5, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"510907";s:10:"bz_summary";s:64:"On site statistics, some CSS image requests return 404 Not Found";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(6, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"512111";s:10:"bz_summary";s:82:"Negative text-indented text in bars is not hidden in RTL, but only on listing page";s:11:"bz_assignee";s:20:"rdoherty@mozilla.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(7, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"512000";s:10:"bz_summary";s:66:"Use breadcrumb element to include name of collection in stats page";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(8, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"504692";s:10:"bz_summary";s:20:"Improve slow queries";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(9, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"400996";s:10:"bz_summary";s:39:"Developer documentation for the AMO API";s:11:"bz_assignee";s:17:"laura@mozilla.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(10, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"507732";s:10:"bz_summary";s:54:"Confirm that API for fennec has appropriate capability";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(11, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509753";s:10:"bz_summary";s:38:"Are our category total numbers broken?";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(12, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508574";s:10:"bz_summary";s:23:"s/%d/%1$s/ in .po files";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(13, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"511948";s:10:"bz_summary";s:39:"Add the /contribute/ page to robots.txt";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(14, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"503354";s:10:"bz_summary";s:32:"Build search indexing via Sphinx";s:11:"bz_assignee";s:14:"dd@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(15, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508172";s:10:"bz_summary";s:36:"Need to fix some minor L10n problems";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(16, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"504699";s:10:"bz_summary";s:52:"Write a new Search API as part of addons services!!!";s:11:"bz_assignee";s:14:"dd@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(17, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509618";s:10:"bz_summary";s:56:"Update config/sql/remora.sql with changes for bug 503354";s:11:"bz_assignee";s:14:"dd@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(18, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508058";s:10:"bz_summary";s:36:"Set up install URLs for Labs add-ons";s:11:"bz_assignee";s:19:"fligtar@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(19, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509619";s:10:"bz_summary";s:61:"Make sure newly added versions play nice with Sphinx indexing";s:11:"bz_assignee";s:14:"dd@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(20, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"510374";s:10:"bz_summary";s:20:"whitelist test pilot";s:11:"bz_assignee";s:19:"fligtar@mozilla.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(21, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"504930";s:10:"bz_summary";s:63:"Encoding error in JSON error message when uploading invalid xpi";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(22, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"510898";s:10:"bz_summary";s:88:"most_recent_versions temp table in bin/update-search-views is causing replication errors";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:54', '2009-08-23 23:24:54'),
-(23, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"512075";s:10:"bz_summary";s:44:"pt-PT lost their L10n in the great migration";s:11:"bz_assignee";s:17:"gandalf@aviary.pl";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(24, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506501";s:10:"bz_summary";s:67:"Add-On Collector Won''t Save Ad Block Plus Extension in Subscription";s:11:"bz_assignee";s:20:"lorchard@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(25, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508904";s:10:"bz_summary";s:60:"AMO: ''Sort by Newest'' search results gives incorrect results";s:11:"bz_assignee";s:18:"nobody@mozilla.org";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(26, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"511775";s:10:"bz_summary";s:64:"Centralize browser-check regex and add Namoroka to supported UAs";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(27, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"501988";s:10:"bz_summary";s:35:"Convert AMO to use normal .po files";s:11:"bz_assignee";s:17:"gandalf@aviary.pl";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(28, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"441852";s:10:"bz_summary";s:36:"Verify dictionaries are dictionaries";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(29, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"441854";s:10:"bz_summary";s:40:"Verify language packs are language packs";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(30, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"444136";s:10:"bz_summary";s:63:"Create framework to automatically scan add-ons for bad patterns";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(31, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508173";s:10:"bz_summary";s:67:"Come up with a better test for dictionary_security_checkInstallJS()";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(32, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"505260";s:10:"bz_summary";s:62:"Create tests for L10n completeness in AMO validation framework";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(33, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"498679";s:10:"bz_summary";s:40:"Run Addons tests automatically on upload";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(34, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508062";s:10:"bz_summary";s:45:"Unable to access uploaded search-engine addon";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(35, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509038";s:10:"bz_summary";s:42:"Tweak all_security_filterUnsafeJS() regexs";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(36, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508275";s:10:"bz_summary";s:34:"3 strings should have plural forms";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(37, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509427";s:10:"bz_summary";s:46:"Minor test suite tweaks for themes (from blog)";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(38, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508988";s:10:"bz_summary";s:67:"Validator: source links don''t work if source viewing is not enabled";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(39, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506154";s:10:"bz_summary";s:37:"[W-2.2.1] Recently Viewed Collections";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(40, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509500";s:10:"bz_summary";s:70:"Validator should treat setTimeout/setInterval as potentially dangerous";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(41, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506152";s:10:"bz_summary";s:43:"[W-2.1.1] Collection Rating on display page";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(42, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509039";s:10:"bz_summary";s:35:"tweak install.js test for seamonkey";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(43, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506155";s:10:"bz_summary";s:41:"[W-2.2.2] Collection ratings in directory";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(44, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506158";s:10:"bz_summary";s:49:"[W-2.4.2] Similar Add-ons on add-on display pages";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(45, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506800";s:10:"bz_summary";s:30:"[W-2.4.1] Add-on Relationships";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(46, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"482396";s:10:"bz_summary";s:36:"Track share count totals in database";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(47, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508468";s:10:"bz_summary";s:81:"Add contribution amounts to listings on home page, categories, and search results";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(48, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"511697";s:10:"bz_summary";s:55:"Can''t access management pages for tags or contributions";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(49, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506157";s:10:"bz_summary";s:36:"[W-2.3.2] Collection Stats Dashboard";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(50, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"371210";s:10:"bz_summary";s:56:"Check add-ons for security vulnerabilities at submission";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(51, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"498038";s:10:"bz_summary";s:30:"Remove extra space on homepage";s:11:"bz_assignee";s:20:"rdoherty@mozilla.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(52, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508469";s:10:"bz_summary";s:30:"Create Contributions dashboard";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(53, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"510031";s:10:"bz_summary";s:79:"Registration Form Error Message for Taken Nicknames Should be in Red or in Bold";s:11:"bz_assignee";s:22:"bmo@mozilla-srbija.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(54, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509542";s:10:"bz_summary";s:37:"Expectant recommended install buttons";s:11:"bz_assignee";s:22:"bmo@mozilla-srbija.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(55, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"499840";s:10:"bz_summary";s:54:"Unordered lists on the registration page aren''t styled";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(56, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506362";s:10:"bz_summary";s:76:"Use JavaScript to test file uploads before the client sends the POST request";s:11:"bz_assignee";s:27:"cdolivei.bugzilla@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(57, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"507310";s:10:"bz_summary";s:82:"Multiple-developer add-ons don''t consistently list all authors / hyperlink #others";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(58, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508868";s:10:"bz_summary";s:50:"Need to be able to link to the developer agreement";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(59, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509916";s:10:"bz_summary";s:75:"Cannot submit language packs for Thunderbird as no categories are available";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(60, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508984";s:10:"bz_summary";s:81:"Add more detail to validation FAQ; unsafe settings warnings need more explanation";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(61, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"496539";s:10:"bz_summary";s:86:"remove locale code (en-US etc.) from links in new add-on version in queue notification";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(62, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"511981";s:10:"bz_summary";s:49:"Some new strings still follow old .po file format";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(63, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"507931";s:10:"bz_summary";s:54:"Blank editor name showing in MTD Activity; Review Logs";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(64, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509235";s:10:"bz_summary";s:52:"Reviews on user profile pages lost their line breaks";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(65, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"511685";s:10:"bz_summary";s:71:"Accessibility/navigational links appearing on preview (top-left corner)";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(66, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"511840";s:10:"bz_summary";s:56:"Voting for a collection explodes if you''re not logged in";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(67, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"504124";s:10:"bz_summary";s:77:"[IE7, JavaScript-disabled] "Go" button in language/locale picker doesn''t work";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(68, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508912";s:10:"bz_summary";s:41:""Other add-ons by author" section missing";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(69, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508763";s:10:"bz_summary";s:48:"Support for manage collection in Collections API";s:11:"bz_assignee";s:20:"lorchard@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(70, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"501273";s:10:"bz_summary";s:77:"On window resize, titles on a "Browse themes" pages overlaps downloads number";s:11:"bz_assignee";s:18:"neilio@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(71, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"511923";s:10:"bz_summary";s:27:"Change tooltip after rating";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(72, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506818";s:10:"bz_summary";s:42:"Review/expand/improve validation help text";s:11:"bz_assignee";s:18:"nobody@mozilla.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(73, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508735";s:10:"bz_summary";s:56:"An error message on the file upload interface is garbled";s:11:"bz_assignee";s:18:"nobody@mozilla.org";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(74, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"511194";s:10:"bz_summary";s:36:"Sprites for collection rating thumbs";s:11:"bz_assignee";s:20:"rdoherty@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(75, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"490077";s:10:"bz_summary";s:62:"Tabs'' layout is broken in the Admin Users'' "About Me" textbox.";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(76, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"494454";s:10:"bz_summary";s:30:"Full name of addon in tooltip?";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(77, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"496764";s:10:"bz_summary";s:32:"Can''t add author with + in email";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(78, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"493070";s:10:"bz_summary";s:44:"Font style wrong on successful add-on upload";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(79, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506106";s:10:"bz_summary";s:33:"Add help links to validation page";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(80, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509142";s:10:"bz_summary";s:92:"Regression: Can not delete pending add-on file so that it can be replaced with a newer file.";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(81, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509921";s:10:"bz_summary";s:44:"Not matching terms in the validation section";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(82, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506797";s:10:"bz_summary";s:139:"on the /admin page under Recent Admin Activity it says ''User ''A'' added to group admins'' instead of ''User ''A'' added User ''B'' to group admins";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(83, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"510142";s:10:"bz_summary";s:71:"Editors should be able to run the validation test suite against add-ons";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(84, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"510342";s:10:"bz_summary";s:64:"View Contents link turns into "File not found!", then into a 404";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(85, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"510347";s:10:"bz_summary";s:67:"Links to add-on review pages in /performance are missing add-on IDs";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(86, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509869";s:10:"bz_summary";s:37:"Recommended list not ordered randomly";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(87, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"507205";s:10:"bz_summary";s:71:"Not localized tooltips for buttons in the Editor Comments â€“ AMO 5.0.8";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(88, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"510542";s:10:"bz_summary";s:78:"Add-on name autocomplete field on Collection build page doesn''t return results";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(89, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"511922";s:10:"bz_summary";s:39:"Add rating sort to Collection Directory";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(90, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"511926";s:10:"bz_summary";s:38:"Add link to collection stats dashboard";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(91, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509436";s:10:"bz_summary";s:55:"Add verification suite output to editor''s control panel";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(92, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506153";s:10:"bz_summary";s:33:"[W-2.1.2] Collection Share widget";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(93, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509645";s:10:"bz_summary";s:80:"Uncaught exception: ''An invalid or illegal string was specified'' @ amo-bundle.js";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(94, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"497646";s:10:"bz_summary";s:30:"Cannot update collections icon";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(95, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"507753";s:10:"bz_summary";s:54:"Create standalone contribution page URL for developers";s:11:"bz_assignee";s:20:"rdoherty@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(96, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"483835";s:10:"bz_summary";s:29:"Create public stats dashboard";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(97, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"493306";s:10:"bz_summary";s:52:"Collections add page: Preserve form choices on error";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(98, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"506391";s:10:"bz_summary";s:70:"Attempt to change collection name to â€œ<â€ results in the empty name";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(99, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509738";s:10:"bz_summary";s:54:"Admin logs page is blank (0-byte content length); OOM?";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(100, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"440811";s:10:"bz_summary";s:44:"Theme browser doesn''t show compatible themes";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(101, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"498872";s:10:"bz_summary";s:54:"Version notes header not showing next to version notes";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(102, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"508688";s:10:"bz_summary";s:58:"Not localized words on the Editor Tools > Performance page";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(103, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"496979";s:10:"bz_summary";s:48:"Files not checked when going to review an add-on";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(104, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"498082";s:10:"bz_summary";s:61:"Multiple layout problems with manage collections add-ons page";s:11:"bz_assignee";s:18:"neilio@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(105, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"429273";s:10:"bz_summary";s:57:"Pre-3.2 image-preview link pages are missing their images";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55'),
-(106, 'bugzilla', 2, 3, 'a:5:{s:9:"bz_number";s:6:"509074";s:10:"bz_summary";s:38:"Change style of stats dashboard header";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:24:55', '2009-08-23 23:24:55');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `resourcetypes`
---
-
-CREATE TABLE IF NOT EXISTS `resourcetypes` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `resourcetype` varchar(255) NOT NULL,
-  `project_id` int(11) unsigned NOT NULL,
-  `enabled` tinyint(1) NOT NULL default '1',
-  `config` text,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `project_id` (`project_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `resourcetypes`
---
-
-INSERT INTO `resourcetypes` (`id`, `resourcetype`, `project_id`, `enabled`, `config`, `created`, `modified`) VALUES
-(1, 'link', 1, 1, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 'wiki', 1, 1, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 'bugzilla', 1, 1, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `temp`
---
-
-CREATE TABLE IF NOT EXISTS `temp` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `data` text,
-  `created` datetime NOT NULL default '0000-00-00 00:00:00',
-  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=319 ;
-
---
--- Dumping data for table `temp`
---
-
-INSERT INTO `temp` (`id`, `data`, `created`, `modified`) VALUES
-(1, 'a:5:{s:9:"bz_number";s:6:"511931";s:10:"bz_summary";s:116:"On viewing the same collection using different locales,it gets listed multiple times under "Recently viewed" section";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(2, 'a:5:{s:9:"bz_number";s:6:"512025";s:10:"bz_summary";s:74:"Collection barometer wraps for more than 4 digits on /collections/ listing";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(3, 'a:5:{s:9:"bz_number";s:6:"512111";s:10:"bz_summary";s:82:"Negative text-indented text in bars is not hidden in RTL, but only on listing page";s:11:"bz_assignee";s:20:"rdoherty@mozilla.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(4, 'a:5:{s:9:"bz_number";s:6:"512134";s:10:"bz_summary";s:49:"chrome.manifest not actually required for themes?";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(5, 'a:5:{s:9:"bz_number";s:6:"512135";s:10:"bz_summary";s:23:"Themes can be in a .xpi";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(6, 'a:5:{s:9:"bz_number";s:6:"510907";s:10:"bz_summary";s:64:"On site statistics, some CSS image requests return 404 Not Found";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(7, 'a:5:{s:9:"bz_number";s:6:"512000";s:10:"bz_summary";s:66:"Use breadcrumb element to include name of collection in stats page";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(8, 'a:5:{s:9:"bz_number";s:6:"400996";s:10:"bz_summary";s:39:"Developer documentation for the AMO API";s:11:"bz_assignee";s:17:"laura@mozilla.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(9, 'a:5:{s:9:"bz_number";s:6:"504692";s:10:"bz_summary";s:20:"Improve slow queries";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(10, 'a:5:{s:9:"bz_number";s:6:"507732";s:10:"bz_summary";s:54:"Confirm that API for fennec has appropriate capability";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(11, 'a:5:{s:9:"bz_number";s:6:"508172";s:10:"bz_summary";s:36:"Need to fix some minor L10n problems";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(12, 'a:5:{s:9:"bz_number";s:6:"508574";s:10:"bz_summary";s:23:"s/%d/%1$s/ in .po files";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(13, 'a:5:{s:9:"bz_number";s:6:"509753";s:10:"bz_summary";s:38:"Are our category total numbers broken?";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(14, 'a:5:{s:9:"bz_number";s:6:"511948";s:10:"bz_summary";s:39:"Add the /contribute/ page to robots.txt";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(15, 'a:5:{s:9:"bz_number";s:6:"503354";s:10:"bz_summary";s:32:"Build search indexing via Sphinx";s:11:"bz_assignee";s:14:"dd@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(16, 'a:5:{s:9:"bz_number";s:6:"504699";s:10:"bz_summary";s:52:"Write a new Search API as part of addons services!!!";s:11:"bz_assignee";s:14:"dd@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(17, 'a:5:{s:9:"bz_number";s:6:"509618";s:10:"bz_summary";s:56:"Update config/sql/remora.sql with changes for bug 503354";s:11:"bz_assignee";s:14:"dd@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(18, 'a:5:{s:9:"bz_number";s:6:"509619";s:10:"bz_summary";s:61:"Make sure newly added versions play nice with Sphinx indexing";s:11:"bz_assignee";s:14:"dd@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(19, 'a:5:{s:9:"bz_number";s:6:"508058";s:10:"bz_summary";s:36:"Set up install URLs for Labs add-ons";s:11:"bz_assignee";s:19:"fligtar@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(20, 'a:5:{s:9:"bz_number";s:6:"510374";s:10:"bz_summary";s:20:"whitelist test pilot";s:11:"bz_assignee";s:19:"fligtar@mozilla.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(21, 'a:5:{s:9:"bz_number";s:6:"504930";s:10:"bz_summary";s:63:"Encoding error in JSON error message when uploading invalid xpi";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(22, 'a:5:{s:9:"bz_number";s:6:"511775";s:10:"bz_summary";s:64:"Centralize browser-check regex and add Namoroka to supported UAs";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(23, 'a:5:{s:9:"bz_number";s:6:"501988";s:10:"bz_summary";s:35:"Convert AMO to use normal .po files";s:11:"bz_assignee";s:17:"gandalf@aviary.pl";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(24, 'a:5:{s:9:"bz_number";s:6:"512075";s:10:"bz_summary";s:44:"pt-PT lost their L10n in the great migration";s:11:"bz_assignee";s:17:"gandalf@aviary.pl";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(25, 'a:5:{s:9:"bz_number";s:6:"510898";s:10:"bz_summary";s:88:"most_recent_versions temp table in bin/update-search-views is causing replication errors";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(26, 'a:5:{s:9:"bz_number";s:6:"506501";s:10:"bz_summary";s:67:"Add-On Collector Won''t Save Ad Block Plus Extension in Subscription";s:11:"bz_assignee";s:20:"lorchard@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(27, 'a:5:{s:9:"bz_number";s:6:"508904";s:10:"bz_summary";s:60:"AMO: ''Sort by Newest'' search results gives incorrect results";s:11:"bz_assignee";s:18:"nobody@mozilla.org";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(28, 'a:5:{s:9:"bz_number";s:6:"441852";s:10:"bz_summary";s:36:"Verify dictionaries are dictionaries";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(29, 'a:5:{s:9:"bz_number";s:6:"441854";s:10:"bz_summary";s:40:"Verify language packs are language packs";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(30, 'a:5:{s:9:"bz_number";s:6:"444136";s:10:"bz_summary";s:63:"Create framework to automatically scan add-ons for bad patterns";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(31, 'a:5:{s:9:"bz_number";s:6:"498679";s:10:"bz_summary";s:40:"Run Addons tests automatically on upload";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(32, 'a:5:{s:9:"bz_number";s:6:"505260";s:10:"bz_summary";s:62:"Create tests for L10n completeness in AMO validation framework";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(33, 'a:5:{s:9:"bz_number";s:6:"508062";s:10:"bz_summary";s:45:"Unable to access uploaded search-engine addon";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(34, 'a:5:{s:9:"bz_number";s:6:"508173";s:10:"bz_summary";s:67:"Come up with a better test for dictionary_security_checkInstallJS()";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(35, 'a:5:{s:9:"bz_number";s:6:"508275";s:10:"bz_summary";s:34:"3 strings should have plural forms";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(36, 'a:5:{s:9:"bz_number";s:6:"508988";s:10:"bz_summary";s:67:"Validator: source links don''t work if source viewing is not enabled";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(37, 'a:5:{s:9:"bz_number";s:6:"509038";s:10:"bz_summary";s:42:"Tweak all_security_filterUnsafeJS() regexs";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(38, 'a:5:{s:9:"bz_number";s:6:"509039";s:10:"bz_summary";s:35:"tweak install.js test for seamonkey";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(39, 'a:5:{s:9:"bz_number";s:6:"509427";s:10:"bz_summary";s:46:"Minor test suite tweaks for themes (from blog)";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(40, 'a:5:{s:9:"bz_number";s:6:"509500";s:10:"bz_summary";s:70:"Validator should treat setTimeout/setInterval as potentially dangerous";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(41, 'a:5:{s:9:"bz_number";s:6:"506152";s:10:"bz_summary";s:43:"[W-2.1.1] Collection Rating on display page";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(42, 'a:5:{s:9:"bz_number";s:6:"506154";s:10:"bz_summary";s:37:"[W-2.2.1] Recently Viewed Collections";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(43, 'a:5:{s:9:"bz_number";s:6:"506155";s:10:"bz_summary";s:41:"[W-2.2.2] Collection ratings in directory";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(44, 'a:5:{s:9:"bz_number";s:6:"506158";s:10:"bz_summary";s:49:"[W-2.4.2] Similar Add-ons on add-on display pages";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(45, 'a:5:{s:9:"bz_number";s:6:"506800";s:10:"bz_summary";s:30:"[W-2.4.1] Add-on Relationships";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(46, 'a:5:{s:9:"bz_number";s:6:"508468";s:10:"bz_summary";s:81:"Add contribution amounts to listings on home page, categories, and search results";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(47, 'a:5:{s:9:"bz_number";s:6:"371210";s:10:"bz_summary";s:56:"Check add-ons for security vulnerabilities at submission";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(48, 'a:5:{s:9:"bz_number";s:6:"511697";s:10:"bz_summary";s:55:"Can''t access management pages for tags or contributions";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(49, 'a:5:{s:9:"bz_number";s:6:"506157";s:10:"bz_summary";s:36:"[W-2.3.2] Collection Stats Dashboard";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(50, 'a:5:{s:9:"bz_number";s:6:"482396";s:10:"bz_summary";s:36:"Track share count totals in database";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(51, 'a:5:{s:9:"bz_number";s:6:"508469";s:10:"bz_summary";s:30:"Create Contributions dashboard";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(52, 'a:5:{s:9:"bz_number";s:6:"498038";s:10:"bz_summary";s:30:"Remove extra space on homepage";s:11:"bz_assignee";s:20:"rdoherty@mozilla.com";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:0;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(53, 'a:5:{s:9:"bz_number";s:6:"509542";s:10:"bz_summary";s:37:"Expectant recommended install buttons";s:11:"bz_assignee";s:22:"bmo@mozilla-srbija.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(54, 'a:5:{s:9:"bz_number";s:6:"510031";s:10:"bz_summary";s:79:"Registration Form Error Message for Taken Nicknames Should be in Red or in Bold";s:11:"bz_assignee";s:22:"bmo@mozilla-srbija.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(55, 'a:5:{s:9:"bz_number";s:6:"506362";s:10:"bz_summary";s:76:"Use JavaScript to test file uploads before the client sends the POST request";s:11:"bz_assignee";s:27:"cdolivei.bugzilla@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(56, 'a:5:{s:9:"bz_number";s:6:"499840";s:10:"bz_summary";s:54:"Unordered lists on the registration page aren''t styled";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(57, 'a:5:{s:9:"bz_number";s:6:"507310";s:10:"bz_summary";s:82:"Multiple-developer add-ons don''t consistently list all authors / hyperlink #others";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(58, 'a:5:{s:9:"bz_number";s:6:"507931";s:10:"bz_summary";s:54:"Blank editor name showing in MTD Activity; Review Logs";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(59, 'a:5:{s:9:"bz_number";s:6:"508868";s:10:"bz_summary";s:50:"Need to be able to link to the developer agreement";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(60, 'a:5:{s:9:"bz_number";s:6:"508984";s:10:"bz_summary";s:81:"Add more detail to validation FAQ; unsafe settings warnings need more explanation";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(61, 'a:5:{s:9:"bz_number";s:6:"509916";s:10:"bz_summary";s:75:"Cannot submit language packs for Thunderbird as no categories are available";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(62, 'a:5:{s:9:"bz_number";s:6:"511981";s:10:"bz_summary";s:49:"Some new strings still follow old .po file format";s:11:"bz_assignee";s:18:"clouserw@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(63, 'a:5:{s:9:"bz_number";s:6:"496539";s:10:"bz_summary";s:86:"remove locale code (en-US etc.) from links in new add-on version in queue notification";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(64, 'a:5:{s:9:"bz_number";s:6:"504124";s:10:"bz_summary";s:77:"[IE7, JavaScript-disabled] "Go" button in language/locale picker doesn''t work";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(65, 'a:5:{s:9:"bz_number";s:6:"508912";s:10:"bz_summary";s:41:""Other add-ons by author" section missing";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(66, 'a:5:{s:9:"bz_number";s:6:"509235";s:10:"bz_summary";s:52:"Reviews on user profile pages lost their line breaks";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(67, 'a:5:{s:9:"bz_number";s:6:"511685";s:10:"bz_summary";s:71:"Accessibility/navigational links appearing on preview (top-left corner)";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(68, 'a:5:{s:9:"bz_number";s:6:"511840";s:10:"bz_summary";s:56:"Voting for a collection explodes if you''re not logged in";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(69, 'a:5:{s:9:"bz_number";s:6:"511923";s:10:"bz_summary";s:27:"Change tooltip after rating";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(70, 'a:5:{s:9:"bz_number";s:6:"508763";s:10:"bz_summary";s:48:"Support for manage collection in Collections API";s:11:"bz_assignee";s:20:"lorchard@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(71, 'a:5:{s:9:"bz_number";s:6:"501273";s:10:"bz_summary";s:77:"On window resize, titles on a "Browse themes" pages overlaps downloads number";s:11:"bz_assignee";s:18:"neilio@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(72, 'a:5:{s:9:"bz_number";s:6:"506818";s:10:"bz_summary";s:42:"Review/expand/improve validation help text";s:11:"bz_assignee";s:18:"nobody@mozilla.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(73, 'a:5:{s:9:"bz_number";s:6:"508735";s:10:"bz_summary";s:56:"An error message on the file upload interface is garbled";s:11:"bz_assignee";s:18:"nobody@mozilla.org";s:8:"bz_fixed";i:0;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(74, 'a:5:{s:9:"bz_number";s:6:"511194";s:10:"bz_summary";s:36:"Sprites for collection rating thumbs";s:11:"bz_assignee";s:20:"rdoherty@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(75, 'a:5:{s:9:"bz_number";s:6:"490077";s:10:"bz_summary";s:62:"Tabs'' layout is broken in the Admin Users'' "About Me" textbox.";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(76, 'a:5:{s:9:"bz_number";s:6:"493070";s:10:"bz_summary";s:44:"Font style wrong on successful add-on upload";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(77, 'a:5:{s:9:"bz_number";s:6:"494454";s:10:"bz_summary";s:30:"Full name of addon in tooltip?";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(78, 'a:5:{s:9:"bz_number";s:6:"496764";s:10:"bz_summary";s:32:"Can''t add author with + in email";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(79, 'a:5:{s:9:"bz_number";s:6:"506106";s:10:"bz_summary";s:33:"Add help links to validation page";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(80, 'a:5:{s:9:"bz_number";s:6:"506797";s:10:"bz_summary";s:139:"on the /admin page under Recent Admin Activity it says ''User ''A'' added to group admins'' instead of ''User ''A'' added User ''B'' to group admins";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(81, 'a:5:{s:9:"bz_number";s:6:"509142";s:10:"bz_summary";s:92:"Regression: Can not delete pending add-on file so that it can be replaced with a newer file.";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(82, 'a:5:{s:9:"bz_number";s:6:"509921";s:10:"bz_summary";s:44:"Not matching terms in the validation section";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(83, 'a:5:{s:9:"bz_number";s:6:"510142";s:10:"bz_summary";s:71:"Editors should be able to run the validation test suite against add-ons";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(84, 'a:5:{s:9:"bz_number";s:6:"510342";s:10:"bz_summary";s:64:"View Contents link turns into "File not found!", then into a 404";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(85, 'a:5:{s:9:"bz_number";s:6:"507205";s:10:"bz_summary";s:71:"Not localized tooltips for buttons in the Editor Comments â€“ AMO 5.0.8";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(86, 'a:5:{s:9:"bz_number";s:6:"510347";s:10:"bz_summary";s:67:"Links to add-on review pages in /performance are missing add-on IDs";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(87, 'a:5:{s:9:"bz_number";s:6:"511926";s:10:"bz_summary";s:38:"Add link to collection stats dashboard";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(88, 'a:5:{s:9:"bz_number";s:6:"509869";s:10:"bz_summary";s:37:"Recommended list not ordered randomly";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(89, 'a:5:{s:9:"bz_number";s:6:"510542";s:10:"bz_summary";s:78:"Add-on name autocomplete field on Collection build page doesn''t return results";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(90, 'a:5:{s:9:"bz_number";s:6:"511922";s:10:"bz_summary";s:39:"Add rating sort to Collection Directory";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(91, 'a:5:{s:9:"bz_number";s:6:"506153";s:10:"bz_summary";s:33:"[W-2.1.2] Collection Share widget";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(92, 'a:5:{s:9:"bz_number";s:6:"509436";s:10:"bz_summary";s:55:"Add verification suite output to editor''s control panel";s:11:"bz_assignee";s:21:"rjbuild1088@gmail.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(93, 'a:5:{s:9:"bz_number";s:6:"497646";s:10:"bz_summary";s:30:"Cannot update collections icon";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(94, 'a:5:{s:9:"bz_number";s:6:"509645";s:10:"bz_summary";s:80:"Uncaught exception: ''An invalid or illegal string was specified'' @ amo-bundle.js";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(95, 'a:5:{s:9:"bz_number";s:6:"507753";s:10:"bz_summary";s:54:"Create standalone contribution page URL for developers";s:11:"bz_assignee";s:20:"rdoherty@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(96, 'a:5:{s:9:"bz_number";s:6:"483835";s:10:"bz_summary";s:29:"Create public stats dashboard";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(97, 'a:5:{s:9:"bz_number";s:6:"440811";s:10:"bz_summary";s:44:"Theme browser doesn''t show compatible themes";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(98, 'a:5:{s:9:"bz_number";s:6:"493306";s:10:"bz_summary";s:52:"Collections add page: Preserve form choices on error";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(99, 'a:5:{s:9:"bz_number";s:6:"496979";s:10:"bz_summary";s:48:"Files not checked when going to review an add-on";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(100, 'a:5:{s:9:"bz_number";s:6:"506391";s:10:"bz_summary";s:70:"Attempt to change collection name to â€œ<â€ results in the empty name";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(101, 'a:5:{s:9:"bz_number";s:6:"509738";s:10:"bz_summary";s:54:"Admin logs page is blank (0-byte content length); OOM?";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(102, 'a:5:{s:9:"bz_number";s:6:"498872";s:10:"bz_summary";s:54:"Version notes header not showing next to version notes";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(103, 'a:5:{s:9:"bz_number";s:6:"508688";s:10:"bz_summary";s:58:"Not localized words on the Editor Tools > Performance page";s:11:"bz_assignee";s:21:"smccammon@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(104, 'a:5:{s:9:"bz_number";s:6:"429273";s:10:"bz_summary";s:57:"Pre-3.2 image-preview link pages are missing their images";s:11:"bz_assignee";s:19:"fwenzel@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(105, 'a:5:{s:9:"bz_number";s:6:"509074";s:10:"bz_summary";s:38:"Change style of stats dashboard header";s:11:"bz_assignee";s:22:"jbalogh@jeffbalogh.org";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56'),
-(106, 'a:5:{s:9:"bz_number";s:6:"498082";s:10:"bz_summary";s:61:"Multiple layout problems with manage collections add-ons page";s:11:"bz_assignee";s:18:"neilio@mozilla.com";s:8:"bz_fixed";i:1;s:11:"bz_verified";i:1;}', '2009-08-23 23:15:56', '2009-08-23 23:15:56');
+INSERT INTO `projects` (`id`, `product_id`, `milestone_id`, `name`, `url`, `description`, `created`, `modified`) VALUES
+(1, 1, 5, 'developer.AMO', 'developer.AMO', 'One-stop-shop for add-on developers to learn why they''d want to make an add-on, how to make an add-on, and manage their add-ons on AMO.', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -465,9 +563,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `buguser` varchar(255) NOT NULL,
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `email` (`email`),
+  KEY `buguser` (`buguser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -480,33 +581,54 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 --
+-- Constraints for table `attachments`
+--
+ALTER TABLE `attachments`
+  ADD CONSTRAINT `attachments_ibfk_1` FOREIGN KEY (`deliverable_id`) REFERENCES `deliverables` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `bugs_deliverables`
+--
+ALTER TABLE `bugs_deliverables`
+  ADD CONSTRAINT `bugs_deliverables_ibfk_3` FOREIGN KEY (`deliverable_id`) REFERENCES `deliverables` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `bugs_deliverables_ibfk_2` FOREIGN KEY (`bug_id`) REFERENCES `bugs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `bugs_milestones`
+--
+ALTER TABLE `bugs_milestones`
+  ADD CONSTRAINT `bugs_milestones_ibfk_2` FOREIGN KEY (`bug_id`) REFERENCES `bugs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `bugs_milestones_ibfk_1` FOREIGN KEY (`milestone_id`) REFERENCES `milestones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `dates`
 --
 ALTER TABLE `dates`
-  ADD CONSTRAINT `dates_ibfk_1` FOREIGN KEY (`milestone_id`) REFERENCES `milestones` (`id`),
-  ADD CONSTRAINT `dates_ibfk_2` FOREIGN KEY (`deliverable_id`) REFERENCES `deliverables` (`id`);
+  ADD CONSTRAINT `dates_ibfk_1` FOREIGN KEY (`milestone_id`) REFERENCES `milestones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `deliverables`
 --
 ALTER TABLE `deliverables`
-  ADD CONSTRAINT `deliverables_ibfk_1` FOREIGN KEY (`milestone_id`) REFERENCES `milestones` (`id`);
+  ADD CONSTRAINT `deliverables_ibfk_3` FOREIGN KEY (`bug_id`) REFERENCES `bugs` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `deliverables_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `deliverables_ibfk_2` FOREIGN KEY (`parent_id`) REFERENCES `deliverables` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `milestones`
 --
 ALTER TABLE `milestones`
-  ADD CONSTRAINT `milestones_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`);
+  ADD CONSTRAINT `milestones_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `resources`
+-- Constraints for table `products_users`
 --
-ALTER TABLE `resources`
-  ADD CONSTRAINT `resources_ibfk_6` FOREIGN KEY (`deliverable_id`) REFERENCES `deliverables` (`id`),
-  ADD CONSTRAINT `resources_ibfk_7` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
+ALTER TABLE `products_users`
+  ADD CONSTRAINT `products_users_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `resourcetypes`
+-- Constraints for table `projects`
 --
-ALTER TABLE `resourcetypes`
-  ADD CONSTRAINT `resourcetypes_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`);
+ALTER TABLE `projects`
+  ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `projects_ibfk_2` FOREIGN KEY (`milestone_id`) REFERENCES `milestones` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;

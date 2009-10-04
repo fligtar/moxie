@@ -66,7 +66,7 @@ foreach ($quarters as $k => $quarter) {
 $template = new Template($product['theme'], $Config->get('theme'));
 
 $template->breadcrumbs = array(
-        $template->getBaseURL() => 'mozilla',
+        $template->getBaseURL() => $Config->get('site_name'),
         $template->getBaseURL().'/'.$product['url'] => $product['name'],
         $template->getBaseURL().'/'.$product['url'].'/roadmap' => 'Roadmap'
     );
@@ -77,7 +77,9 @@ $template->render('head', array(
     ));
 
 $template->render('header', array(
-        'product' => $product
+        'page_title' => $product['name'],
+        'page_subtitle' => 'Roadmap',
+        'product_base_url' => $template->getBaseURL().'/'.$product['url']
     ));
 
 $template->render('roadmap', array(

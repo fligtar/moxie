@@ -95,15 +95,10 @@ class Template {
         return "templates/{$path}";
     }
     
-    public function bugLink($bug, $tracker) {
-        echo '<a class="bug';
-        if ($bug['fixed'])
-            echo ' fixed';
-        if ($bug['verified'])
-            echo ' verified';
-        echo '" title="'.htmlentities($bug['assignee'].' - '.$bug['summary']).'" ';
-        echo 'href="'.$tracker['url'].sprintf($tracker['tracker_info']['viewpage'], $bug['number']).'">';
-        echo $tracker['tracker_info']['bug_term'].' '.$bug['number'];
+    public function linkBug(&$bug) {
+        echo '<a class="bug status-'.$bug['status'].'"';
+        echo ' href="https://bugzilla.mozilla.org/show_bug.cgi?id='.$bug['number'].'">';
+        echo $bug['summary'];
         echo '</a>';
     }
 }

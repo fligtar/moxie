@@ -89,6 +89,9 @@ a:hover {
     display: inline-block;
     padding: 0 5px2;
 }
+#global-header #breadcrumbs li.spacer {
+    margin: 0 0.3em;
+}
 
 #global-header #account-box {
     float: right;

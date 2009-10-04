@@ -9,9 +9,9 @@
     # Example: /products/1/projects/2 -> project.php?product=1&project=2&extra=
     RewriteRule ^products\/([^\/]+)\/projects\/([^\/]+)(.*)$ project.php?product=$1&project=$2&extra=$3 [L]
     
-    # Roadmap redirect
+    # Main page redirect
     # Example: /products/1/roadmap -> roadmap.php?product=1&extra=
-    RewriteRule ^products\/([^\/]+)\/roadmap\/?(.*)$ roadmap.php?product=$1&extra=$2 [L]
+    RewriteRule ^products\/([^\/]+)\/(roadmap|milestones|projects)\/?(.*)$ $2.php?product=$1&extra=$3 [L]
     
     # Product redirect
     # Example: /products/1 -> product.php?product=1&extra=

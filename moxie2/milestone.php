@@ -3,8 +3,6 @@ define('PAGE', 'milestone');
 
 require 'includes/init.inc.php';
 require 'includes/template.inc.php';
-require 'includes/resourcemanager.inc.php';
-require 'includes/bugtracking.inc.php';
 
 list($Attachment, $Bug, $Date, $Deliverable, $Milestone, $Product, $Project) = 
 load_models('Attachment', 'Bug', 'Date', 'Deliverable', 'Milestone', 'Product', 'Project');
@@ -23,8 +21,9 @@ $bugs = $Bug->getBugsForMilestone($milestone['id']);
 $template = new Template($product['theme'], $Config->get('theme'));
 
 $template->breadcrumbs = array(
-        $template->getBaseURL() => 'mozilla',
+        $template->getBaseURL() => $Config->get('site_name'),
         $template->getBaseURL().'/'.$product['url'] => $product['name'],
+        $template->getBaseURL().'/'.$product['url'].'/milestones' => 'milestones',
         $template->getBaseURL().'/'.$product['url'].'/milestones/'.$milestone['url'] => $milestone['name']
     );
 
@@ -34,8 +33,9 @@ $template->render('head', array(
     ));
 
 $template->render('header', array(
-        'product' => $product,
-        'milestone' => $milestone,
+        'page_title' => $product['name'],
+        'page_subtitle' => $milestone['name'],
+        'product_base_url' => $template->getBaseURL().'/'.$product['url']
     ));
 
 $template->render('milestone', array(

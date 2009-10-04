@@ -17,7 +17,8 @@ $deliverables = $Deliverable->getKeyedDeliverables($project['id']);
 
 // Get resources for each deliverable
 if (!empty($deliverables)) {
-    //$deliverables = $Resource->addResourcesToDeliverables($deliverables);
+    $Attachment->addAttachmentsToDeliverables($deliverables);
+    $Bug->addBugsToDeliverables($deliverables);
     
     $deliverables = $Deliverable->nestDeliverables($deliverables);
 }
@@ -25,8 +26,9 @@ if (!empty($deliverables)) {
 $template = new Template($product['theme'], $Config->get('theme'));
 
 $template->breadcrumbs = array(
-        $template->getBaseURL() => 'mozilla',
+        $template->getBaseURL() => $Config->get('site_name'),
         $template->getBaseURL().'/'.$product['url'] => $product['name'],
+        $template->getBaseURL().'/'.$product['url'].'/projects' => 'projects',
         $template->getBaseURL().'/'.$product['url'].'/projects/'.$project['url'] => $project['name']
     );
 
@@ -36,8 +38,9 @@ $template->render('head', array(
     ));
 
 $template->render('header', array(
-        'product' => $product,
-        'project' => $project,
+        'page_title' => $product['name'],
+        'page_subtitle' => $project['name'],
+        'product_base_url' => $template->getBaseURL().'/'.$product['url']
     ));
 
 $template->render('project', array(

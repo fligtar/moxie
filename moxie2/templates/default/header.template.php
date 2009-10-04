@@ -40,42 +40,51 @@
 <div id="page">
 
     <div id="header">
-    <!--
         <ul id="toolbar">
+            <?php if (PAGE != 'index'): ?>
             <li>
-                <a href="#" onclick="return false;" class="tab">view</a>
+                <a href="#" onclick="return false;" class="tab">product</a>
                 <ul class="menu">
-                    <li><a href="#" class="selected" onclick="return false;">summary view</a></li>
-                    <li><a href="#" onclick="return false;">detailed view</a></li>
+                    <li><a href="<?php echo $vars['product_base_url'].'/roadmap'; ?>">roadmap</a></li>
+                    <li><a href="<?php echo $vars['product_base_url'].'/milestones'; ?>">milestones</a></li>
+                    <li><a href="<?php echo $vars['product_base_url'].'/projects'; ?>">projects</a></li>
+                    <li class="separator"></li>
+                    <li><a href="#" onclick="return false;">edit product</a></li>
+                    <li class="separator"></li>
+                    <li><a href="#" onclick="return false;">new milestone</a></li>
+                    <li><a href="#" onclick="return false;">new project</a></li>
                 </ul>
             </li>
+            <?php endif; ?>
+            <?php if (PAGE == 'milestone'): ?>
             <li>
                 <a href="#" onclick="return false;" class="tab">milestone</a>
                 <ul class="menu">
                     <li><a href="#" onclick="return false;">edit milestone</a></li>
+                    <li><a href="#" onclick="return false;">refresh status</a></li>
                     <li class="separator"></li>
-                    <li><a href="#" onclick="return false;">new deliverable</a></li>
-                    <li><a href="#" onclick="return false;">arrange deliverables</a></li>
-                    <li class="separator"></li>
-                    <li><a href="#" onclick="add_resources.show(); return false;">add resources</a></li>
-                    <li><a href="#" onclick="milestone.refreshResources(); return false;">refresh resources</a></li>
+                    <li><a href="#" onclick="return false;">new project</a></li>
                 </ul>
             </li>
+            <?php endif; ?>
+            <?php if (PAGE == 'project'): ?>
             <li>
                 <a href="#" onclick="return false;" class="tab">project</a>
                 <ul class="menu">
                     <li><a href="#" onclick="return false;">edit project</a></li>
-                    <li><a href="#" onclick="return false;">new milestone</a></li>
+                    <li><a href="#" onclick="return false;">assign to milestone</a></li>
+                    <li><a href="#" onclick="return false;">organize deliverables</a></li>
+                    <li class="separator"></li>
+                    <li><a href="#" onclick="return false;">new deliverable</a></li>
                 </ul>
             </li>
-            <li><a href="#" onclick="return false;" class="tab">admin</a></li>
-            <li><a href="#" onclick="milestone.toggleEditing(); return false;" class="tab">edit mode</a></li>
+            <?php endif; ?>
         </ul>
-    -->
+
         <div id="title">
             <img id="logo" src="<?php echo $this->image('logo.png') ?>" alt="<?php echo $vars['product']['name']; ?> logo" />
-            <h1><?php echo $vars['product']['name']; ?></h1>
-            <!--<h2><?php echo $vars['milestone']['name']; ?></h2>-->
+            <?php if (!empty($vars['page_title'])) { echo "<h1>{$vars['page_title']}</h1>"; } ?>
+            <?php if (!empty($vars['page_subtitle'])) { echo "<h2>{$vars['page_subtitle']}</h2>"; } ?>
         </div>
     </div>
 
