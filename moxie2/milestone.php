@@ -28,13 +28,13 @@ $template->breadcrumbs = array(
     );
 
 $template->render('head', array(
-        'title' => $product['name'].' - '.$milestone['name'].' @ '. $Config->get('site_name').' moxie',
+        'title' => $product['name'].' - milestone '.$milestone['name'].' @ '. $Config->get('site_name').' moxie',
         'css' => $template->cssString('global')
     ));
 
 $template->render('header', array(
         'page_title' => $product['name'],
-        'page_subtitle' => $milestone['name'],
+        'page_subtitle' => 'milestone '.$milestone['name'],
         'product_base_url' => $template->getBaseURL().'/'.$product['url']
     ));
 

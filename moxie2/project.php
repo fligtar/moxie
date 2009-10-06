@@ -12,6 +12,12 @@ $product = $Product->getProductFromURL($_GET['product']);
 // Get the project's info
 $project = $Project->getProjectFromURL($_GET['project']);
 
+// If project is in a milestone, get milestone info
+if (!empty($project['milestone_id'])) {
+    $project['milestone'] = $Milestone->get($project['milestone_id']);
+    $project['milestone']['dates'] = $Date->getAll('milestone_id = '.escape($project['milestone_id']));
+}
+
 // Get all deliverables for the project
 $deliverables = $Deliverable->getKeyedDeliverables($project['id']);
 

@@ -25,7 +25,15 @@ class BugModel extends Model {
      * Pulls bugs for the given deliverables and adds them to the array
      */
     public function addBugsToDeliverables(&$deliverables) {
-        $bugs = $this->db->query("SELECT * FROM bugs INNER JOIN bugs_deliverables ON bugs_deliverables.bug_id = bugs.id WHERE bugs_deliverables.deliverable_id IN (".implode(',', array_keys($deliverables)).")");
+        $bugs = $this->db->query("
+            SELECT
+                bugs.*, bugs_deliverables.*, users.name
+            FROM bugs 
+            INNER JOIN bugs_deliverables ON bugs_deliverables.bug_id = bugs.id
+            LEFT JOIN users ON bugs.assignee = users.buguser
+            WHERE
+                bugs_deliverables.deliverable_id IN (".implode(',', array_keys($deliverables)).")
+        ");
         
         if (!empty($bugs)) {
             foreach ($bugs as $bug) {

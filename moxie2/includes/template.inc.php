@@ -95,12 +95,89 @@ class Template {
         return "templates/{$path}";
     }
     
-    public function linkBug(&$bug) {
+    public function linkBug(&$bug, $include_details = true) {
         echo '<a class="bug status-'.$bug['status'].'"';
         echo ' href="https://bugzilla.mozilla.org/show_bug.cgi?id='.$bug['number'].'">';
         echo $bug['summary'];
         echo '</a>';
+        
+        if ($include_details) {
+            echo '<span class="bug-details">(';
+            
+            // Bug status
+            if ($bug['status'] == BugModel::STATUS_OPEN) {
+                echo 'Open';
+            }
+            elseif ($bug['status'] == BugModel::STATUS_FIXED) {
+                echo 'Fixed';
+            }
+            elseif ($bug['status'] == BugModel::STATUS_OTHER) {
+                echo 'Other';
+            }
+            
+            echo ' - ';
+            
+            // Bug assignee
+            if (!empty($bug['name'])) {
+                echo $bug['name'];
+            }
+            else {
+                echo $bug['assignee'];
+            }
+            
+            echo ')</span>';
+        }
     }
+    
+    /**
+     * Renders the deliverable status menu
+     */
+    public function renderDeliverableStatus(&$deliverable) {
+        if ($deliverable['status'] == DeliverableModel::STATUS_AUTOMATIC) {
+            // If status is automatically determined, look at bugs
+            // No bugs = not started
+            if (empty($deliverable['bugs'])) {
+                $displayed_status = DeliverableModel::STATUS_NOTSTARTED;
+            }
+            else {
+                $complete = true;
+                // No open bugs = complete
+                foreach ($deliverable['bugs'] as $bug) {
+                    if ($bug['status'] == BugModel::STATUS_OPEN) {
+                        $complete = false;
+                    }
+                }
+            
+                if ($complete) {
+                    $displayed_status = DeliverableModel::STATUS_COMPLETE;
+                }
+                else {
+                    $displayed_status = DeliverableModel::STATUS_INPROGRESS;
+                }
+            }
+        }
+        else {
+            $displayed_status = $deliverable['status'];
+        }
+        
+        echo '<span class="deliverable-status status-'.$displayed_status.'">';
+        
+        if ($displayed_status == DeliverableModel::STATUS_NOTSTARTED) {
+            echo 'NOT STARTED';
+        }
+        elseif ($displayed_status == DeliverableModel::STATUS_INPROGRESS) {
+            echo 'IN PROGRESS';
+        }
+        elseif ($displayed_status == DeliverableModel::STATUS_COMPLETE) {
+            echo 'COMPLETE';
+        }
+        elseif ($displayed_status == DeliverableModel::STATUS_BLOCKED) {
+            echo 'BLOCKED';
+        }
+        
+        echo '</span>';
+    }
+    
 }
 
 ?>

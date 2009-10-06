@@ -3,6 +3,12 @@
 class DeliverableModel extends Model {
     public $table = 'deliverables';
     
+    const STATUS_AUTOMATIC = 0;
+    const STATUS_NOTSTARTED = 1;
+    const STATUS_INPROGRESS = 2;
+    const STATUS_COMPLETE = 3;
+    const STATUS_BLOCKED = 4;
+    
     /**
      * Gets all deliverables for the given project
      */
