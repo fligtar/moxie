@@ -18,6 +18,9 @@ $projects = $Project->getProjectsForMilestone($milestone['id']);
 // Get the milestone's bugs
 $bugs = $Bug->getBugsForMilestone($milestone['id']);
 
+// Group the bugs
+$bugs = $Bug->groupBugs($bugs, 'component', 'assignee', 'totalbugs');
+
 $template = new Template($product['theme'], $Config->get('theme'));
 
 $template->breadcrumbs = array(

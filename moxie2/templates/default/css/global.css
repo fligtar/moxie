@@ -266,6 +266,15 @@ ul.bugs {
 ul.bugs li {
     margin: 0.2em 0;
 }
+ul.bug-groups {
+    margin: 0.5em 1em;
+}
+ul.bug-groups li {
+    margin: 1em 0 0 0;
+}
+ul.bug-groups ul.bugs {
+    display: none;
+}
 
 /* Deliverables */
 div.deliverable {

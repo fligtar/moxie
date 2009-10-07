@@ -118,12 +118,7 @@ class Template {
             echo ' - ';
             
             // Bug assignee
-            if (!empty($bug['name'])) {
-                echo $bug['name'];
-            }
-            else {
-                echo $bug['assignee'];
-            }
+            echo $bug['name'];
             
             echo ')</span>';
         }
