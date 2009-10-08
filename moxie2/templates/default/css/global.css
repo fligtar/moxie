@@ -326,16 +326,16 @@ div.deliverable.level-0 {
     margin: 0 0.5em 0 0;
     color: #FFFFFF;
 }
-.deliverable .deliverable-status.status-3 {
+.deliverable .deliverable-status.status-2 {
     background-color: #34B138;
 }
-.deliverable .deliverable-status.status-1 {
+.deliverable .deliverable-status.status-0 {
     background-color: #666666;
 }
-.deliverable .deliverable-status.status-2 {
+.deliverable .deliverable-status.status-1 {
     background-color: #E8C147;
 }
-.deliverable .deliverable-status.status-4 {
+.deliverable .deliverable-status.status-3 {
     background-color: #E85242;
 }
 
@@ -350,6 +350,34 @@ div.deliverable.level-0 {
     -moz-border-radius-bottomleft: 15px;
     -moz-border-radius-bottomright: 15px;
     -moz-box-shadow: 0px 0px 15px #333;
+}
+
+/* bug filters */
+.bug-filters div {
+    margin: 0.5em 1em;
+    font-size: 0.85em;
+}
+.bug-filters span {
+    display: inline-block;
+}
+.bug-filters ul {
+    display: inline-block;
+}
+.bug-filters li {
+    display: inline-block;
+}
+#page .bug-filters li a {
+    text-decoration: none;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    margin: 0 0.5em;
+    padding: 0.1em 0.5em 0.2em;
+}
+#page .bug-filters li a:hover,
+#page .bug-filters li a.selected {
+    background-color: #666666;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 0px #000000;
 }
 
 /* roadmap */

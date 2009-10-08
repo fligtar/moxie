@@ -16,7 +16,6 @@ class BugModel extends Model {
      * Gets all bugs in a given milestone
      */
     public function getBugsForMilestone($milestone_id) {
-        $_bugs = $this->db->query("SELECT bugs.* FROM bugs INNER JOIN bugs_milestones ON bugs_milestones.bug_id = bugs.id WHERE bugs_milestones.milestone_id = ".escape($milestone_id));
         $bugs = $this->db->query("
             SELECT
                 bugs.*, IFNULL(users.name, bugs.assignee) as name
@@ -25,6 +24,23 @@ class BugModel extends Model {
             LEFT JOIN users ON bugs.assignee = users.buguser
             WHERE
                 bugs_milestones.milestone_id = ".escape($milestone_id)."
+        ");
+        
+        return $bugs;
+    }
+    
+    /**
+     * Gets all bugs in a given deliverable
+     */
+    public function getBugsForDeliverable($deliverable_id) {
+        $bugs = $this->db->query("
+            SELECT
+                bugs.*, IFNULL(users.name, bugs.assignee) as name
+            FROM bugs 
+            INNER JOIN bugs_deliverables ON bugs_deliverables.bug_id = bugs.id
+            LEFT JOIN users ON bugs.assignee = users.buguser
+            WHERE
+                bugs_deliverables.deliverable_id = ".escape($deliverable_id)."
         ");
         
         return $bugs;

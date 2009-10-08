@@ -31,7 +31,13 @@ class Model {
         $fields = array();
         
         foreach ($data as $field => $value) {
-            $fields[] = "{$field} = '".escape($value)."'";
+            if ($value == 'NOW()') {
+                // hax r us
+                $fields[] = "{$field} = NOW()";
+            }
+            else {
+                $fields[] = "{$field} = '".escape($value)."'";
+            }
         }
         
         if (!array_key_exists('modified', $data)) {

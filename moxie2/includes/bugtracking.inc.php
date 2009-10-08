@@ -80,6 +80,9 @@ class Bugtracking {
         return $bug_ids;
     }
     
+    /**
+     * Updates bug associations with the given milestone
+     */
     private function updateAssociations($bug_ids, $milestone_id) {
         $milestone_id = escape($milestone_id);
         

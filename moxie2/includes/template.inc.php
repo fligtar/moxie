@@ -127,46 +127,19 @@ class Template {
     /**
      * Renders the deliverable status menu
      */
-    public function renderDeliverableStatus(&$deliverable) {
-        if ($deliverable['status'] == DeliverableModel::STATUS_AUTOMATIC) {
-            // If status is automatically determined, look at bugs
-            // No bugs = not started
-            if (empty($deliverable['bugs'])) {
-                $displayed_status = DeliverableModel::STATUS_NOTSTARTED;
-            }
-            else {
-                $complete = true;
-                // No open bugs = complete
-                foreach ($deliverable['bugs'] as $bug) {
-                    if ($bug['status'] == BugModel::STATUS_OPEN) {
-                        $complete = false;
-                    }
-                }
-            
-                if ($complete) {
-                    $displayed_status = DeliverableModel::STATUS_COMPLETE;
-                }
-                else {
-                    $displayed_status = DeliverableModel::STATUS_INPROGRESS;
-                }
-            }
-        }
-        else {
-            $displayed_status = $deliverable['status'];
-        }
+    public function renderDeliverableStatus($status) {
+        echo '<span class="deliverable-status status-'.$status.'">';
         
-        echo '<span class="deliverable-status status-'.$displayed_status.'">';
-        
-        if ($displayed_status == DeliverableModel::STATUS_NOTSTARTED) {
+        if ($status == DeliverableModel::STATUS_NOTSTARTED) {
             echo 'NOT STARTED';
         }
-        elseif ($displayed_status == DeliverableModel::STATUS_INPROGRESS) {
+        elseif ($status == DeliverableModel::STATUS_INPROGRESS) {
             echo 'IN PROGRESS';
         }
-        elseif ($displayed_status == DeliverableModel::STATUS_COMPLETE) {
+        elseif ($status == DeliverableModel::STATUS_COMPLETE) {
             echo 'COMPLETE';
         }
-        elseif ($displayed_status == DeliverableModel::STATUS_BLOCKED) {
+        elseif ($status == DeliverableModel::STATUS_BLOCKED) {
             echo 'BLOCKED';
         }
         

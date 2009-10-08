@@ -15,6 +15,20 @@ $milestone = $Milestone->getMilestoneFromURL($_GET['milestone']);
 // Get the milestone's projects
 $projects = $Project->getProjectsForMilestone($milestone['id']);
 
+if (!empty($projects)) {
+    foreach ($projects as $k => $project) {
+        // Get all deliverables for the project
+        $deliverables = $Deliverable->getKeyedDeliverables($project['id']);
+        
+        // Get resources for each deliverable
+        if (!empty($deliverables)) {
+            $deliverables = $Deliverable->nestDeliverables($deliverables);
+        }
+        
+        $projects[$k]['deliverables'] = $deliverables;
+    }
+}
+
 // Get the milestone's bugs
 $bugs = $Bug->getBugsForMilestone($milestone['id']);
 

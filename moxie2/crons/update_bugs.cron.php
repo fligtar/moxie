@@ -4,7 +4,7 @@ require '../includes/bugtracking.inc.php';
 
 $bugtracker = new Bugtracking();
 
-list($Milestone) = load_models('Milestone');
+list($Bug, $Deliverable, $Milestone) = load_models('Bug', 'Deliverable', 'Milestone');
 
 $milestones = $Milestone->getAll();
 
@@ -13,5 +13,8 @@ if (!empty($milestones)) {
         $bugtracker->retrieveAndUpdateBugs($milestone['id'], $milestone['bugquery']);
     }
 }
+
+// Update any deliverable statuses that may have changed
+$Deliverable->updateStatuses();
 
 ?>

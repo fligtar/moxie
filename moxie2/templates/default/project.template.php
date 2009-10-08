@@ -37,7 +37,7 @@ function renderDeliverables($deliverables, $level = 0, &$template) {
         foreach ($deliverables as $deliverable_id => $deliverable) {
             echo '<div class="deliverable level-'.$level.'" id="deliverable-'.$deliverable['id'].'">';
             echo '<h3>';
-            $template->renderDeliverableStatus($deliverable);
+            $template->renderDeliverableStatus($deliverable['status']);
             echo $deliverable['name'].'</h3>';
             
             //strip_tags_attributes($string,'<strong><em><a>','href,rel');
