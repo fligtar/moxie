@@ -1,6 +1,6 @@
 <div id="global-header">
-    <div id="breadcrumbs">
-        <a href="<?php echo $this->getBaseURL(); ?>"><?php echo $vars['site_name']; ?> moxie</a>
+    <div id="site-name">
+        <a href="<?php echo $this->getBaseURL(); ?>"><span><?php echo $vars['site_name']; ?></span> moxie</a>
     </div>
     
     <div id="account-box">
