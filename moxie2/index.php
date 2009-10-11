@@ -13,17 +13,13 @@ $products = $Product->getAll();
 
 $template = new Template($Config->get('theme'));
 
-$template->breadcrumbs = array(
-        $template->getBaseURL() => $Config->get('site_name')
-    );
-
 $template->render('head', array(
         'title' => $Config->get('site_name').' moxie',
         'css' => $template->cssString('global')
     ));
 
 $template->render('header', array(
-        'page_title' => $Config->get('site_name').' moxie'
+        'site_name' => $Config->get('site_name'),
     ));
 
 $template->render('index', array(

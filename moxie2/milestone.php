@@ -37,21 +37,16 @@ $bugs = $Bug->groupBugs($bugs, 'component', 'assignee', 'totalbugs');
 
 $template = new Template($product['theme'], $Config->get('theme'));
 
-$template->breadcrumbs = array(
-        $template->getBaseURL() => $Config->get('site_name'),
-        $template->getBaseURL().'/'.$product['url'] => $product['name'],
-        $template->getBaseURL().'/'.$product['url'].'/milestones' => 'milestones',
-        $template->getBaseURL().'/'.$product['url'].'/milestones/'.$milestone['url'] => $milestone['name']
-    );
-
 $template->render('head', array(
         'title' => $product['name'].' - milestone '.$milestone['name'].' @ '. $Config->get('site_name').' moxie',
         'css' => $template->cssString('global')
     ));
 
 $template->render('header', array(
-        'page_title' => $product['name'],
-        'page_subtitle' => 'milestone '.$milestone['name'],
+        'site_name' => $Config->get('site_name'),
+        'product_name' => $product['name'],
+        'page_type' => 'milestones',
+        'page_name' => $milestone['name'],
         'product_base_url' => $template->getBaseURL().'/'.$product['url']
     ));
 

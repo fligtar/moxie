@@ -12,18 +12,14 @@ $product = $Product->getProductFromURL($_GET['product']);
 
 $template = new Template($product['theme'], $Config->get('theme'));
 
-$template->breadcrumbs = array(
-        $template->getBaseURL() => $Config->get('site_name'),
-        $template->getBaseURL().'/'.$product['url'] => $product['name']
-    );
-
 $template->render('head', array(
         'title' => $product['name'].' @ '. $Config->get('site_name').' moxie',
         'css' => $template->cssString('global')
     ));
 
 $template->render('header', array(
-        'page_title' => $product['name'],
+        'site_name' => $Config->get('site_name'),
+        'product_name' => $product['name'],
         'product_base_url' => $template->getBaseURL().'/'.$product['url']
     ));
 

@@ -1,7 +1,13 @@
+<div class="summary-block">
+    <a class="edit-link" href="#" onclick="$(this).parent().find('.edit-box').toggle(); return false;">edit project</a>
+
+    <h3>project summary</h3>
+    <p class="description"><?php echo $vars['project']['description']; ?></p>
+    
+    <h3>schedule</h3>
 <?php
 if (!empty($vars['project']['milestone_id'])) {
-    echo '<p class="hello-notice">';
-    echo 'This project is assigned to <strong>';
+    echo '<p>This project is assigned to <strong>';
     echo '<a href="'.$this->getBaseURL().'/'.$vars['product']['url'].'/milestones/'.$vars['project']['milestone']['url'].'">';
     echo 'milestone '.$vars['project']['milestone']['name'].'</a></strong>';
     
@@ -29,6 +35,50 @@ if (!empty($vars['project']['milestone_id'])) {
 }
 ?>
 
+<div class="edit-box">
+    <h3>edit project</h3>
+    <dl class="inline">
+        <dt><label for="name">project name</label></dt>
+        <dd><input type="text" id="name" value="<?php echo $vars['project']['name']; ?>"/></dd>
+
+        <dt><label for="url">project URL</label></dt>
+        <dd><input type="text" id="url" value="<?php echo $vars['project']['url']; ?>"/></dd>
+    </dl>
+    
+    <dl class="inline">
+        <dt><label for="milestone_id">milestone</label></dt>
+        <dd><select id="milestone_id">
+        <option value="">none assigned</option>
+        <?php
+        foreach ($vars['milestones'] as $milestone) {
+            echo '<option value="'.$milestone['id'].'"'.($vars['project']['milestone_id'] == $milestone['id'] ? ' selected' : '').'>'.$milestone['name'].'</option>';
+        }
+        ?>
+        </select></dd>
+        
+        <dt><label for="product_id">product</label></dt>
+        <dd><select id="product_id">
+        <?php
+        foreach ($vars['products'] as $product) {
+            echo '<option value="'.$product['id'].'"'.($vars['product']['id'] == $product['id'] ? ' selected' : '').'>'.$product['name'].'</option>';
+        }
+        ?>
+        </select></dd>
+    </dl>
+    
+    <dl>
+        <dt><label for="description">project summary</label></dt>
+        <dd><textarea id="description" cols="20" rows="3"><?php echo $vars['project']['description']; ?></textarea></dd>
+    </dl>
+    
+    <p class="save">
+        <button>save settings</button>
+        <span>Saving...</span>
+    </p>
+</div>
+
+</div>
+
 <div class="deliverables">
 <?php
         
@@ -37,6 +87,7 @@ function renderDeliverables($deliverables, $level = 0, &$template) {
         foreach ($deliverables as $deliverable_id => $deliverable) {
             echo '<div class="deliverable level-'.$level.'" id="deliverable-'.$deliverable['id'].'">';
             echo '<h3>';
+            echo '<a class="edit-link" href="#">edit deliverable</a>';
             $template->renderDeliverableStatus($deliverable['status']);
             echo $deliverable['name'].'</h3>';
             
@@ -48,7 +99,7 @@ function renderDeliverables($deliverables, $level = 0, &$template) {
             
             if ($hasAttachments || $hasBugs) {
                 echo '<div class="goodies">';
-                echo '<a class="toggle" href="#" onclick="return flase;">hide</a>';
+                echo '<a class="toggle" href="#" onclick="$(this).parent().hide(); return false;">hide</a>';
                 
                 // Output any associated attachments
                 if ($hasAttachments) {

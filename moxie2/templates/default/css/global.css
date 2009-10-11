@@ -1,15 +1,4 @@
-/* A font by Jos Buivenga (exljbris) -> www.exljbris.nl */
-@font-face {
-    font-family: "Museo";
-    src: url(Museo700-Regular.otf);
-    font-weight: bold;
-}
-@font-face {
-    font-family: "Museo";
-    src: url(Museo500-Regular.otf);
-    font-weight: normal;
-}
-
+/* Reset stylesheet */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -59,6 +48,7 @@ blockquote, q {
 
 /* End reset stylesheet */
 
+/* General */
 body {
     font-family: helvetica,arial,sans-serif;
     background-color: #218FB1;
@@ -78,6 +68,7 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Global Header */
 #global-header {
     width: 90%;
     margin: 5px auto;
@@ -117,8 +108,9 @@ a:hover {
     border: none;
 }
 
-#page {
-    font-family: "Lucida Grande",arial,sans-serif;
+/* Page */
+.page {
+    font-family: "Lucida Grande",helvetica,arial,sans-serif;
     font-size: 1em;
     background-color: #FFFFFF;
     margin: 15px auto 20px;
@@ -130,110 +122,82 @@ a:hover {
     min-height: 600px;
 }
 
-#page a {
+.page a {
     color: #666666;
     text-decoration: underline;
 }
-#page a:hover {
+.page a:hover {
     color: #000000;
     text-decoration: underline;
 }
 
-/* Bug links */
-#page a.bug.status-2 {
-    color: #34B138;
-}
-.bug-details {
-    color: #666666;
-    margin-left: 0.5em;
-}
-
 /* Header and Toolbar */
-#header #logo {
-    display: inline;
-}
-
 #toolbar {
     position: absolute;
     top: 0;
-    right: 40px;
+    right: 30px;
 }
-#toolbar > li {
+#toolbar li {
     display: inline-block;
     position: relative;
 }
-#toolbar a.tab {
-    background-color: #999999;
+.page #toolbar a {
     -moz-border-radius-bottomleft: 6px;
     -moz-border-radius-bottomright: 6px;
-    padding: 5px 8px;
+    padding: 0.75em 0.3em 0.2em 0.3em;
     margin: 0 5px;
-    color: #FFFFFF;
-    text-shadow: 0 0 3px #333333;
     display: block;
     text-decoration: none;
+    font-family: georgia,serif;
+    font-style: italic;
 }
-#toolbar > li:hover a.tab {
-    color: yellow;
+.page #toolbar a:hover {
+    border-bottom: 2px solid #7D6CB5;
     text-decoration: none;
-    -moz-border-radius: 0;
-    -moz-box-shadow: 2px 2px 1px #333;
+    color: #7D6CB5;
 }
-
-#toolbar .menu {
-    display: none;
-    position: absolute;
-    background-color: #FFFFFF;
-    border: 2px solid #999999;
-    right: 5px;
-    width: 175px;
-    -moz-border-radius-topleft: 6px;
-    -moz-border-radius-bottomleft: 6px;
-    -moz-border-radius-bottomright: 6px;
-    -moz-box-shadow: 2px 2px 1px #333;
-    
-}
-#toolbar .menu li.separator {
-    border-bottom: 1px solid #999999;
-}
-
-#toolbar .menu li a {
-    display: block;
-    text-align: right;
-    padding: 5px;
-    text-decoration: none;
-}
-#toolbar .menu li a:hover {
-    text-decoration: underline;
-}
-#toolbar .menu li a.selected {
-    font-weight: bold;
-}
-
-#toolbar > li:hover .menu {
-    display: block;
-}
-
 #header #title {
     padding: 10px 20px 2px;
 }
 
+#logo {
+    display: inline;
+}
 #header img {
+    vertical-align: middle;
+}
+#title div {
+    display: inline-block;
     vertical-align: middle;
 }
 #header h1 {
     font-weight: bold;
-    display: inline;
-    font-size: 2.5em;
-    text-shadow: 0 0 5px white, 0px 3px 7px yellow, -3px 0px 7px lime, 3px 0px 7px blue, 0px -3px 7px red;
+    font-size: 2em;
     vertical-align: middle;
-    margin: 0 5px;
+}
+#header h1 a {
+    text-decoration: none;
+    color: #000000;
+}
+#header h1 a:hover {
+    text-decoration: none;
 }
 #header h2 {
-    display: inline;
-    font-size: 1.8em;
-    font-family: "Museo";
+    font-size: 1.5em;
     vertical-align: text-top;
+    margin-left: 0.5em;
+}
+#header h2 span {
+    font-family: georgia,serif;
+    font-style: italic;
+    color: #666666;
+}
+#header h2 a {
+    text-decoration: none;
+}
+#header h2 a:hover {
+    text-decoration: none;
+    color: #7D6CB5;
 }
 
 #content {
@@ -241,16 +205,78 @@ a:hover {
     clear: both;
 }
 
-p.hello-notice {
-    -moz-border-radius: 6px;
+/* Elements used on multiple pages */
+.summary-block {
+   -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     background-color: #EEEEEE;
     font-size: 0.8em;
     margin: 0 0 1em 0;
     padding: 0.5em;
 }
+.summary-block .edit-link {
+    float: right;
+    margin: 0 0 0.3em 0.3em;
+}
+.summary-block h3 {
+    color: #666666;
+    font-family: georgia,serif;
+    font-style: italic;
+    font-weight: normal;
+    margin-bottom: 0.2em;
+}
+.summary-block .description {
+    margin-bottom: 1em;
+}
 
-/* General Content */
+.summary-block .edit-box {
+    display: none;
+    border-top: 1px solid #666666;
+    margin-top: 1em;
+}
+.summary-block .edit-box h3 {
+    font-weight: bold;
+    color: #000000;
+    font-style: normal;
+    font-family: "Lucida Grande",helvetica,arial,sans-serif;;
+    font-size: 1.2em;
+    margin: 0.5em 0;
+}
+.summary-block .edit-box dl {
+    margin: 0 1em;
+}
+.summary-block .edit-box dl.inline {
+    display: inline-block;
+    vertical-align: top;
+}
+.summary-block .edit-box dt {
+    padding: 5px 0;
+    font-weight: bold;
+}
+.summary-block .edit-box dd {
+    margin-bottom: 5px;
+}
+.summary-block .edit-box dd input {
+    font-size: 1.1em;
+    width: 20em;
+}
+.summary-block .edit-box dd textarea {
+    font-size: 1.1em;
+    width: 40em;
+    font-family: inherit;
+}
+.summary-block .edit-box dd select {
+    font-size: 1.1em;
+}
+.summary-block .edit-box .save {
+    margin: 0.5em 1em;
+}
+.summary-block .edit-box .save span {
+    display: none;
+    font-size: 1.2em;
+    margin: 0 1em;
+}
+
 h3 {
     font-weight: bold;
     font-size: 1em;
@@ -276,6 +302,31 @@ ul.bug-groups ul.bugs {
     display: none;
 }
 
+button {
+    color: #FFFFFF;
+    background-color: #7D6CB5;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    padding: 0.2em 0.5em;
+    font-size: 1em;
+    font-weight: bold;
+    text-shadow: #000000 1px 1px 0;
+    border: none;
+    -moz-box-shadow: #000000 1px 1px 4px;
+}
+button:active {
+    -moz-box-shadow: #000000 -1px -1px 4px;
+}
+
+a.bug.status-2 {
+    color: #34B138;
+}
+.bug-details {
+    color: #666666;
+    margin-left: 0.5em;
+}
+
+
 /* Deliverables */
 div.deliverable {
     clear: both;
@@ -290,7 +341,7 @@ div.deliverable.level-0 {
     padding: 0.5em;
     margin: 0 0 0 2em;
 }
-#page .deliverable .goodies a.toggle {
+.deliverable .goodies a.toggle {
     -moz-transform: rotate(270deg);
     color: #EEEEEE;
     font-size: 0.75em;
@@ -298,8 +349,21 @@ div.deliverable.level-0 {
     margin-left: -2.7em;
     text-decoration: none;
 }
-#page .deliverable .goodies a.toggle:hover {
+.deliverable .goodies a.toggle:hover {
     color: #999999;
+}
+.deliverable h3 a.edit-link {
+    float: right;
+    color: #CCCCCC;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 0.85em;
+}
+.deliverable:hover h3 a.edit-link {
+    color: #999999;
+}
+.deliverable h3 a.edit-link:hover {
+    text-decoration: underline;
 }
 .deliverable .description {
     margin: 0.5em 0;
@@ -339,19 +403,6 @@ div.deliverable.level-0 {
     background-color: #E85242;
 }
 
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 13%;
-    right: 13%;
-    width: 74%;
-    height: 500px;
-    background-color: #6389B3;
-    -moz-border-radius-bottomleft: 15px;
-    -moz-border-radius-bottomright: 15px;
-    -moz-box-shadow: 0px 0px 15px #333;
-}
-
 /* bug filters */
 .bug-filters div {
     margin: 0.5em 1em;
@@ -366,15 +417,15 @@ div.deliverable.level-0 {
 .bug-filters li {
     display: inline-block;
 }
-#page .bug-filters li a {
+.bug-filters li a {
     text-decoration: none;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     margin: 0 0.5em;
     padding: 0.1em 0.5em 0.2em;
 }
-#page .bug-filters li a:hover,
-#page .bug-filters li a.selected {
+.bug-filters li a:hover,
+.bug-filters li a.selected {
     background-color: #666666;
     color: #FFFFFF;
     text-shadow: 1px 1px 0px #000000;
@@ -475,6 +526,7 @@ div.deliverable.level-0 {
     height: 4em;
 }
 
+/* Footer */
 #global-footer {
     text-align: center;
     margin-bottom: 20px;

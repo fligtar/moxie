@@ -15,20 +15,15 @@ $projects = $Project->getAll('product_id = '.escape($product['id']));
 
 $template = new Template($product['theme'], $Config->get('theme'));
 
-$template->breadcrumbs = array(
-        $template->getBaseURL() => $Config->get('site_name'),
-        $template->getBaseURL().'/'.$product['url'] => $product['name'],
-        $template->getBaseURL().'/'.$product['url'].'/projects' => 'projects'
-    );
-
 $template->render('head', array(
         'title' => $product['name'].' projects @ '. $Config->get('site_name').' moxie',
         'css' => $template->cssString('global')
     ));
 
 $template->render('header', array(
-        'page_title' => $product['name'],
-        'page_subtitle' => 'projects',
+        'site_name' => $Config->get('site_name'),
+        'product_name' => $product['name'],
+        'page_type' => 'projects',
         'product_base_url' => $template->getBaseURL().'/'.$product['url']
     ));
 

@@ -29,14 +29,11 @@ if (!empty($deliverables)) {
     $deliverables = $Deliverable->nestDeliverables($deliverables);
 }
 
-$template = new Template($product['theme'], $Config->get('theme'));
+// Get all products and milestones for edit dropdowns
+$milestones = $Milestone->getAll(null, 'id, name');
+$products = $Product->getAll(null, 'id, name');
 
-$template->breadcrumbs = array(
-        $template->getBaseURL() => $Config->get('site_name'),
-        $template->getBaseURL().'/'.$product['url'] => $product['name'],
-        $template->getBaseURL().'/'.$product['url'].'/projects' => 'projects',
-        $template->getBaseURL().'/'.$product['url'].'/projects/'.$project['url'] => $project['name']
-    );
+$template = new Template($product['theme'], $Config->get('theme'));
 
 $template->render('head', array(
         'title' => $product['name'].' - '.$project['name'].' @ '. $Config->get('site_name').' moxie',
@@ -44,15 +41,19 @@ $template->render('head', array(
     ));
 
 $template->render('header', array(
-        'page_title' => $product['name'],
-        'page_subtitle' => $project['name'],
+        'site_name' => $Config->get('site_name'),
+        'product_name' => $product['name'],
+        'page_type' => 'projects',
+        'page_name' => $project['name'],
         'product_base_url' => $template->getBaseURL().'/'.$product['url']
     ));
 
 $template->render('project', array(
         'product' => $product,
         'project' => $project,
-        'deliverables' => $deliverables
+        'deliverables' => $deliverables,
+        'products' => $products,
+        'milestones' => $milestones
     ));
 
 $template->render('footer', array(

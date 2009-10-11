@@ -1,20 +1,6 @@
 <div id="global-header">
     <div id="breadcrumbs">
-        <ul>
-        <?php
-            if (!empty($this->breadcrumbs)) {
-                foreach ($this->breadcrumbs as $url => $name) {
-                    if (isset($first)) {
-                        echo '<li class="spacer">&raquo;</li>';
-                    }
-                    else {
-                        $first = true;
-                    }
-                    echo '<li><a href="'.$url.'">'.$name.'</a></li>';
-                }
-            }
-        ?>
-        </ul>
+        <a href="<?php echo $this->getBaseURL(); ?>"><?php echo $vars['site_name']; ?> moxie</a>
     </div>
     
     <div id="account-box">
@@ -37,55 +23,49 @@
     </div>
 </div>
 
-<div id="page">
+<div class="page">
 
     <div id="header">
+    <?php if (PAGE != 'index'): ?>
         <ul id="toolbar">
-            <?php if (PAGE != 'index'): ?>
-            <li>
-                <a href="#" onclick="return false;" class="tab">product</a>
-                <ul class="menu">
-                    <li><a href="<?php echo $vars['product_base_url'].'/roadmap'; ?>">roadmap</a></li>
-                    <li><a href="<?php echo $vars['product_base_url'].'/milestones'; ?>">milestones</a></li>
-                    <li><a href="<?php echo $vars['product_base_url'].'/projects'; ?>">projects</a></li>
-                    <li class="separator"></li>
-                    <li><a href="#" onclick="return false;">edit product</a></li>
-                    <li class="separator"></li>
-                    <li><a href="#" onclick="return false;">new milestone</a></li>
-                    <li><a href="#" onclick="return false;">new project</a></li>
-                </ul>
-            </li>
-            <?php endif; ?>
-            <?php if (PAGE == 'milestone'): ?>
-            <li>
-                <a href="#" onclick="return false;" class="tab">milestone</a>
-                <ul class="menu">
-                    <li><a href="#" onclick="return false;">edit milestone</a></li>
-                    <li><a href="#" onclick="return false;">refresh status</a></li>
-                    <li class="separator"></li>
-                    <li><a href="#" onclick="return false;">new project</a></li>
-                </ul>
-            </li>
-            <?php endif; ?>
-            <?php if (PAGE == 'project'): ?>
-            <li>
-                <a href="#" onclick="return false;" class="tab">project</a>
-                <ul class="menu">
-                    <li><a href="#" onclick="return false;">edit project</a></li>
-                    <li><a href="#" onclick="return false;">assign to milestone</a></li>
-                    <li><a href="#" onclick="return false;">organize deliverables</a></li>
-                    <li class="separator"></li>
-                    <li><a href="#" onclick="return false;">new deliverable</a></li>
-                </ul>
-            </li>
-            <?php endif; ?>
+            <li><a href="<?php echo $vars['product_base_url'].'/roadmap'; ?>">roadmap</a></li>
+            <li><a href="<?php echo $vars['product_base_url'].'/milestones'; ?>">milestones</a></li>
+            <li><a href="<?php echo $vars['product_base_url'].'/projects'; ?>">projects</a></li>
         </ul>
-
+    <?php endif; ?>
+    
+    <?php if (!empty($vars['product_name'])): ?>
         <div id="title">
-            <img id="logo" src="<?php echo $this->image('logo.png') ?>" alt="<?php echo $vars['product']['name']; ?> logo" />
-            <?php if (!empty($vars['page_title'])) { echo "<h1>{$vars['page_title']}</h1>"; } ?>
-            <?php if (!empty($vars['page_subtitle'])) { echo "<h2>{$vars['page_subtitle']}</h2>"; } ?>
+            <a href="<?php echo $vars['product_base_url']; ?>">
+                <img id="logo" src="<?php echo $this->image('logo.png') ?>" alt="<?php echo $vars['product_name']; ?> logo" />
+            </a>
+            
+            <div>
+                <h1><a href="<?php echo $vars['product_base_url']; ?>"><?php echo $vars['product_name']; ?></a></h1>
+                <?php
+                if (!empty($vars['page_type']) || !empty($vars['page_name'])) {
+                    echo '<h2>';
+                    
+                    if (!empty($vars['page_type'])) {
+                        echo '<span><a href="'.$vars['product_base_url'].'/'.$vars['page_type'].'">'.$vars['page_type'].'</a>';
+                        
+                        if (!empty($vars['page_name'])) {
+                            echo ' &raquo; ';
+                        }
+                        
+                        echo '</span>';
+                    }
+                    
+                    if (!empty($vars['page_name'])) {
+                        echo $vars['page_name'];
+                    }
+                    
+                    echo '</h2>';
+                }
+                ?>
+            </div>
         </div>
     </div>
+    <?php endif; ?>
 
     <div id="content">
