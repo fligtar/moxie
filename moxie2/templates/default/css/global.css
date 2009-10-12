@@ -141,8 +141,8 @@ a:hover {
     position: relative;
 }
 .page #toolbar a {
-    -moz-border-radius-bottomleft: 6px;
-    -moz-border-radius-bottomright: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
     padding: 0.75em 0.3em 0.2em 0.3em;
     margin: 0 5px;
     display: block;
@@ -206,6 +206,12 @@ a:hover {
 }
 
 /* Elements used on multiple pages */
+.right {
+    float: right;
+}
+.left {
+    float: left;
+}
 .summary-block {
    -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
@@ -302,7 +308,8 @@ ul.bug-groups ul.bugs {
     display: none;
 }
 
-button {
+button,
+a.button {
     color: #FFFFFF;
     background-color: #7D6CB5;
     -moz-border-radius: 6px;
@@ -313,9 +320,18 @@ button {
     text-shadow: #000000 1px 1px 0;
     border: none;
     -moz-box-shadow: #000000 1px 1px 4px;
+    text-decoration: none;
+    display: block;
+}
+a.button {
+    padding: 0.4em 0.7em;
 }
 button:active {
     -moz-box-shadow: #000000 -1px -1px 4px;
+}
+a.button:hover {
+    color: #FFFFFF;
+    text-decoration: none;
 }
 
 a.bug.status-2 {
@@ -403,32 +419,38 @@ div.deliverable.level-0 {
     background-color: #E85242;
 }
 
-/* bug filters */
-.bug-filters div {
-    margin: 0.5em 1em;
+/* filters */
+.filters {
+    margin-bottom: 1em;
     font-size: 0.85em;
 }
-.bug-filters span {
+.filters span {
+    display: inline-block;
+    font-family: georgia,serif;
+    font-style: italic;
+}
+.filters ul {
     display: inline-block;
 }
-.bug-filters ul {
+.filters li {
     display: inline-block;
 }
-.bug-filters li {
-    display: inline-block;
+.filters .separator {
+    color: #999999;
 }
-.bug-filters li a {
+.filters li a {
     text-decoration: none;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    margin: 0 0.5em;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
     padding: 0.1em 0.5em 0.2em;
 }
-.bug-filters li a:hover,
-.bug-filters li a.selected {
-    background-color: #666666;
-    color: #FFFFFF;
-    text-shadow: 1px 1px 0px #000000;
+.filters li a:hover,
+.filters li a.selected {
+    color: #7D6CB5;
+    text-decoration: none;
+}
+.filters li a.selected {
+    border-bottom: 2px solid #7D6CB5;
 }
 
 /* roadmap */
@@ -509,7 +531,14 @@ div.deliverable.level-0 {
 }
 
 .roadmap .quarter .items ul {
-    list-style: disc;
+    list-style: circle;
+}
+.roadmap .quarter .items li {
+    margin: 0.2em 0;
+    color: #666666;
+}
+.roadmap .quarter .items a {
+    text-decoration: none;
 }
 .roadmap .end-row {
     display: table-row;
@@ -524,6 +553,18 @@ div.deliverable.level-0 {
     -moz-border-radius-bottomleft: 8em;
     -moz-border-radius-bottomright: 8em;
     height: 4em;
+}
+
+/* Projects and Milestones */
+.projects dt,
+.milestones dt {
+    font-weight: bold;
+    margin: 1em 0 0.3em;
+}
+.projects dd,
+.milestones dd {
+    font-size: 0.85em;
+    margin-left: 1em;
 }
 
 /* Footer */

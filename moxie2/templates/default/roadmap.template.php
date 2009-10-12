@@ -1,5 +1,13 @@
-<a href="<?php echo $this->getBaseURL().'/'.$vars['product']['url'].'/roadmap/upcoming'; ?>">upcoming year</a>
-<a href="<?php echo $this->getBaseURL().'/'.$vars['product']['url'].'/roadmap/year'; ?>">current year</a>
+<div>
+    <div class="filters">
+        <span>show:</span>
+        <ul>
+            <li><a href="<?php echo $this->getBaseURL().'/'.$vars['product']['url'].'/roadmap/upcoming'; ?>" class="selected">upcoming year</a></li>
+            <li class="separator">/</li>
+            <li><a href="<?php echo $this->getBaseURL().'/'.$vars['product']['url'].'/roadmap/year'; ?>">current year</a></li>
+        </ul>
+    </div>
+</div>
 
 <div class="roadmap">
     <div class="start-row">
@@ -26,7 +34,7 @@
             <?php
             if (!empty($quarter['items'])) {
                 foreach ($quarter['items'] as $milestone) {
-                    echo '<li><a href="'.$this->getBaseURL().'/'.$vars['product']['url'].'/milestones/'.$milestone['url'].'">'.$milestone['name'].'</a></li>';
+                    echo '<li><a href="'.$this->getBaseURL().'/'.$vars['product']['url'].'/milestones/'.$milestone['url'].'">milestone '.$milestone['name'].'</a></li>';
                 }
             }
             ?>

@@ -1,9 +1,14 @@
-<ul>
-    <li>active projects</li>
-    <li>archived projects</li>
-</ul>
-
-<button>create project</button>
+<div>
+    <a href="#" class="button right">create project</a>
+    <div class="filters">
+        <span>show:</span>
+        <ul>
+            <li><a href="#" onclick="return false;">active projects</a></li>
+            <li class="separator">/</li>
+            <li><a href="#" onclick="return false;" class="selected">archived projects</a></li>
+        </ul>
+    </div>
+</div>
 
 <div class="projects">
 <?php if (!empty($vars['projects'])): ?>

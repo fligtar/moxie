@@ -30,32 +30,42 @@ if (!empty($vars['projects'])) {
 if (!empty($vars['bugs'])) {
     echo '<h3>Bugs</h3>';
     ?>
-    <div class="bug-filters">
-        <div>
+    <div>
+        <div class="filters">
             <span>group bugs by:</span>
             <ul>
                 <li><a href="#" onclick="return false;">assignee</a></li>
+                <li class="separator">/</li>
                 <li><a href="#" onclick="return false;" class="selected">component</a></li>
+                <li class="separator">/</li>
                 <li><a href="#" onclick="return false;">status</a></li>
+                <li class="separator">/</li>
                 <li><a href="#" onclick="return false;">priority</a></li>
             </ul>
         </div>
-        <div>
+        <div class="filters">
             <span>sort groups by:</span>
             <ul>
                 <li><a href="#" onclick="return false;">name</a></li>
+                <li class="separator">/</li>
                 <li><a href="#" onclick="return false;" class="selected">total bugs</a></li>
+                <li class="separator">/</li>
                 <li><a href="#" onclick="return false;">open bugs</a></li>
+                <li class="separator">/</li>
                 <li><a href="#" onclick="return false;">fixed bugs</a></li>
             </ul>
         </div>
-        <div>
+        <div class="filters">
             <span>sort bugs by:</span>
             <ul>
                 <li><a href="#" onclick="return false;" class="selected">assignee</a></li>
+                <li class="separator">/</li>
                 <li><a href="#" onclick="return false;">component</a></li>
+                <li class="separator">/</li>
                 <li><a href="#" onclick="return false;">status</a></li>
+                <li class="separator">/</li>
                 <li><a href="#" onclick="return false;">priority</a></li>
+                <li class="separator">/</li>
                 <li><a href="#" onclick="return false;">id</a></li>
             </ul>
         </div>
