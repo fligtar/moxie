@@ -1,6 +1,6 @@
 <div id="global-header">
     <div id="site-name">
-        <a href="<?php echo $this->getBaseURL(); ?>"><span><?php echo $vars['site_name']; ?></span> moxie</a>
+        <a href="<?php echo $this->getBaseURL(); ?>"><strong><?php echo $vars['site_name']; ?></strong> moxie</a>
     </div>
     
     <div id="account-box">
@@ -17,8 +17,7 @@
         <ul id="account-links">
             <!--<li><a href="#">Log in</a></li>
             <li><a href="#">Sign up</a></li>-->
-            <li><a href="#">Logged in as <b>fligtar@gmail.com</b></a></li>
-            <li><a href="#">Log out</a></li>
+            <li>hello, <a href="#"><strong>Justin Scott</strong></a> / <a href="#">log out</a></li>
         </ul>
     </div>
 </div>

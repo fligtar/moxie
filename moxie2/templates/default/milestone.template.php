@@ -20,18 +20,21 @@ function renderDeliverables($deliverables, $level = 0, &$template) {
 if (!empty($vars['projects'])) {
     echo '<h3>Projects</h3>';
     foreach ($vars['projects'] as $project) {
+        echo '<div class="mini-project">';
         echo '<h4><a href="'.$this->getBaseURL().'/'.$vars['product']['url'].'/projects/'.$project['url'].'">'.$project['name'].'</a></h4>';
+        echo '<p>'.$project['description'].'</p>';
         echo '<div class="deliverables">';
         renderDeliverables($project['deliverables'], 0, $this);
+        echo '</div>';
         echo '</div>';
     }
 }
 
 if (!empty($vars['bugs'])) {
-    echo '<h3>Bugs</h3>';
     ?>
-    <div>
-        <div class="filters">
+    <h3>Bugs</h3>
+    <div class="small-margin">
+        <div class="filters inline">
             <span>group bugs by:</span>
             <ul>
                 <li><a href="#" onclick="return false;">assignee</a></li>
@@ -43,7 +46,8 @@ if (!empty($vars['bugs'])) {
                 <li><a href="#" onclick="return false;">priority</a></li>
             </ul>
         </div>
-        <div class="filters">
+        
+        <div class="filters inline left-margin">
             <span>sort groups by:</span>
             <ul>
                 <li><a href="#" onclick="return false;">name</a></li>
@@ -78,7 +82,9 @@ if (!empty($vars['bugs'])) {
         
         echo '<ul id="bug-group-'.$i.'" class="bugs">';
         foreach ($data['bugs'] as $bug) {
-            echo '<li>'.$this->linkBug($bug).'</li>';
+            echo '<li>';
+            $this->linkBug($bug);
+            echo '</li>';
         }
         echo '</ul>';
         $i++;

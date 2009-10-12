@@ -50,7 +50,7 @@ blockquote, q {
 
 /* General */
 body {
-    font-family: helvetica,arial,sans-serif;
+    font-family: "Lucida Grande",helvetica,arial,sans-serif;
     background-color: #218FB1;
     color: #FFFFFF;
     min-width: 800px;
@@ -76,34 +76,41 @@ a:hover {
     font-size: 0.75em;
 }
 
-#global-header #site-name {
+#site-name {
     float: left;
     font-size: 1.25em;
     text-shadow: #000000 1px 1px 0;
 }
-#global-header #site-name span {
+#site-name strong {
     font-weight: bold;
     text-transform: lowercase; /* will probably remove this later */
     text-shadow: #000000 -2px -2px 1px;
 }
 
-#global-header #account-box {
+#account-box {
     float: right;
 }
 
-#global-header #account-box #login-form {
+#login-form {
     display: none;
 }
 
-#global-header #account-box #account-links {
+#account-links {
     display: inline-block;
 }
-#global-header #account-box #account-links li {
+#account-links li {
     float: left;
     padding: 0 10px;
-    border-left: 1px solid #FFFFFF;
 }
-#global-header #account-box #account-links li:first-child {
+#account-links li,
+#account-links li a {
+    color: #EEEEEE;
+}
+#account-links li strong {
+    color: #FFFFFF;
+}
+
+#account-links li:first-child {
     border: none;
 }
 
@@ -206,11 +213,21 @@ a:hover {
 }
 
 /* Elements used on multiple pages */
+.inline {
+    display: inline-block;
+    vertical-align: top;
+}
 .right {
     float: right;
 }
 .left {
     float: left;
+}
+.left-margin {
+    margin-left: 1em;
+}
+.small-margin {
+    margin: 0.5em;
 }
 .summary-block {
    -moz-border-radius: 6px;
@@ -250,10 +267,6 @@ a:hover {
 }
 .summary-block .edit-box dl {
     margin: 0 1em;
-}
-.summary-block .edit-box dl.inline {
-    display: inline-block;
-    vertical-align: top;
 }
 .summary-block .edit-box dt {
     padding: 5px 0;
@@ -565,6 +578,23 @@ div.deliverable.level-0 {
 .milestones dd {
     font-size: 0.85em;
     margin-left: 1em;
+}
+.mini-project {
+    margin: 0.5em 1em;
+}
+.mini-project h4 {
+    font-size: 1em;
+}
+.mini-project h5 {
+    font-size: 0.85em;
+    margin-left: 1em;
+}
+.mini-project .deliverable {
+    margin-bottom: 0;
+}
+.mini-project p {
+    font-size: 0.85em;
+    margin: 0.3em 0 0.5em;
 }
 
 /* Footer */

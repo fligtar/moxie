@@ -80,7 +80,8 @@ $template->render('header', array(
 $template->render('roadmap', array(
         'product' => $product,
         'quarters' => $quarters,
-        'elapsed' => $elapsed
+        'elapsed' => $elapsed,
+        'view' => $view
     ));
 
 $template->render('footer', array(

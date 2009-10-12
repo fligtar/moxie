@@ -2,9 +2,9 @@
     <div class="filters">
         <span>show:</span>
         <ul>
-            <li><a href="<?php echo $this->getBaseURL().'/'.$vars['product']['url'].'/roadmap/upcoming'; ?>" class="selected">upcoming year</a></li>
+            <li><a href="<?php echo $this->getBaseURL().'/'.$vars['product']['url'].'/roadmap/upcoming'; ?>" <?php if ($vars['view'] == 'upcoming') { echo 'class="selected"'; } ?>>upcoming year</a></li>
             <li class="separator">/</li>
-            <li><a href="<?php echo $this->getBaseURL().'/'.$vars['product']['url'].'/roadmap/year'; ?>">current year</a></li>
+            <li><a href="<?php echo $this->getBaseURL().'/'.$vars['product']['url'].'/roadmap/year'; ?>"  <?php if ($vars['view'] == 'year') { echo 'class="selected"'; } ?>>current year</a></li>
         </ul>
     </div>
 </div>
