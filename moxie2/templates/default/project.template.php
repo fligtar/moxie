@@ -96,14 +96,32 @@ function renderDeliverables($deliverables, $level = 0, &$template) {
             
             $hasAttachments = !empty($deliverable['attachments']);
             $hasBugs = !empty($deliverable['bugs']);
+            $hasComments = !empty($deliverable['comments']);
             
-            if ($hasAttachments || $hasBugs) {
+            if ($hasAttachments || $hasBugs || $hasComments) {
+                echo '<a class="show-goodies" href="#" onclick="project.showDeliverableGoodies(this); return false;">show ';
+                $show = array();
+                if ($hasAttachments) {
+                    $numAttachments = count($deliverable['attachments']);
+                    $show[] = $numAttachments.' attachment'.($numAttachments == 1 ? '' : 's');
+                }
+                if ($hasBugs) {
+                    $numBugs = count($deliverable['bugs']);
+                    $show[] = $numBugs.' bug'.($numBugs == 1 ? '' : 's');
+                }
+                if ($hasComments) {
+                    $numComments = count($deliverable['comments']);
+                    $show[] = $numComments.' comment'.($numComments == 1 ? '' : 's');
+                }
+                echo implode(', ', $show);
+                echo '</a>';
+                
                 echo '<div class="goodies">';
-                echo '<a class="toggle" href="#" onclick="$(this).parent().hide(); return false;">hide</a>';
+                echo '<a class="hide-goodies" href="#" onclick="project.hideDeliverableGoodies(this); return false;">hide</a>';
                 
                 // Output any associated attachments
                 if ($hasAttachments) {
-                    echo '<h4>Attachments</h4>';
+                    echo '<h4>Attachments <span>('.$numAttachments.')</span></h4>';
                     echo '<ul class="attachments">';
                     foreach ($deliverable['attachments'] as $attachment) {
                         echo '<li>';
@@ -117,7 +135,7 @@ function renderDeliverables($deliverables, $level = 0, &$template) {
             
                 // Output any associated bugs
                 if ($hasBugs) {
-                    echo '<h4>Bugs</h4>';
+                    echo '<h4>Bugs <span>('.$numBugs.')</span></h4>';
                     echo '<ul class="bugs">';
                     foreach ($deliverable['bugs'] as $bug) {
                         echo '<li>';
@@ -133,6 +151,17 @@ function renderDeliverables($deliverables, $level = 0, &$template) {
                     
                         $template->linkBug($bug);
                         echo '</li>';
+                    }
+                    echo '</ul>';
+                }
+                
+                // Output any associated comments
+                if ($hasComments) {
+                    echo '<h4>Comments <span>('.$numComments.')</span></h4>';
+                    echo '<ul class="comments">';
+                    foreach ($deliverable['comments'] as $comment) {
+                        echo '<li>'.$comment['text'];
+                        echo '<span>&mdash; '.$comment['name'].', '.date('M j, Y g:i a', strtotime($comment['created'])).'</span></li>';
                     }
                     echo '</ul>';
                 }

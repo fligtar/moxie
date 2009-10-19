@@ -304,6 +304,9 @@ h4 {
     font-weight: bold;
     font-size: 0.8em;
 }
+h4 span {
+    font-weight: normal;
+}
 ul.bugs {
     margin: 0.5em 1em;
     font-size: 0.75em;
@@ -365,12 +368,17 @@ div.deliverable {
 div.deliverable.level-0 {
     padding-left: 0;
 }
+.deliverable .show-goodies {
+    display: none;
+    margin-left: 2em;
+    font-size: 0.85em;
+}
 .deliverable .goodies {
     border-left: 5px solid #EEEEEE;
     padding: 0.5em;
     margin: 0 0 0 2em;
 }
-.deliverable .goodies a.toggle {
+.deliverable .goodies .hide-goodies {
     -moz-transform: rotate(270deg);
     color: #EEEEEE;
     font-size: 0.75em;
@@ -408,6 +416,16 @@ div.deliverable.level-0 {
 .deliverable .attachments .caption {
     font-size: 0.75em;
     text-align: center;
+}
+.deliverable .comments li {
+    margin: 0.25em 0;
+    font-size: 0.85em;
+}
+.deliverable .comments li span {
+    display: block;
+    text-align: right;
+    font-size: 0.90em;
+    color: #666666;
 }
 .deliverable .deliverable-status {
     display: inline-block;

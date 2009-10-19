@@ -4,8 +4,8 @@ define('PAGE', 'project');
 require 'includes/init.inc.php';
 require 'includes/template.inc.php';
 
-list($Attachment, $Bug, $Date, $Deliverable, $Milestone, $Product, $Project) = 
-load_models('Attachment', 'Bug', 'Date', 'Deliverable', 'Milestone', 'Product', 'Project');
+list($Attachment, $Bug, $Comment, $Date, $Deliverable, $Milestone, $Product, $Project) = 
+load_models('Attachment', 'Bug', 'Comment', 'Date', 'Deliverable', 'Milestone', 'Product', 'Project');
 
 $product = $Product->getProductFromURL($_GET['product']);
 
@@ -25,6 +25,7 @@ $deliverables = $Deliverable->getKeyedDeliverables($project['id']);
 if (!empty($deliverables)) {
     $Attachment->addAttachmentsToDeliverables($deliverables);
     $Bug->addBugsToDeliverables($deliverables);
+    $Comment->addCommentsToDeliverables($deliverables);
     
     $deliverables = $Deliverable->nestDeliverables($deliverables);
 }
@@ -57,6 +58,7 @@ $template->render('project', array(
     ));
 
 $template->render('footer', array(
+        'jsFiles' => $template->jsString('project')
     ));
 
 ?>
