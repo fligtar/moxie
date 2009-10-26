@@ -121,7 +121,7 @@ function renderDeliverables($deliverables, $level = 0, &$template) {
                 
                 // Output any associated attachments
                 if ($hasAttachments) {
-                    echo '<h4>Attachments <span>('.$numAttachments.')</span></h4>';
+                    echo '<h4>Attachments <span>('.$numAttachments.')</span><a href="#" class="edit-link">manage attachments</a></h4>';
                     echo '<ul class="attachments">';
                     foreach ($deliverable['attachments'] as $attachment) {
                         echo '<li>';
@@ -135,7 +135,7 @@ function renderDeliverables($deliverables, $level = 0, &$template) {
             
                 // Output any associated bugs
                 if ($hasBugs) {
-                    echo '<h4>Bugs <span>('.$numBugs.')</span></h4>';
+                    echo '<h4>Bugs <span>('.$numBugs.')</span><a href="#" class="edit-link">manage bugs</a></h4>';
                     echo '<ul class="bugs">';
                     foreach ($deliverable['bugs'] as $bug) {
                         echo '<li>';
@@ -157,11 +157,11 @@ function renderDeliverables($deliverables, $level = 0, &$template) {
                 
                 // Output any associated comments
                 if ($hasComments) {
-                    echo '<h4>Comments <span>('.$numComments.')</span></h4>';
+                    echo '<h4>Comments <span>('.$numComments.')</span><a href="#" class="edit-link">manage comments</a></h4>';
                     echo '<ul class="comments">';
                     foreach ($deliverable['comments'] as $comment) {
                         echo '<li>'.$comment['text'];
-                        echo '<span>&mdash; '.$comment['name'].', '.date('M j, Y g:i a', strtotime($comment['created'])).'</span></li>';
+                        echo '<span>&mdash; <strong>'.$comment['name'].'</strong>, '.date('M. j, Y g:i a', strtotime($comment['created'])).'</span></li>';
                     }
                     echo '</ul>';
                 }

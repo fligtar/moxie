@@ -304,9 +304,6 @@ h4 {
     font-weight: bold;
     font-size: 0.8em;
 }
-h4 span {
-    font-weight: normal;
-}
 ul.bugs {
     margin: 0.5em 1em;
     font-size: 0.75em;
@@ -386,21 +383,27 @@ div.deliverable.level-0 {
     margin-left: -2.7em;
     text-decoration: none;
 }
-.deliverable .goodies a.toggle:hover {
+.deliverable .goodies:hover a.hide-goodies {
     color: #999999;
 }
-.deliverable h3 a.edit-link {
+.deliverable h3 a.edit-link,
+.deliverable h4 a.edit-link {
     float: right;
     color: #CCCCCC;
     text-decoration: none;
     font-weight: normal;
     font-size: 0.85em;
 }
-.deliverable:hover h3 a.edit-link {
+.deliverable:hover h3 a.edit-link,
+.deliverable .goodies:hover h4 a.edit-link {
     color: #999999;
 }
-.deliverable h3 a.edit-link:hover {
+.deliverable h3 a.edit-link:hover,
+.deliverable h4 a.edit-link:hover {
     text-decoration: underline;
+}
+.deliverable h4 span {
+    font-weight: normal;
 }
 .deliverable .description {
     margin: 0.5em 0;
@@ -420,6 +423,12 @@ div.deliverable.level-0 {
 .deliverable .comments li {
     margin: 0.25em 0;
     font-size: 0.85em;
+    padding-top: 0.25em;
+    border-top: 1px solid #EEEEEE;
+}
+.deliverable .comments li:first-child {
+    border-top: none;
+    padding-top: 0;
 }
 .deliverable .comments li span {
     display: block;

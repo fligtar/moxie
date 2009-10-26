@@ -14,6 +14,8 @@ class CommentModel extends Model {
             INNER JOIN users ON comments.user_id = users.id
             WHERE
                 comments.deliverable_id IN (".implode(',', array_keys($deliverables)).")
+            ORDER BY 
+                comments.created ASC
         ");
         
         if (!empty($comments)) {
