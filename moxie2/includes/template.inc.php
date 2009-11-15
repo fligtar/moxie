@@ -66,6 +66,14 @@ class Template {
         return $url;
     }
     
+    public function getCurrentURL() {
+        $url = $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
+        
+        $url .= $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+        
+        return $url;
+    }
+    
     public function cssString() {
         $files = func_get_args();
         $string = '';

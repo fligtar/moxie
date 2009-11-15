@@ -11,7 +11,7 @@
 </div>
 
 <?php
-echo $this->jsString('jquery/jquery.min', 'jquery/jquery-ui.min');
+echo $this->jsString('jquery/jquery.min', 'jquery/jquery-ui.min', 'global');
 
 // Custom JS in the page
 if (!empty($vars['js'])) {
@@ -24,10 +24,6 @@ if (!empty($vars['js'])) {
 if (!empty($vars['jsFiles'])) {
     echo $vars['jsFiles'];
 }
-
-echo '<script type="text/javascript">';
-hook('output_js');
-echo '</script>';
 
 /*global $starttime;
 $endtime = microtime();

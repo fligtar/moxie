@@ -24,5 +24,7 @@ unset($db_user, $db_pass, $db_host, $db_name, $db_port);
 
 list($Config) = load_models('Config');
 
+session_start();
+
 
 ?>

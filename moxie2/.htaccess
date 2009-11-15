@@ -1,6 +1,10 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
     
+    # Account functions redirect
+    # Example: /login -> account.php?action=login
+    RewriteRule ^(login|logout|account)$ account.php?action=$1 [L]
+    
     # Milestone redirect
     # Example: /products/1/milestones/2 -> milestone.php?product=1&milestone=2&extra=
     RewriteRule ^products\/([^\/]+)\/milestones\/([^\/]+)(.*)$ milestone.php?product=$1&milestone=$2&extra=$3 [L]

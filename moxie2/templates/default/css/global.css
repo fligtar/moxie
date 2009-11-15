@@ -89,10 +89,46 @@ a:hover {
 
 #account-box {
     float: right;
+    text-align: right;
 }
 
 #login-form {
+    background: #EEEEEE;
+    position: relative;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    z-index: 10;
+    color: #218FB1;
+    padding: 10px;
+    font-size: 1.1em;
+    -moz-box-shadow: 2px 2px 15px #333;
+    text-align: left;
+    top: 0.5em;
+    right: 5em;
     display: none;
+}
+#login-form dt,
+#login-form dd {
+    margin-bottom: 0.3em;
+}
+#login-form input {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+#login-form .actions {
+    text-align: right;
+}
+#login-form .actions a {
+    float: left;
+    color: #666666;
+}
+#login-form .actions input {
+    background-color: #218FB1;
+    border: none;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    color: #FFFFFF;
+    font-weight: normal;
 }
 
 #account-links {
@@ -105,6 +141,9 @@ a:hover {
 #account-links li,
 #account-links li a {
     color: #EEEEEE;
+}
+#account-links li.separator {
+    padding: 0;
 }
 #account-links li strong {
     color: #FFFFFF;
@@ -209,7 +248,6 @@ a:hover {
 
 #content {
     padding: 20px;
-    clear: both;
 }
 
 /* Elements used on multiple pages */
@@ -622,6 +660,21 @@ div.deliverable.level-0 {
 .mini-project p {
     font-size: 0.85em;
     margin: 0.3em 0 0.5em;
+}
+
+
+/* Account Management */
+.body-account .logged-out {
+    text-align: center;
+    margin: 5em 0;
+}
+.body-account .logged-out h3 {
+    font-size: 2em;
+}
+.body-account .logged-out h4 {
+    font-size: 1.3em;
+    font-weight: normal;
+    margin: 1em 0;
 }
 
 /* Footer */

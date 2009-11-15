@@ -34,6 +34,9 @@ if (!empty($vars['project']['milestone_id'])) {
     echo '.</p>';
 }
 ?>
+    
+    <h3>project lead</h3>
+    <p></p>
 
 <div class="edit-box">
     <h3>edit project</h3>

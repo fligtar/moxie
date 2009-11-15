@@ -4,36 +4,57 @@
     </div>
     
     <div id="account-box">
+        <ul id="account-links">
+        <?php if (!empty($_SESSION['id'])): ?>
+            <li>hello, <a href="<?php echo $this->getBaseURL(); ?>/account"><strong>Justin Scott</strong></a></li>
+            <li class="separator">/</li>
+            <li><a href="<?php echo $this->getBaseURL(); ?>/logout">log out</a></li>
+        <?php else: ?>
+            <li><a href="<?php echo $this->getBaseURL(); ?>/login" onclick="global.showLoginForm(); return false;">log in</a></li>
+            <li class="separator">/</li>
+            <li><a href="<?php echo $this->getBaseURL(); ?>/register">register</a></li>
+        <?php endif; ?>
+        </ul>
+        
         <div id="login-form">
-            <form method="post" action="">
-                <label>E-mail</label>
-                <input type="text" name="email" />
-                <label>Password</label>
-                <input type="password" name="password" />
-                <input type="submit" value="Log in" />
+            <form method="post" action="<?php echo $this->getBaseURL(); ?>/login">
+            <input type="hidden" name="redirect" value="<?php echo htmlentities($this->getCurrentURL()); ?>" />
+            <dl>
+                <dt><label for="login_email">e-mail address</label></dt>
+                <dd><input type="text" name="email" id="login_email" /></dd>
+                <dt><label for="login_password">password</label></dt>
+                <dd><input type="password" name="password" id="login_password" /></dd>
+            </dl>
+            
+            <div class="actions">
+                <a href="#" onclick="global.hideLoginForm(); return false;">never mind</a>
+                <?php
+                // random login button. this is important
+                $login_choices = array(
+                    'this is it!',
+                    'yes, please!',
+                    'whatever',
+                    'here we go!'
+                );
+                $this->getCurrentURL();
+                ?>
+                <input type="submit" value="<?php echo $login_choices[array_rand($login_choices)]; ?>" />
+            </div>
             </form>
         </div>
-        
-        <ul id="account-links">
-            <!--<li><a href="#">Log in</a></li>
-            <li><a href="#">Sign up</a></li>-->
-            <li>hello, <a href="#"><strong>Justin Scott</strong></a> / <a href="#">log out</a></li>
-        </ul>
     </div>
 </div>
 
 <div class="page">
 
     <div id="header">
-    <?php if (PAGE != 'index'): ?>
+    <?php if (!empty($vars['product_name'])): ?>
         <ul id="toolbar">
             <li><a href="<?php echo $vars['product_base_url'].'/roadmap'; ?>">roadmap</a></li>
             <li><a href="<?php echo $vars['product_base_url'].'/milestones'; ?>">milestones</a></li>
             <li><a href="<?php echo $vars['product_base_url'].'/projects'; ?>">projects</a></li>
         </ul>
-    <?php endif; ?>
-    
-    <?php if (!empty($vars['product_name'])): ?>
+
         <div id="title">
             <a href="<?php echo $vars['product_base_url']; ?>">
                 <img id="logo" src="<?php echo $this->image('logo.png') ?>" alt="<?php echo $vars['product_name']; ?> logo" />
@@ -64,7 +85,7 @@
                 ?>
             </div>
         </div>
-    </div>
     <?php endif; ?>
+    </div>
 
     <div id="content">
