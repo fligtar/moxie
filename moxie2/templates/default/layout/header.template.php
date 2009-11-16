@@ -1,3 +1,5 @@
+<?php $this->render('layout/head'); ?>
+
 <div id="global-header">
     <div id="site-name">
         <a href="<?php echo $this->url(); ?>"><strong><?php echo $site_name; ?></strong> moxie</a>
@@ -20,7 +22,7 @@
         <?php endif; ?>
         </ul>
         
-        <?php $this->setAndRender('login', array('context' => 'global')); ?>
+        <?php $this->setAndRender('account/login', array('context' => 'global')); ?>
     </div>
 </div>
 

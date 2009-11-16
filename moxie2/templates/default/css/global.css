@@ -160,6 +160,7 @@ a:hover {
     background-color: #FFFFFF;
     margin: 15px auto 20px;
     -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
     width: 90%;
     -moz-box-shadow: 2px 2px 15px #333;
     color: #000000;
@@ -250,7 +251,67 @@ a:hover {
     padding: 20px;
 }
 
+/* Spacious Form */
+.spacious-form dl {
+    background-color: #EEEEEE;
+    background: -moz-linear-gradient(top left, #EEEEEE, rgba(238,238,238,0));
+    -moz-border-radius-topleft: 3em;
+    -moz-border-radius-bottomleft: 3em;
+    -webkit-border-top-left-radius: 3em;
+    -webkit-border-bottom-left-radius: 3em;
+    padding: 0.5em 2em;
+    margin-bottom: 1em;
+}
+.spacious-form dl.errors {
+    background: -moz-linear-gradient(top left, #E8A6A3, rgba(238,238,238,0));
+}
+.spacious-form label {
+    font-weight: bold;
+}
+.spacious-form .description {
+    color: #666666;
+    font-size: 0.9em;
+    margin: 0.5em 0;
+}
+.spacious-form .error {
+    color: #E85242;
+    font-weight: bold;
+    margin-top: 0.5em;
+}
+.spacious-form input,
+.spacious-form textarea {
+    font-size: 1em;
+    font-family: inherit;
+}
+.spacious-form .small {
+    width: 7em;
+}
+.spacious-form .medium {
+    width: 15em;
+}
+.spacious-form .full {
+    width: 30em;
+}
+
 /* Elements used on multiple pages */
+.success-notice {
+    border: 1px solid #34B138;
+    color: #34B138;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    -moz-border-radius: 6px;
+    -webkit-border-radus: 6px;
+    font-weight: bold;
+}
+.error-notice {
+    border: 1px solid #E85242;
+    color: #E85242;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    -moz-border-radius: 6px;
+    -webkit-border-radus: 6px;
+    font-weight: bold;
+}
 .inline {
     display: inline-block;
     vertical-align: top;
@@ -360,7 +421,8 @@ ul.bug-groups ul.bugs {
 }
 
 button,
-a.button {
+a.button,
+input.button {
     color: #FFFFFF;
     background-color: #7D6CB5;
     -moz-border-radius: 6px;
@@ -630,6 +692,8 @@ div.deliverable.level-0 {
     border-bottom: 2px solid #000000;
     -moz-border-radius-bottomleft: 8em;
     -moz-border-radius-bottomright: 8em;
+    -webkit-border-bottom-left-radius: 8em;
+    -webkit-border-bottom-right-radius: 8em;
     height: 4em;
 }
 

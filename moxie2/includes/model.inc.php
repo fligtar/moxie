@@ -73,6 +73,22 @@ class Model {
         
         return $this->db->execute($query);
     }
+    
+    public function filterData($data, $fields) {
+        $safe = array();
+        
+        if (empty($data) || empty($fields)) {
+            return array();
+        }
+        
+        foreach ($data as $key => $value) {
+            if (in_array($key, $fields)) {
+                $safe[$key] = $value;
+            }
+        }
+        
+        return $safe;
+    }
 }
 
 ?>

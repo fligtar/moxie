@@ -185,6 +185,26 @@ class Template {
         echo '</span>';
     }
     
+    /**
+     * Returns a sanitized form value in the order of:
+     *    1. any POST data of the same key
+     *    2. any existing data from the db
+     *    3. empty
+     */
+    public function formValue($key, &$data) {
+        // First, try $_POST data
+        if (!empty($_POST[$key])) {
+            return htmlentities($_POST[$key]);
+        }
+        
+        // Next, try given existing data
+        if (!empty($data[$key])) {
+            return htmlentities($data[$key]);
+        }
+        
+        // Give up
+        return '';
+    }
 }
 
 ?>
