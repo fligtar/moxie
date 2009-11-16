@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html lang="en-US">
 
 <head>
-    <title><?php echo $vars['title']; ?></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <base href="<?php echo $this->getBaseURL(); ?>/" />
-    <?php if (!empty($vars['css'])) echo $vars['css']; ?>
+    <title><?php echo $page_title; ?></title>
+    <meta charset=utf-8" />
+    <base href="<?php echo $this->url(); ?>/" />
+    <?php if (!empty($css)) echo $css; ?>
     <?php echo $this->cssString('smoothness/jquery-ui'); ?>
 </head>
 
-<body class="body-<?php echo PAGE; ?>">
+<body class="body-<?php echo $page_id; ?> <?php if (!empty($body_class)) echo $body_class; ?>">

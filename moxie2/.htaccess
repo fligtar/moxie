@@ -3,7 +3,11 @@
     
     # Account functions redirect
     # Example: /login -> account.php?action=login
-    RewriteRule ^(login|logout|account)$ account.php?action=$1 [L]
+    RewriteRule ^(login|logout|account|register)$ account.php?action=$1 [L]
+    
+    # Admin functions redirect
+    # Example: /login -> account.php?action=login
+    RewriteRule ^admin$ admin.php [L]
     
     # Milestone redirect
     # Example: /products/1/milestones/2 -> milestone.php?product=1&milestone=2&extra=
@@ -15,7 +19,7 @@
     
     # Main page redirect
     # Example: /products/1/roadmap -> roadmap.php?product=1&extra=
-    RewriteRule ^products\/([^\/]+)\/(roadmap|milestones|projects)\/?(.*)$ $2.php?product=$1&extra=$3 [L]
+    RewriteRule ^products\/([^\/]+)\/(roadmap|milestones|projects|settings)\/?(.*)$ $2.php?product=$1&extra=$3 [L]
     
     # Product redirect
     # Example: /products/1 -> product.php?product=1&extra=

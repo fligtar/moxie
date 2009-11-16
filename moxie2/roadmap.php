@@ -66,7 +66,7 @@ foreach ($quarters as $k => $quarter) {
 $template = new Template($product['theme'], $Config->get('theme'));
 
 $template->render('head', array(
-        'title' => $product['name'].' Roadmap @ '. $Config->get('site_name').' moxie',
+        'title' => $product['name'].' roadmap @ '. $Config->get('site_name').' moxie',
         'css' => $template->cssString('global')
     ));
 

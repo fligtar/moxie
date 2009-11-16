@@ -92,7 +92,7 @@ a:hover {
     text-align: right;
 }
 
-#login-form {
+#login-form.global {
     background: #EEEEEE;
     position: relative;
     -moz-border-radius: 6px;
@@ -664,17 +664,35 @@ div.deliverable.level-0 {
 
 
 /* Account Management */
-.body-account .logged-out {
+.body-logged-out {
     text-align: center;
     margin: 5em 0;
 }
-.body-account .logged-out h3 {
+.body-logged-out h3 {
     font-size: 2em;
 }
-.body-account .logged-out h4 {
+.body-logged-out h4 {
     font-size: 1.3em;
     font-weight: normal;
     margin: 1em 0;
+}
+
+.body-login .page {
+    min-height: 0;
+    width: 18em;
+}
+.body-login #global-header {
+    margin-top: 5em;
+}
+.body-login #site-name {
+    float: none;
+    text-align: center;
+}
+#login-form .error {
+    color: #E85242;
+    font-weight: bold;
+    font-size: 0.8em;
+    margin-bottom: 0.5em;
 }
 
 /* Footer */

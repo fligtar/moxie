@@ -14,15 +14,15 @@
 echo $this->jsString('jquery/jquery.min', 'jquery/jquery-ui.min', 'global');
 
 // Custom JS in the page
-if (!empty($vars['js'])) {
+if (!empty($js)) {
     echo '<script type="text/javascript">';
-    echo $vars['js'];
+    echo $js;
     echo '</script>';
 }
 
 // Page-specific js files
-if (!empty($vars['jsFiles'])) {
-    echo $vars['jsFiles'];
+if (!empty($jsFiles)) {
+    echo $jsFiles;
 }
 
 /*global $starttime;

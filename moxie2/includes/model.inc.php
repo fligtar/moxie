@@ -63,11 +63,6 @@ class Model {
             $values[] = 'NOW()';
         }
         
-        if (!array_key_exists('modified', $data)) {
-            $fields[] = 'modified';
-            $values[] = 'NOW()';
-        }
-        
         $query = "INSERT INTO {$this->table} (".implode(', ', $fields).") VALUES (".implode(', ', $values).")";
         
         return $this->db->execute($query);

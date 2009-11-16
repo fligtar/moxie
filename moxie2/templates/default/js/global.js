@@ -1,7 +1,7 @@
 var global = {
     showLoginForm: function() {
         $('#login-form').show();
-        $('#login_email').focus();
+        $('#login-email').focus();
     },
     
     hideLoginForm: function() {

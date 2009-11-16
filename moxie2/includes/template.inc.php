@@ -5,42 +5,56 @@ class Template {
     public $backup_theme;
     public $default_theme = 'default';
     public $template_dir;
-    public $breadcrumbs = array();
+    public $vars = array();
+    public $product_url;
     
-    private $cache = array();
-    
-    const CACHE_NONE = 0;
-    const CACHE_MEMORY = 1;
-    //const CACHE_FILE = 2;
-    
-    public function __construct($primary_theme = 'default', $backup_theme = 'default') {
+    public function __construct($primary_theme = 'default', $backup_theme = 'default', $product_url = '') {
         $this->primary_theme = $primary_theme;
         $this->backup_theme = $backup_theme;
+        $this->product_url = $product_url;
         
         $this->template_dir = dirname(dirname(__FILE__)).'/templates/';
     }
     
-    public function render($template, $vars = array(), $cache_level = Template::CACHE_NONE) {
-        // If caching requesting, see if a cached version is available
-        if ($cache_level > Template::CACHE_NONE) {
-            if (!empty($this->cache[$template])) {
-                // Cached version found in memory. Use it and return
-                echo "<!-- Cached template {$template} -->";
-                echo $this->cache[$template];
-                return;
-            }
-            else {
-                // No cached version found. We'll cache the one we're about to render!
-                ob_start();
+    /**
+     * Takes an array of values to set for the template.
+     */
+    public function set($variables) {
+        foreach ($variables as $key => $value) {
+            $this->vars[$key] = $value;
+        }
+    }
+    
+    /**
+     * Takes a list of templates to render in order.
+     * Ex: $template->render('head', 'header', 'page', 'footer');
+     */
+    public function render() {
+        $templates = func_get_args();
+        $reserved = array('templates', 'template', 'this', 'key', 'value', 'reserved');
+        
+        // Give access to the set variables
+        if (!empty($this->vars)) {
+            foreach ($this->vars as $key => $value) {
+                if (!in_array($key, $reserved)) {
+                    $$key = $value;
+                }
             }
         }
         
-        include $this->getThemedFile("{$template}.template.php");
-        
-        if ($cache_level > Template::CACHE_NONE) {
-            $this->cache[$template] = ob_get_contents();
-            ob_end_flush();
+        // Load the templates
+        foreach ($templates as $template) {
+            include $this->getThemedFile("{$template}.template.php");
         }
+    }
+    
+    /**
+     * Sets variables and then renders a template in one
+     */
+    public function setAndRender($template, $variables) {
+        $this->set($variables);
+        
+        $this->render($template);
     }
     
     private function getThemedFile($file) {
@@ -58,6 +72,23 @@ class Template {
         return $this->template_dir.$this->default_theme."/{$file}";
     }
     
+    /**
+     * Gets the absolute URL for a relative URL
+     * Allowed substitutions:
+     *      %product% -> product url prefix
+     */
+    public function url($url = '') {
+        if (strpos($url, '%') !== false) {
+            $url = str_replace('%product%', $this->product_url, $url);
+        }
+        
+        return $this->getBaseURL().'/'.$url;
+    }
+    
+    /**
+     * Gets the absolute base URL of the moxie installation.
+     * Use $this->url() instead.
+     */
     public function getBaseURL() {
         $url = $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
         

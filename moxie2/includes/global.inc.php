@@ -15,15 +15,14 @@ function pr($array) {
 function load_models() {
     $models = func_get_args();
     global $db;
-    $return = array();
     
     foreach ($models as $model) {
         require_once dirname(__FILE__).'/models/'.strtolower($model).'.model.php';
         $model_name = "{$model}Model";
-        $return[] = new $model_name($db);
+        
+        global $$model;
+        $$model = new $model_name($db);
     }
-    
-    return $return;
 }
 
 function escape($string) {
@@ -50,32 +49,6 @@ function load_url($url, $post = '') {
     curl_close($ch);
     
     return $response;
-}
-
-/* Hooks */
-$hooks = array();
-
-function add_hook($action, $callback) {
-    global $hooks;
-    
-    if (!array_key_exists($action, $hooks)) {
-        $hooks[$action] = array();
-    }
-    
-    $hooks[$action][] = $callback;
-}
-
-function hook($action) {
-    global $hooks;
-    
-    if (!empty($hooks[$action])) {
-        $params = func_get_args();
-        unset($params[0]);
-        
-        foreach ($hooks[$action] as $function) {
-            call_user_func_array($function, $params);
-        }
-    }
 }
 
 function strip_tags_attributes($string,$allowtags=NULL,$allowattributes=NULL){

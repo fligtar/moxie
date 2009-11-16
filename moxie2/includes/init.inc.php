@@ -22,7 +22,7 @@ $db = new $db_engine($db_user, $db_pass, $db_name, $db_host, $db_port);
 // Unset database config vars
 unset($db_user, $db_pass, $db_host, $db_name, $db_port);
 
-list($Config) = load_models('Config');
+load_models('Config');
 
 session_start();
 
