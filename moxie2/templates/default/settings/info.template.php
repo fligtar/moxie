@@ -16,7 +16,7 @@
         <dt><label for="info-description">product description</label></dt>
         <dd>
             <?php if (!empty($errors['description'])) echo '<p class="error">'.$errors['description'].'</p>'; ?>
-            <p class="description">Briefly describe your product..</p>
+            <p class="description">Briefly describe your product.</p>
             <p><textarea name="description" id="info-description" rows="3" cols="50" class="full"><?php echo $this->formValue('description', $product); ?></textarea></p>
         </dd>
     </dl>
