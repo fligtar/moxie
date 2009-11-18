@@ -137,7 +137,28 @@ class GroupModel extends Model {
         
         return $permissions;
     }
-
+    
+    /**
+     * Gets the permission level for a specific permission on a specific product
+     */
+    public function getPermissionLevel($permission, $product_id, $permissions = array()) {
+        // If no permissions array passed, we try to get from the session
+        if (empty($permissions) && !empty($_SESSION['permissions'])) {
+            $permissions = $_SESSION['permissions'];
+        }
+        
+        // If the product is specifically listed in the user's permissions, use it
+        // Otherwise, try to use the defaults
+        if (array_key_exists($product_id, $permissions)) {
+            return $permission[$product_id][$permission];
+        }
+        elseif (array_key_exists('*', $permissions)) {
+            return $permissions['*'][$permission];
+        }
+        else {
+            return GroupModel::PERMISSION_NONE;
+        }
+    }
 }
 
 ?>
