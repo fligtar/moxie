@@ -3,13 +3,6 @@
 class GroupModel extends Model {
     public $table = 'groups';
     
-    // Permission levels, with room to grow
-    const PERMISSION_NONE = 0;
-    const PERMISSION_VIEW = 5;
-    const PERMISSION_CONTRIBUTE = 10;
-    const PERMISSION_CREATE = 15;
-    const PERMISSION_MANAGE = 20;
-    
     // Special groups. Special in a good way
     const GROUP_ADMINS = 1;
     const GROUP_REGISTERED = 2;
@@ -62,14 +55,14 @@ class GroupModel extends Model {
                 $groups[$k]['permissionset_id'] = $_role[0]['permissionset_id'];
             }
             
+            $groups[$k]['permissions'] = array();
+            
             // Now, if we have a permissionset_id, we can get the permissionset
             if (!empty($groups[$k]['permissionset_id'])) {
                 // if a product is specified, we filter on that
                 $where = !empty($product_id) ? " AND (product_id = ".escape($product_id).") OR product_id IS NULL" : '';
                 
                 $permissions = $this->db->query("SELECT * FROM permissionsets WHERE id = ".escape($groups[$k]['permissionset_id']).$where);
-                
-                $groups[$k]['permissions'] = array();
                 
                 if (!empty($permissions)) {
                     foreach ($permissions as $permission) {
@@ -139,24 +132,31 @@ class GroupModel extends Model {
     }
     
     /**
-     * Gets the permission level for a specific permission on a specific product
+     * Get the user-friendly text for all permission levels
      */
-    public function getPermissionLevel($permission, $product_id, $permissions = array()) {
-        // If no permissions array passed, we try to get from the session
-        if (empty($permissions) && !empty($_SESSION['permissions'])) {
-            $permissions = $_SESSION['permissions'];
-        }
+    public function describePermissionLevels() {
+        $descriptions = array(
+            ConfigModel::PERMISSION_NONE => 'None',
+            ConfigModel::PERMISSION_VIEW => 'View',
+            ConfigModel::PERMISSION_CONTRIBUTE => 'Contribute',
+            ConfigModel::PERMISSION_CREATE => 'Create',
+            ConfigModel::PERMISSION_MANAGE => 'Manage'
+        );
         
-        // If the product is specifically listed in the user's permissions, use it
-        // Otherwise, try to use the defaults
-        if (array_key_exists($product_id, $permissions)) {
-            return $permission[$product_id][$permission];
-        }
-        elseif (array_key_exists('*', $permissions)) {
-            return $permissions['*'][$permission];
+        return $descriptions;
+    }
+    
+    /**
+     * Get the user-friendly text for a specific permission level
+     */
+    public function describePermissionLevel($level) {
+        $descriptions = $this->describePermissionLevels();
+        
+        if (array_key_exists($level, $descriptions)) {
+            return $descriptions[$level];
         }
         else {
-            return GroupModel::PERMISSION_NONE;
+            return 'Unknown';
         }
     }
 }

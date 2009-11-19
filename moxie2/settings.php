@@ -3,7 +3,7 @@ require 'includes/init.inc.php';
 require 'includes/template.inc.php';
 
 // Load models used by all actions on the page
-load_models('Group', 'Product');
+load_models('Group', 'Product', 'Role');
 
 // Determine the product
 $product = $Product->getProductFromURL($_GET['product']);
@@ -66,14 +66,23 @@ switch ($_GET['extra']) {
         break;
         
     case 'permissions':
-        $groups = $Group->getGroupsForUser(1);
-        $Group->addPermissionsToGroups($groups);
-        pr($groups);
+        //$groups = $Group->getGroupsForUser(1);
+        $groups = $Group->getAll();
+        $Group->addPermissionsToGroups($groups, $product['id']);
+        //pr($groups);
+        //pr($groups);
         
-        $Group->sumPermissions($groups);
+        //$Group->sumPermissions($groups);
+        $roles = $Role->getAll();
+        
+        $levels = $Group->describePermissionLevels();
         
         $template->set(array(
-            'page_name' => 'manage permissions'
+            'page_name' => 'manage permissions',
+            'groups' => $groups,
+            'roles' => $roles,
+            'levels' => $levels,
+            'product' => $product
         ));
         $template->render('layout/header', 'settings/permissions', 'layout/footer');
         break;

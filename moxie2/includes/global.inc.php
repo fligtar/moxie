@@ -67,4 +67,27 @@ function strip_tags_attributes($string,$allowtags=NULL,$allowattributes=NULL){
     }
     return $string;
 }
+
+/**
+ * Gets the permission level for a specific permission on a specific product
+ */
+function get_permission_level($permission, $product_id, $permissions = array()) {
+    // If no permissions array passed, we try to get from the session
+    if (empty($permissions) && !empty($_SESSION['permissions'])) {
+        $permissions = $_SESSION['permissions'];
+    }
+    
+    // If the product is specifically listed in the user's permissions, use it
+    // Otherwise, try to use the defaults
+    if (array_key_exists($product_id, $permissions)) {
+        return $permissions[$product_id][$permission];
+    }
+    elseif (array_key_exists('*', $permissions)) {
+        return $permissions['*'][$permission];
+    }
+    else {
+        return ConfigModel::PERMISSION_NONE;
+    }
+}
+
 ?>

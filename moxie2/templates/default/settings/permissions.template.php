@@ -7,7 +7,7 @@
     <thead>
         <tr>
             <th colspan="2"></th>
-            <th colspan="3"><?php echo $product['name']; ?> product</th>
+            <th colspan="3"><?php echo $product_name; ?> product</th>
         </tr>
         <tr>
             <th>Group</th>
@@ -18,15 +18,36 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>Administrators</td>
-            <td><select>
-                <option></option>
-            </select></td>
-            <td>Manage</td>
-            <td>Manage</td>
-            <td>Manage</td>
-        </tr>
+    <?php
+        foreach ($groups as $group) {
+            echo '<tr>';
+            echo '<td>'.$group['name'].'</td>';
+            echo '<td><select>';
+            echo '<option value="">(none)</option>';
+            
+            // Pre-defined roles
+            foreach ($roles as $role) {
+                echo '<option value="'.$role['id'].'"';
+                if ($role['id'] == $group['role_id']) {
+                    echo ' selected';
+                }
+                echo '>'.$role['name'].'</option>';
+            }
+            
+            // Custom role
+            echo '<option value=""';
+            if (!empty($group['permissionset_id']) && empty($group['role_id'])) {
+            echo ' selected';
+            }
+            echo '>(custom)</option>';
+            
+            echo '</select></td>';
+            echo '<td>'.$levels[get_permission_level('product', $product['id'], $group['permissions'])].'</td>';
+            echo '<td>'.$levels[get_permission_level('milestones', $product['id'], $group['permissions'])].'</td>';
+            echo '<td>'.$levels[get_permission_level('projects', $product['id'], $group['permissions'])].'</td>';
+            echo '</tr>';
+        }
+    ?>
     </tbody>
 </table>
     

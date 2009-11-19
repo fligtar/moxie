@@ -4,6 +4,13 @@ class ConfigModel extends Model {
     public $table = 'config';
     private $config;
     
+    // Permission levels, with room to grow
+    const PERMISSION_NONE = 0;
+    const PERMISSION_VIEW = 5;
+    const PERMISSION_CONTRIBUTE = 10;
+    const PERMISSION_CREATE = 15;
+    const PERMISSION_MANAGE = 20;
+    
     public function get($key) {
         if (empty($this->config)) {
             $this->getConfig();
